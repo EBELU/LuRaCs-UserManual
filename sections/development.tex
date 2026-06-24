@@ -1,0 +1,18 @@
+\section{Development \& Internal Function}
+\subsection{Datatypes \& Formats}
+\subsubsection{Spectrum}
+
+\subsubsection{Spectrogram}
+The spectrogram format is based around an SQLite database which stores measured data. Each database file contains three tables: header, summary and spectrogram. 
+The following data is stored for each time point in the spectrogram table:
+
+\begin{itemize}
+    \item Timestamp.
+    \item Average count rate measured since the last time point.
+    \item Average dose rate measured since the last time point.
+    \item Device temperature at the time the data is written.
+    \item Longitude, if a GPS is available.
+    \item Latitude, if a GPS is available.
+    \item Spectrum difference since the last written data point, stored as a compressed binary blob.
+\end{itemize}
+\subsubsection{ROI}

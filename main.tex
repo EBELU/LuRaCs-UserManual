@@ -1,0 +1,64 @@
+\documentclass[english, 12pt]{rapport}
+
+%_________________________________________________
+% Titlepage settings
+
+
+\title{LuRaCs - User Manual}
+\subtext{}
+\author{Erik Ewald}
+\logo{main_icon_green.png}
+
+
+%_________________________________________________
+% Macros
+
+% Writing macros:
+% 
+%     \newcommand{\cmd}[nargs]{defn}:
+%     Arguments ordered as #1, #2,...
+% 
+%     \NewDocumentCommand\cmd{mO{}D<>{}}{#1 maybe #2 maybe #3}
+%     {mO{}D<>} = {#1, #2, #3}
+%     m = Mandatory argument, accessed with \cmd{}
+%     O{} = Optional argument, accessed with []
+%     D<> = Optional argument, accessed with <>
+%     \cmd{arg1}[optarg1]<optarg2> => arg1 maybe optorg1 maybe optorg2
+%     *: \IfBooleanTF{body when starred}
+% 
+
+%Power of ten
+\newcommand{\pt}[1]{\cdot 10^{#1}} 
+%Halflife
+\newcommand{\hl}{\text{T$_{\nicefrac{1}{2}}$}}
+
+%Derivative, för d/dx -> dd{\,}{x}
+\NewDocumentCommand\dd{mm}{\text{$\frac{\text{d}#1}{\text{d}#2}$}}
+%Stopping power, skrivs \spower[col]
+\NewDocumentCommand\spower{O{}}{\text{$\left(\frac{\text{dE}}{\text{dx}}\right)_{\text{#1}}$}}
+
+%_________________________________________________
+% Bibliography
+
+\usepackage[style=ieee, backend=biber]{biblatex}
+\addbibresource[glob]{bibfiles/*.bib}
+
+%_________________________________________________
+% Document
+
+\countinsec
+\header
+\usepackage{array,supertabular,hhline,hyperref}
+\begin{document}
+
+\tableofcontents
+\newpage
+\include{sections/getting_started}
+\include{sections/interface}
+\include{sections/development}
+
+
+\printbibliography
+
+
+\end{document}

@@ -1,0 +1,37 @@
+\section{Getting Started}
+
+\subsection{Installation}
+LuRaCs can be installed from source by cloning from GitHub or installing from PyPi. This will install dependencies for full function of the application. When installing from source, run \texttt{pip install -e .[dev]} to install development tools like \texttt{pyinstaller}.
+
+
+\begin{minted}[
+    framesep=2mm,
+    baselinestretch=1.2,
+    bgcolor=backcolour,
+    fontsize=\footnotesize,
+    breaklines
+    ]{bash}
+# Clone the the GitHub repo
+git clone --recursive https://github.com/EBELU/LuRaCs.git
+cd LuRaCs
+
+# Install with pip
+pip install .
+# Run
+LuRaCs
+\end{minted}
+\captionof{listing}{Download and build from source}
+
+\subsection{Connecting Devices}
+\subsubsection{Prerequisites}
+In order to use USB connected devices on Linux the udev-rules must be updated by adding the following permissions depending on the device.
+\begin{minted}[
+    framesep=2mm,
+    baselinestretch=1.2,
+    bgcolor=backcolour,
+    fontsize=\footnotesize,
+    breaklines
+    ]{bash}
+# Radiacode
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="f123", TAG+="uaccess", MODE="0660"
+\end{minted}
