@@ -1,18 +1,113 @@
-\section{Development \& Internal Function}
-\subsection{Datatypes \& Formats}
-\subsubsection{Spectrum}
+\section{Internal Function}
+\subsection{Code Structure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[trim={0 10cm 0 3cm}, width=0.8\linewidth]{images/internal_function/structure.png}
+    \caption{Flowchart illustrating the structure of the LuRaCs code}
+    \label{fig:placeholder}
+\end{figure}
 
-\subsubsection{Spectrogram}
-The spectrogram format is based around an SQLite database which stores measured data. Each database file contains three tables: header, summary and spectrogram. 
-The following data is stored for each time point in the spectrogram table:
+\subsection*{core}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{images/internal_function/structure_core.png}
+    \caption{Flowchart of the structure of the LuRaCs core module}
+    \label{fig:placeholder}
+\end{figure}
+The core of the application is built on a number of singleton classes that manage the global state of the program. These are reachable from anywhere in the program.
 
+\paragraph{Settings}
+The settings contain modifiable parameters that affect the running of the program. It is divided in the the following parts. Settings can also be used for communication within the program as when a setting is changed using the \texttt{update\_setting} function a signal is emitted from \texttt{Settings} with the group of the setting, name of the setting and the new value.
 \begin{itemize}
-    \item Timestamp.
-    \item Average count rate measured since the last time point.
-    \item Average dose rate measured since the last time point.
-    \item Device temperature at the time the data is written.
-    \item Longitude, if a GPS is available.
-    \item Latitude, if a GPS is available.
-    \item Spectrum difference since the last written data point, stored as a compressed binary blob.
+    \item \textbf{Appearance} contain simple settings mostly controlling appearance of the GUI and preferences for data import.
+    \item \textbf{Paths} contain file and system paths to resources and stored data.
+    \item \textbf{Temp} contain values that are reset upon shutdown.
+    \item \textbf{State} saves mostly last used values for convenience and is capable of saving and loading complex data types like dequeues.
+    \item \textbf{Advanced} contains advanced options that most users rarely need to change.
 \end{itemize}
-\subsubsection{ROI}
+\paragraph{RunManager} 
+The RunManager handles connecting and sampling instruments. It owns its own thread running an async event loop, this to avoid instrument sampling being affected by events in the GUI thread and vice versa. Threadsafe communications are handled using Qt signals. The RunManager also owns the \textbf{SpectrogramManager} which tracks spectrogram and manages spectrogram ROIs.
+\paragraph{ScriptEngine} 
+The ScriptEngine is responsible for converting text commands into actions. Like the RunManager it owns it own thread and communications are made using Qt signals. Available commands are described in the section on the CLI. 
+\paragraph{Log} The Log exports a reference to the python logger "Application".
+\paragraph{IOManager} The IOManager provides functions for import and export of various files and manages indexes of internally stored file for the Data Store.
+\paragraph{SpectrumManager} The SpectrumManager is one of the most critical parts of the application. It owns all spectra, both from files and devices. Modifications of spectra are handles through it. It also owns the following components.
+\begin{itemize}
+    \item \textbf{NuclideLibrary} contains loaded nuclide data and some functions for interacting with it.
+    \item \textbf{ROIManager} handles spectrum ROIs and updates peak fits.
+    \item \textbf{GenericInsturmentLibrary} contains generic instruments based on instrument models that can be used to store characterisc data and be used as basis for UniqueInstruments.
+    \item \textbf{UniqueInsturmentLibrary} contains unique instruments that can be assigned to spectra. They differ from GenericInstruments in that they store information unique to each device like energy calibration.
+\end{itemize}
+
+The core also contains the helper class \textbf{Calculator} that is designed to easily assign a CPU intensive task to a separate thread and signal back the result using a Qt signals.
+
+\subsection{Wrapping Devices}
+The implementation of detectors is written be extensible and make it easy to implement new instruments. This is facilitated though inheritance from an abstract class \texttt{DeviceWrapper}. This wrapping hides the individual device implementations and LuRaCs only interact through this wrapper interface. Creating a subclass from \texttt{DeviceWrapper} automatically registers the new wrapper for use as a detector connection. 
+
+\subsection{Algorithms}
+\subsubsection{Peak Fitting}
+Peak fitting are based in ROIs in which a peak is assumed to be. Each ROI can contain one peak but ROIs can merge so several peaks can share the same background estimation. One a ROI is defined the fitting process is as follows.
+\begin{enumerate}
+    \item Determine a number of channels starting at the ROI and counting inwards on which to base the background.
+    \item A polynomial is fitted using the edge channels and their corresponding counts.
+    \item The polynomial is evaluated for every channel in the ROI or the merged ROI region and the result subtracted from the respective channels.
+    \item One or the sum of several Gauassian functions are fitted to the remainder.
+    \item Peak characteristics are extracted from the fitted paramters.
+\end{enumerate}
+
+The uncertainties of the peak fitting is calculated as follows. Firstly, the counts in channel \textit{i}, $N_i$ is assumed to follow Poisson distribution, thus $\sigma_i = \sqrt{N_i}$. The uncertainty of each channel is used as weights for the polynomial fit. 
+
+\subsubsection{Deconvolution}
+The deconvolution method implemented is based on the \textit{Maximum Likelihood - Expectation Maximisation} or ML-EM algorithm. 
+
+Before reconstruction the response matrices are processed and rows for the requested values are interpolated. The method for interpolation is described by Jandel et al. \footcite{jandelDecompositionContinuumGray2004}.
+
+% \subsection{Data Objects}
+% \subsubsection{Spectrum}
+
+% \subsubsection{Spectrogram}
+
+% \subsubsection{Spectrum ROI}
+
+\subsection{File Types}
+\subsubsection{Spectrum, ROI and Instrument (.xml)}
+Spectra are stored in the XML format and is interoperable with the ANSI/IEEE N42.42 format \cite{}.
+
+ROIs and Instrument data are stored as an extension to the N42 standard using the \textit{LRC} namespace.
+ 
+\subsubsection{Spectrogram (.db)}\label{sec:file_spectrogram}
+Spectrograms are saved to an SQLite3 database file. One file contains one spectrogram. Saved files can be loaded and measurement resumed. A spectrogram database contains three tables described in \autoref{tab:header-schema}, \ref{tab:summary-schema} and \ref{tab:spectrogram-schema}.
+
+\input{tables/spectrogram_format}
+
+
+
+
+\subsubsection{Detector Response Matrix (.npz)}
+Detector response matrices are stored as serialized and compressed numpy arrays (.npz) with pickle disabled. Each files contains three arrays described in \autoref{tab:response_matrix_schema}.
+
+\begin{table}[H]
+\centering
+\caption{Contents of a response matrix .npz file.}
+\label{tab:response_matrix_schema}
+\begin{tabular}{lllp{8cm}}
+\toprule
+\textbf{Key}          & \textbf{dtype}   & \textbf{shape}  & \textbf{Description}                                                          \\ \midrule
+\texttt{response\_matrix} &
+  float32 &
+  2D (m x n) &
+  Detector response values. First index is the simulated photon energy and second index is the normalized count bins (\#bin / \#fired photons) \\
+\texttt{indices}      & float32 & 1D (m) & Simulated photon energy of the corresponding row in \texttt{response\_matrix} \\
+\texttt{bin\_centres} & float32 & 1D (n) & Energy of the bin centres of the detector energy response.           \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Simple map tracks (.geojson)}
+Spectrograms are the primary way to store GPS position data these are however not directly compatible with any other software without custom scripts. A spectrogram can be converted to the \textit{GeoJSON} format, with the loss of some information, for compatibility and easier sharing. The \textit{GeoJSON} format is generally compatible with dedicated GIS software, like \textit{QGis}, for viewing measurements outside the embedded map.
+
+\input{tables/geojson_schema}
+
+\subsection{Embedded map}
+The embedded map is rendered using \textit{MapLibre GL JS}\footcite{MaplibreMaplibregljs2026} in a QWebEngine widget. The packages for MapLibre is included in the LuRaCs code and does not require any installation. MapLibre handles requesting tiles is connected to an online API it requires minimal work. Using maps offline works by using an embedded tile server run using \textit{uvicorn} and \textit{fastapi} to supply MapLibre with tiles. The embedded tile server runs on host 127.0.0.1 and port 8080. PMTiles are loaded using a fork of the \textit{pmtiles} Python package, having improved cacheing and performance, incorporated in the LuRaCs code.
+
+The code is written so that the the Python side handles most of the logic, using only simple calls to JS for creating or updating points, etc. 

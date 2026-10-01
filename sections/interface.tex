@@ -1,20 +1,46 @@
 \section{Interface}
-
+% The GUI of LuRaCs is divided into two panes with tabs containing the most important information for viewing and measuring spectra. These are supported by popup windows and dialogs for performing specific tasks, like loading files or performing a certain analysis method.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{overview.png}
+    \caption{Enter Caption \\ second row}
+    \label{fig:placeholder}
+\end{figure}
 \subsection{Top Tabs}
-
 \subsubsection{Spectrum}
-The spectrum view shows spectra as a count histogram, retrieved from a connected device or loaded from a file. It can show several spectra combined in one plot or separately. This can be changed under \texttt{Options $\rightarrow$ Tabbed / Combined Spectrum View}.
+The spectrum view shows spectra as a count histograms, retrieved from a connected device or loaded from a file. It can show several spectra combined in one plot or separately. This can be changed under \texttt{Options $\rightarrow$ Tabbed / Combined Spectrum View}.
+
 
 \subsubsection{Spectrogram}
 A spectrogram allows time-series measurements to be conducted. A spectrogram stores data at specified time intervals and can be displayed in a waterfall plot.
 
+The spectrogram format is based around an SQLite database, see section \ref{sec:file_spectrogram} for further details on the format. The following data is stored for each time point in the spectrogram:
+
+\begin{itemize}
+    \item Timestamp.
+    \item Average count rate measured since the last time point.
+    \item Average dose rate measured since the last time point.
+    \item Device temperature at the time the data is written.
+    \item Longitude at the time the data is written, if a GPS is available.
+    \item Latitude at the time the data is written, if a GPS is available.
+    \item Spectrum difference since the last written data point, stored as compressed binary.
+    \item Meta data, stored as a utf-8 encoded and zlib compressed json-string. Examples of stored metadata include extended GPS data.
+\end{itemize}
+
+
+
 \subsubsection{Map}
+Loading enables viewing of measurements made with a spectrogram and a GPS. Maps can be loaded from online API requiring an internet connection or loaded from a \textit{.mbiles}-file for offline use. Compatible APIs and files are offered by several vendors, the software \textit{QGis} offers great support for exporting \textit{.mbiles} from other formats.
+
+\paragraph{Disclaimer} LuRaCs does not provide or distribute map data. Users are responsible for ensuring that any map data or tile services they use with LuRaCs are obtained and used in accordance with the applicable licenses, terms, and usage restrictions.
 
 \subsection{Bottom Tabs}
 
 \subsubsection{Spectrum Info}
 
-\subsubsection{ROI Info}
+\subsubsection{Spectrum ROIs}
+
+\subsubsection{Spectrogram ROIs}
 
 \subsubsection{Real Time Values}
 
@@ -23,11 +49,22 @@ A spectrogram allows time-series measurements to be conducted. A spectrogram sto
 \subsubsection{Isotopics}
 
 \subsubsection{Console}
+The console allows for entering text commands to control the application and running scripts for basic automation. See \autoref{subsec:cli} for information on available commands and their usage.
 
 \subsubsection{System Log}
 
-\subsection{Calculation Windows}
+\subsection{Gamma Tools}
+\subsubsection{Calibration}
 
-\subsection{Command Line Interface (CLI)}
+\subsubsection{Deconvolution}
+
+\subsubsection{Efficiency}
+
+\subsubsection{Resolution}
+
+
+
+\subsection{Command Line Interface (CLI)}\label{subsec:cli}
 
 \subsection{Settings}
+The settings are devided into \texttt{Settings} which contain basic and cosmetic settings, such as what data should be imported files and what theme should the application use. 

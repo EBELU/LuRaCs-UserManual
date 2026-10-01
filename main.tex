@@ -2,8 +2,6 @@
 
 %_________________________________________________
 % Titlepage settings
-
-
 \title{LuRaCs - User Manual}
 \subtext{}
 \author{Erik Ewald}
@@ -40,7 +38,9 @@
 %_________________________________________________
 % Bibliography
 
-\usepackage[style=ieee, backend=biber]{biblatex}
+\usepackage{tabularx}
+\usepackage[bottom]{footmisc}
+\usepackage[style=verbose-ibid, backend=biber]{biblatex}
 \addbibresource[glob]{bibfiles/*.bib}
 
 %_________________________________________________
@@ -53,8 +53,9 @@
 
 \tableofcontents
 \newpage
-\include{sections/getting_started}
+\input{sections/getting_started}
 \include{sections/interface}
+\include{sections/examples}
 \include{sections/development}
 
 

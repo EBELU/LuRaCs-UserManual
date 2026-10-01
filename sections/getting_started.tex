@@ -1,8 +1,59 @@
 \section{Getting Started}
+\subsection{Introduction}
+
+\subsubsection{LuRaCs-H3}
+LuRaCs-H3 is a light weight version of the compiled program indented for system with limited storage. It excludes heavy components to reduce file size of the executable. It is approximately 250 MB smaller than the regular version. The following systems are excluded in the H3 version.
+\begin{itemize}
+    \item The embedded map, position data can still be recorded.
+\end{itemize}
 
 \subsection{Installation}
-LuRaCs can be installed from source by cloning from GitHub or installing from PyPi. This will install dependencies for full function of the application. When installing from source, run \texttt{pip install -e .[dev]} to install development tools like \texttt{pyinstaller}.
+Before installing, ensure that Python version 3.10, 3.11, 3.12 or 3.13 is installed on the system. The Python installation can be verified by opening \textit{cmd} on windows or a Terminal on MacOS and Linux and entering \texttt{python --version} or \texttt{python3 --version}, if Python is correctly installed the version will be displayed.
+\subsubsection{With \texttt{pip}}
+When Python has been correctly set up, make a new folder for the install and open \textit{cmd} or a terminal in that folder. On Windows enter the following commands in \textit{cmd}:
+\begin{minted}[
+    framesep=2mm,
+    baselinestretch=1.2,
+    bgcolor=backcolour,
+    fontsize=\footnotesize,
+    breaklines
+    ]{powershell}
+# Make a new python environment
+python -m venv .venv
 
+# Activate the environment
+.\.venv\Scripts\activate
+
+# Install
+pip install luracs
+
+# Run
+LuRaCs
+\end{minted}
+
+On Linux and MacOS run the following bash commands:
+\begin{minted}[
+    framesep=2mm,
+    baselinestretch=1.2,
+    bgcolor=backcolour,
+    fontsize=\footnotesize,
+    breaklines
+    ]{bash}
+# Make a new python environment
+python3 -m venv .venv
+
+# Activate the environment
+source .venv/bin/activate
+
+# Install
+pip install luracs
+
+# Run
+LuRaCs
+\end{minted}
+This will install all decencies for the full version of the application and provide the start script \texttt{LuRaCs}.
+\subsubsection{From source}
+LuRaCs can be installed from source by cloning the GitHub repository. Installing from source requires a C/C++-compiler for compiling \textit{Cython} extensions. When installing from source to edit the code, run \texttt{pip install -e .[dev]} to install in editable mode. The will also install development tools like \texttt{pyinstaller} and \texttt{pytest}.
 
 \begin{minted}[
     framesep=2mm,
@@ -20,10 +71,24 @@ pip install .
 # Run
 LuRaCs
 \end{minted}
-\captionof{listing}{Download and build from source}
 
 \subsection{Connecting Devices}
-\subsubsection{Prerequisites}
+
+\begin{table}[H]
+\centering
+\caption{Currently implemented devices}
+\label{tab:implemented_devices}
+\begin{tabular}{@{}llll@{}}
+\toprule
+Model         & Manufacturer  & Connections & Note         \\ \midrule
+RadiaCode-1xx & Radiacode     & USB, BLE    &              \\
+Raysid        & Raysid        & BLE         &              \\
+digiBase      & Oretec Ametek & USB         &              \\
+digiDart      & Oretec Ametek & USB         &              \\
+DetectiveX    & Oretec Ametek & NETWORK     &              \\ \bottomrule
+\end{tabular}
+\end{table}
+
 In order to use USB connected devices on Linux the udev-rules must be updated by adding the following permissions depending on the device.
 \begin{minted}[
     framesep=2mm,
@@ -33,5 +98,41 @@ In order to use USB connected devices on Linux the udev-rules must be updated by
     breaklines
     ]{bash}
 # Radiacode
-SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="f123", TAG+="uaccess", MODE="0660"
+SUBSYSTEM=="usb", ATTR{idVendor}=="0483", ATTR{idProduct}=="f123", TAG+="uaccess", MODE="0660"
+
+# digiBase/digiDart
+SUBSYSTEM=="usb", ATTRS{idVendor}=="0a2d", GROUP="users", MODE="0666"
+
 \end{minted}
+
+Connecting devices over the network likely requires specific to that instrument so no general guide is provided. See example \ref{subsec:example_detx} for how this can be done for the Ortec Ametec Detective X.
+
+\subsection{Compatible file formats}
+LuRaCs is compatible with a selection of file formats, both standard and more niche third party formats. However, LuRaCs is not primarily intended to support general spectrum analysis so if you are looking for a general analysis application consider using InterSpec\footcite{SandialabsInterSpec2025} instead. 
+
+\begin{table}[H]
+\centering
+\caption{Compatible spectrum formats.}
+\label{tab:supported_formats}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Source}            & \textbf{Extension} & \textbf{Contained Data}                                        \\ \midrule
+Radiacode         & .xml      & Counts, background, live time, real time, calibration \\
+                  & .n42      & Counts, background, live time, real time, calibration \\
+Ortec    & .spe      & Counts, live time, real time, calibration             \\
+Canberra & .tka      & Counts, live time, real time                          \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Compatible track formats.}
+\label{tab:supported_formats}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Source}            & \textbf{Extension} \\ \midrule
+Radiacode         & .rctrk \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Package dependencies and Resources}

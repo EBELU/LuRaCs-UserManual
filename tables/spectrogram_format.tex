@@ -1,0 +1,101 @@
+\begin{table}[H]
+    \centering
+    \caption{Schema of the \texttt{header} table.}
+    \label{tab:header-schema}
+    \begin{tabular}{lll}
+    \toprule
+    \textbf{Column}                      & \textbf{Type} & \textbf{Description}                         \\ \midrule
+    \texttt{id}             & INTEGER       & Identifier of the header record.             \\
+    \texttt{created}        & INTEGER       & Creation time as a Unix timestamp.           \\
+    \texttt{device\_id}     & TEXT          & Identifier of the device producing the data. \\
+    \texttt{channels}       & INTEGER       & Number of spectrum channels.                 \\
+    \texttt{calibration}    & TEXT          & Calibration coefficients as a json list.     \\
+    \texttt{concat} &
+      INTEGER &
+      \begin{tabular}[c]{@{}l@{}}Indicates whether the channels have been concatenated \\ by a factor of 1 (not concatinated), 2, 4 or 8.\end{tabular} \\
+    \texttt{save\_interval} & REAL          & Interval between data saves.                 \\
+    \texttt{meta}           & TEXT          & Additional metadata as json.                 \\ \bottomrule
+    \end{tabular}
+\end{table}
+
+
+\begin{table}[H]
+    \centering
+    \caption{Schema of the \texttt{summary} table.}
+    \label{tab:summary-schema}
+    \begin{tabular}{lll}
+        \toprule
+        \textbf{Column} & \textbf{Type} & \textbf{Description} \\
+        \midrule
+        \texttt{id}
+            & INTEGER
+            & Identifier of the summary record. \\
+
+        \texttt{accumulated\_spectrum}
+            & BLOB
+            & \begin{tabular}[c]{@{}l@{}}Accumulated spectrum data, \\ zlib compressed array. \end{tabular} \\
+
+        \texttt{total\_duration}
+            & REAL
+            & Total duration of the recording in [s]. \\
+
+        \texttt{total\_dose}
+            & REAL
+            & Total accumulated dose in [\unit{\micro\sievert}]. \\
+
+        \texttt{last\_update}
+            & INTEGER
+            & \begin{tabular}[c]{@{}l@{}}Timestamp of the last update as \\ a Unix timestamp. \end{tabular} \\
+
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+
+\begin{table}[H]
+    \centering
+    \caption{Schema of the \texttt{spectrogram} table.}
+    \label{tab:spectrogram-schema}
+    \begin{tabular}{lll}
+        \toprule
+        \textbf{Column} & \textbf{Type} & \textbf{Description} \\
+        \midrule
+        \texttt{id}
+            & INTEGER
+            & Identifier of the spectrogram record. \\
+
+        \texttt{timestamp}
+            & REAL
+            & Timestamp of the measurement as a Unix timestamp. \\
+
+        \texttt{avg\_cps}
+            & INTEGER
+            & Average counts per second multiplied by 1000. \\
+
+        \texttt{avg\_dr}
+            & INTEGER
+            & Average dose rate as [\unit{\micro\sievert\per\second}*1000]. \\
+
+        \texttt{temperature}
+            & INTEGER
+            & Temperature during the measurement in [\unit{\celsius}*1000]. \\
+
+        \texttt{latitude}
+            & REAL
+            & Latitude of the measurement location. \\
+
+        \texttt{longitude}
+            & REAL
+            & Longitude of the measurement location. \\
+
+        \texttt{spectrum}
+            & BLOB
+            & Recorded spectrum during interval, zlib compressed array. \\
+
+        \texttt{meta}
+            & BLOB
+            & \begin{tabular}[c]{@{}l@{}}Additional metadata as a json string \\ encoded with utf-8 and zlib compressed.\end{tabular} \\
+
+        \bottomrule
+    \end{tabular}
+\end{table}

@@ -1,0 +1,83 @@
+\begin{table}[H]
+\centering
+\caption{Collection-level contents of the GeoJSON mapping data file.}
+\label{tab:geojson_mapping_collection_schema}
+\begin{tabular}{llp{8cm}}
+\toprule
+\textbf{Key} & \textbf{dtype} & \textbf{Description} \\ \midrule
+
+\texttt{type} &
+  string &
+  GeoJSON object type. Always set to \texttt{"FeatureCollection"}. \\
+
+\texttt{name} &
+  string &
+  Name or title of the mapping dataset. \\
+
+\texttt{metadata} &
+  object &
+  Metadata describing the mapping session, including device information, acquisition times, and additional metadata. \\
+
+\texttt{metadata.device\_id} &
+  string &
+  Identifier of the device used to acquire the measurements. \\
+
+\texttt{metadata.start} &
+  string &
+  ISO 8601 timestamp indicating the start of the measurement period. \\
+
+\texttt{metadata.end} &
+  string or null &
+  ISO 8601 timestamp indicating the end of the measurement period. Set to \texttt{null} if unavailable. \\
+
+\texttt{features} &
+  array &
+  Collection of georeferenced measurement points. \\
+
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Contents of individual measurement features in the GeoJSON mapping data. Accessed as \texttt{features.xxx}}.
+\label{tab:geojson_mapping_feature_schema}
+\begin{tabular}{llp{7.3cm}}
+\toprule
+\textbf{Key} & \textbf{dtype} & \textbf{Description} \\ \midrule
+
+\texttt{type} &
+  string &
+  GeoJSON feature type. Always set to \texttt{"Feature"}. \\
+
+\texttt{geometry} &
+  object &
+  Geographic representation of the measurement. The geometry is a GeoJSON \texttt{Point}. \\
+
+\texttt{geometry.type} &
+  string &
+  Geometry type. Always set to \texttt{"Point"}. \\
+
+\texttt{geometry.coordinates} &
+  float &
+  Longitude and latitude of the measurement location, given in GeoJSON order as \texttt{[longitude, latitude]}. \\
+
+\texttt{properties.timestamp} &
+  string &
+  ISO 8601 timestamp indicating when the measurement was recorded. \\
+
+\texttt{properties.count\_rate} &
+  float &
+  Measured count rate at the corresponding geographic location. \\
+
+\texttt{properties.dose\_rate} &
+  float &
+  Measured dose rate at the corresponding geographic location. \\
+
+\texttt{properties.other\_data\_points} &
+  on &
+  Additional measurements points, typically produced by spectrogram ROIs, saved as a JSON-object. \\
+
+\bottomrule
+\end{tabular}
+\end{table}

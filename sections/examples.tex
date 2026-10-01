@@ -1,0 +1,16 @@
+\section{Examples}
+%\subsection{Multiple USB devices on Windows}
+%Due to limitations in Windows the serial number of connected USB devices can not be easily retrieved. Instead of showing the serial number, which usually contains an easily identifiable name, like in Linux it instead shows the manufacturer and the connected port. The user must then identify the instrument based on the port number.
+
+\subsection{Connecting Detective X using direct ethernet}\label{subsec:example_detx}
+\textit{LuRaCs} communicates with a Detective X detector using the \textit{Mobile Field Kit} API described in the Detective X manual. Using this interface requires a network connection between the instrument and a host computer. A simple and stable way to establish such a connection is a direct ethernet cable from the instrument to the PC with no router in between. This method requires some setup before \textit{LuRaCs} can connect to a Detective X and is described in this example.
+
+The first step is to configure the ethernet interface on the Detective X.
+Go to \texttt{Settings $\rightarrow$ Communications $\rightarrow$ Ethernet}. Ensure ethernet is enabled and disable DHCP. Manually enter the IP-address and network mask. A good choice of IP is \textbf{192.168.50.2}, as long as does not interfere with another connected device, and set the network mask to \textbf{255.255.255.0}.
+
+The second step is to configure the PC to have a static IP address on the ethernet connection. The used IP will be \textbf{192.168.50.1} and the network mask 255.255.255.0, leave gateway empty. Examples are shown for Windows 11 and Linux Mint but the principle is the same for most systems.
+
+Once the network is configured check the connection by pinging Detective X.
+
+If the ping succeeds everything is ready. In \textit{LuRaCs} go to \texttt{Devices $\rightarrow$ Connect Network} and enter the instrument IP, 192.168.50.2 in this example.
+

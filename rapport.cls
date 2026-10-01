@@ -72,7 +72,7 @@ separate-uncertainty = true}
 \RequirePackage{expl3} %Wrapper for LaTeX3
 \RequirePackage{ifthen}
 \RequirePackage{fancyhdr}
-\RequirePackage[outputdir=.output/]{minted} % Code listing
+\RequirePackage{minted} % Code listing
 \RequirePackage{csquotes}
 \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
 
@@ -189,7 +189,7 @@ separate-uncertainty = true}
     \def\@email{#1 \\ #2}
 }
 % University if \institution is not used
-\def\@uni{Lund University}
+\def\@uni{Medical Radiation Physics, \\Lund University,\\Sweden}
 \fi
 \fi
 
@@ -219,7 +219,7 @@ separate-uncertainty = true}
 \begin{titlepage}
  \begin{center}
         \noindent
-        \begin{minipage}{.35\textwidth}
+        \begin{minipage}{.55\textwidth}
             %%% Insitution [top left corner]
             \ifdefined\institution
             \Large \institution
@@ -228,7 +228,7 @@ separate-uncertainty = true}
             \fi 
             %%%
         \end{minipage}
-        \begin{minipage}{.55\textwidth}
+        \begin{minipage}{.35\textwidth}
         \begin{flushright}
             %%% Date [top right corner]
             \ifdefined\@conducted
@@ -239,7 +239,7 @@ separate-uncertainty = true}
         \end{flushright}  
         \end{minipage}
 
-        \vspace*{4cm} % Space for title
+        \vspace*{3cm} % Space for title
         \LARGE
         %%% Text above the title
         \ifdefined\toptext
@@ -310,10 +310,19 @@ separate-uncertainty = true}
 
         %Department of Physics
    \end{center}
-    
-   \begin{right}
-   \includegraphics[width=0.2\linewidth]{cc-by-sa.png}
-   \end{right}
+
+\begin{minipage}{.5\textwidth}
+\begin{flushleft}
+\includegraphics[width=.5\linewidth]{LU_logo.png}
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{.5\textwidth}
+\begin{flushright}
+\includegraphics[width=.4\linewidth]{cc-by-sa.png}
+\end{flushright}
+\end{minipage}
+
+
 \end{titlepage}
 
 }
