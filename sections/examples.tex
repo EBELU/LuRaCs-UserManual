@@ -10,7 +10,7 @@ Go to \texttt{Settings $\rightarrow$ Communications $\rightarrow$ Ethernet}. Ens
 
 The second step is to configure the PC to have a static IP address on the ethernet connection. The used IP will be \textbf{192.168.50.1} and the network mask 255.255.255.0, leave gateway empty. Examples are shown for Windows 11 and Linux Mint but the principle is the same for most systems.
 
-Once the network is configured check the connection by pinging Detective X.
+Once the network is configured check the connection by pinging Detective X. On most Linux systems, if the ping fails try restarting the network manager with the following command \texttt{sudo systemctl restart NetworkManager}. If that does not work, try rebooting the PC.
 
 If the ping succeeds everything is ready. In \textit{LuRaCs} go to \texttt{Devices $\rightarrow$ Connect Network} and enter the instrument IP, 192.168.50.2 in this example.
 

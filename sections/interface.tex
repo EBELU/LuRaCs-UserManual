@@ -1,18 +1,130 @@
 \section{Interface}
 % The GUI of LuRaCs is divided into two panes with tabs containing the most important information for viewing and measuring spectra. These are supported by popup windows and dialogs for performing specific tasks, like loading files or performing a certain analysis method.
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.75\linewidth]{overview.png}
-    \caption{Enter Caption \\ second row}
-    \label{fig:placeholder}
-\end{figure}
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.95\linewidth]{images/interface/overview.pdf}
+%     \caption{Enter Caption \\ second row}
+%     \label{fig:placeholder}
+% \end{figure}
 \subsection{Top Tabs}
 \subsubsection{Spectrum}
 The spectrum view shows spectra as a count histograms, retrieved from a connected device or loaded from a file. It can show several spectra combined in one plot or separately. This can be changed under \texttt{Options $\rightarrow$ Tabbed / Combined Spectrum View}.
 
 
+Background spectra can be viewed as one the three following methods \textit{No background}, \textit{Background overlay} and \textit{background subtract}. \textit{Background overlay} shows the background spectrum overlaid on top of the main spectrum. \textit{Background subtract} does channel wise subtraction of the background from the foreground spectrum, this is a hard background subtraction and will effect ROI calculations on the spectrum. Both \textit{Background overlay} and \textit{background subtract} only show values of count rate.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = .9\linewidth]{images/interface/spectrum_view.pdf}
+    \caption{Spectra of Ba-133, C-60 and Cs-137 displayed in \textit{Combined Spectrum View}.}
+    \label{fig:spectrum_view}
+    \begin{flushleft}
+        \begin{enumerate}
+            \item \textbf{Rest Zoom} resets the zoom of the spectrum and locks the y-axis if unlocked.
+            \item \textbf{Unlock y-axis} allows the y-axis to be zoomed independently and disables autoscaling.
+            \item \textbf{Log} set the scale of the y-axis to logarithmic.
+            \item \textbf{CPS} normalises the spectrum to the live time, or real time if live time is not available but real time is.
+            \item \textbf{Cursor} toggles the spectrum cursor, see \autoref{fig:spectrum_with_cursor}.
+            \item \textbf{Add ROI} adds a customisable \textit{region of interest} to the spectrum, see \autoref{fig:spectrum_with_roi}.
+            \item Switch the use of background spectrum. Options are \textit{No background}, \textit{Background overlay} and \textit{background subtract}. See the section above.
+            \item Display for info from the cursor, see \autoref{fig:spectrum_with_cursor}.
+            \item The y-axis show either total counts or time normalised counts in units of \unit{\per\second}.
+            \item The x-axis always display energy in units of keV.
+        \end{enumerate}
+    \end{flushleft}
+\end{figure}
+
+\textit{Regions of interest} (ROI) are sub regions of the spectrum bounded in energy and are useful in the analysis of spectrum peaks. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = .9\linewidth]{images/interface/spectrum_with_roi.pdf}
+    \caption{A Ba-133 spectrum with three ROIs, two are merged and fitted to the same background. The ROI editor is open for the right most ROI.}
+    \label{fig:spectrum_with_roi}
+
+    \begin{flushleft}
+        \begin{enumerate}
+            \item A ROI with one peak and a fitted Gaussian peak and linear background.
+            \item Two merged ROIs that fit two Gaussian peaks on a shared quadratic background.
+            \item The ROI editor for 'ROI\_2', see \autoref{tab:ROI_editor}.
+        \end{enumerate}
+    \end{flushleft}
+\end{figure}
+
+\begin{table}[H]
+    \centering
+    \caption{ROI Editor options}
+    \label{tab:ROI_editor}
+    \begin{tabular}{p{4cm}p{11cm}}
+    \toprule
+    \textbf{Field} & \textbf{Description} \\ \midrule
+    ROI Name & An alias for the ROI used for display purposes and easier identification. \\
+    Lower Bound & The lower energy bound of the ROI. \\
+    Upper Bound & The upper energy bound of the ROI. \\
+    Peak Function & The type function fitted to the peak. Options are: \textit{Guassian}, \textit{None} \\
+    Background & Type of function used as peak background. Options are: \textit{None}, \textit{Linear}, \textit{Quadratic} \\
+    Edge Channels & The number of channels inside of ROI from the upper and lower bounds of the ROI used to fit the background. \\
+    Nuclide & Assign a nuclide from the reference library to the ROI. Used for calculations by other tools. \\
+    Photopeak & Choose the specific photon emission associated with the peak in the ROI. Options are based on the chosen nuclide. \\
+    Auto Match Nuclide & Attempt to automatically find the Nuclide and Emission of the peak. If any nuclides are check and shown in the spectrum the match is limited to these. Blind matches are often unreliable. \\
+    Allow Merging & Allow the ROI to merge with other ROIs with merging allowed. \\
+    Movable & If the ROI can be moved by using the mouse. \\
+    Use Poission Weights & Apply a $\nicefrac{1}{\sigma}$ weight to the optimisation to force the peak to emulate a Poission distribution. \\
+    \bottomrule
+
+    \end{tabular}
+\end{table}
+
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = .9\linewidth]{images/interface/spectrum_with_cursor.pdf}
+    \caption{Co-60 spectrum with an active cursor.}
+    \label{fig:spectrum_with_cursor}
+
+    \begin{flushleft}
+        \begin{enumerate}
+            \item Tabs for selecting spectrum in \textit{Tabbed Spectrum View}.
+            \item Information about the cursor, it shows position of the cursor in units of energy, corresponding channels number, the number of counts in the channel, closest reference emission line as [\textit{nuclide} \textit{Emission Energy} \textit{Decay chain if applicable}]. Channel and channel counts are only displayed in tabbed spectrum view.
+            \item Cursor in the spectrum.
+            \item Emission lines of the suggested nuclide. These are always to closest to the cursor and does not weigh intensity or anything else. Can be disabled by \texttt{View -> Spectrum -> Show Cursor Emissions}.
+        \end{enumerate}
+    \end{flushleft}
+\end{figure}
+
+
+
+
 \subsubsection{Spectrogram}
 A spectrogram allows time-series measurements to be conducted. A spectrogram stores data at specified time intervals and can be displayed in a waterfall plot.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = .9\linewidth]{images/interface/spectrogram_view.pdf}
+    \caption{Measured spectrogram with the \textit{Time Selector} active and one ROI.}
+    \label{fig:spectrogram_view}
+
+    \begin{flushleft}
+        \begin{enumerate}
+            \item Opens a dialog for starting a new spectrogram.
+            \item Close the viewed spectrogram.
+            \item Shortcut to the Data Store Spectrogram page, see section \ref{}.
+            \item Selector for currently loaded spectrograms. Status is shown to the left as [ACTIVE], [LOADED] or [PAUSED].
+            \item Pause or Resume data collections, requires that the same instrument used collect the previous data to be connected.
+            \item Options menu, see \autoref{}
+            \item Current information stored in the spectrogram and information about the \textit{Time Selector} if active.
+            \item Count histogram. Shows either total accumulated spectrum upon loading a measured spectrogram, summed channel counts inside the \textit{Time Selector} if active or counts in the latest row.
+            \item ROI illustrated in the histogram, can be deleted with Mouse-2.
+            \item Waterfall diagram of the spectrogram.
+            \item \textit{Time Selector} to study a specific time interval. Can be toggled in the options menu (6.).
+            \item Break line, illustrates that the time between measured points exceeds the Time Interval. Can indicate a connection and caution should be taken to verify data integrity. Can be toggled in the options menu (6.).
+            \item Y-axis displays the timestamps of when each row was measured.
+            \item X-axis display spectrum energy if calibrated.
+            \item Color slider for the waterfall diagram. Color map can be changed by clicking Mouse-2 on the gradient bar.
+        \end{enumerate}
+    \end{flushleft}
+\end{figure}
 
 The spectrogram format is based around an SQLite database, see section \ref{sec:file_spectrogram} for further details on the format. The following data is stored for each time point in the spectrogram:
 
@@ -30,21 +142,68 @@ The spectrogram format is based around an SQLite database, see section \ref{sec:
 
 
 \subsubsection{Map}
-Loading enables viewing of measurements made with a spectrogram and a GPS. Maps can be loaded from online API requiring an internet connection or loaded from a \textit{.mbiles}-file for offline use. Compatible APIs and files are offered by several vendors, the software \textit{QGis} offers great support for exporting \textit{.mbiles} from other formats.
+Loading a map enables viewing of geographic measurements made with a spectrogram and a GPS. Maps can be loaded from online API requiring an internet connection or loaded from a \textit{.mbiles}-file for offline use. Compatible APIs and files are offered by several vendors, the software \textit{QGis} offers great support for exporting \textit{.mbiles} from other formats.
 
 \paragraph{Disclaimer} LuRaCs does not provide or distribute map data. Users are responsible for ensuring that any map data or tile services they use with LuRaCs are obtained and used in accordance with the applicable licenses, terms, and usage restrictions.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = .9\linewidth]{images/interface/map_view.pdf}
+    \caption{Map with a loaded track and connected GPS.}
+    \label{fig:map_view}
+    \begin{flushleft}
+        \begin{enumerate}
+            \item Options menu for loading maps and importing and exporting simple tracks.
+            \item Longitude and Latitude of the cursor.
+            \item Name of the loaded map.
+            \item List of loaded spectrograms, if the selected contains no geolocation data no points are displayed.
+            \item Selector for what data is shown. total Count Rate, Dose Rate or count rate inside a loaded ROI.
+            \item Main map view.
+            \item Color gradient selector for the track points and a histogram over measured values. Color map can be changed by clicking Mouse-2 on the gradient bar.
+            \item Live data from the GPS, see \autoref{}
+            \item Current GPS position, always displayed as a white and blue circle.
+        \end{enumerate}
+    \end{flushleft}
+\end{figure}
 
 \subsection{Bottom Tabs}
 
 \subsubsection{Spectrum Info}
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = .9\linewidth]{images/interface/spectrum_tab.pdf}
+    \caption{}
+    \label{fig:}
+\end{figure}
+
 \subsubsection{Spectrum ROIs}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = .9\linewidth]{images/interface/spectrum_roi_info_tab.pdf}
+    \caption{}
+    \label{fig:}
+\end{figure}
 
 \subsubsection{Spectrogram ROIs}
 
 \subsubsection{Real Time Values}
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = .9\linewidth]{images/interface/real_time_tab.pdf}
+    \caption{}
+    \label{fig:}
+\end{figure}
+
 \subsubsection{Devices}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = .9\linewidth]{images/interface/detectors_tab.pdf}
+    \caption{}
+    \label{fig:}
+\end{figure}
 
 \subsubsection{Isotopics}
 
@@ -65,6 +224,10 @@ The console allows for entering text commands to control the application and run
 
 
 \subsection{Command Line Interface (CLI)}\label{subsec:cli}
+
+\subsection{Connection Dialogs}
+
+\subsection{Data Store}
 
 \subsection{Settings}
 The settings are devided into \texttt{Settings} which contain basic and cosmetic settings, such as what data should be imported files and what theme should the application use. 

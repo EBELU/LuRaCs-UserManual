@@ -41,7 +41,7 @@ The ScriptEngine is responsible for converting text commands into actions. Like 
 
 The core also contains the helper class \textbf{Calculator} that is designed to easily assign a CPU intensive task to a separate thread and signal back the result using a Qt signals.
 
-\subsection{Wrapping Devices}
+\subsection{Wrapping Detectors}
 The implementation of detectors is written be extensible and make it easy to implement new instruments. This is facilitated though inheritance from an abstract class \texttt{DeviceWrapper}. This wrapping hides the individual device implementations and LuRaCs only interact through this wrapper interface. Creating a subclass from \texttt{DeviceWrapper} automatically registers the new wrapper for use as a detector connection. 
 
 \subsection{Algorithms}
@@ -97,8 +97,8 @@ Detector response matrices are stored as serialized and compressed numpy arrays 
   float32 &
   2D (m x n) &
   Detector response values. First index is the simulated photon energy and second index is the normalized count bins (\#bin / \#fired photons) \\
-\texttt{indices}      & float32 & 1D (m) & Simulated photon energy of the corresponding row in \texttt{response\_matrix} \\
-\texttt{bin\_centres} & float32 & 1D (n) & Energy of the bin centres of the detector energy response.           \\ \bottomrule
+\texttt{indices}      & float32 & 1D (m) & Simulated photon energy of the corresponding row in \texttt{response\_matrix} in keV \\
+\texttt{bin\_centres} & float32 & 1D (n) & Energy of the bin centres of the detector energy response in keV.           \\ \bottomrule
 \end{tabular}
 \end{table}
 
