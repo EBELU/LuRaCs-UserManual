@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>interface</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    
+  </style>
+  <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+<h1 id="interface">Interface</h1>
+<h2 id="top-tabs">Top Tabs</h2>
+<h3 id="spectrum">Spectrum</h3>
+<p>The spectrum view shows spectra as a count histograms, retrieved from a connected device or loaded from a file. It can show several spectra combined in one plot or separately. This can be changed under <code>Options -&gt; Tabbed-/Combined Spectrum View</code>.</p>
+<p>Background spectra can be viewed as one the three following methods <em>No background</em>, <em>Background overlay</em> and <em>background subtract</em>. <em>Background overlay</em> shows the background spectrum overlaid on top of the main spectrum. <em>Background subtract</em> does channel wise subtraction of the background from the foreground spectrum, this is a hard background subtraction and will effect ROI calculations on the spectrum. Both <em>Background overlay</em> and <em>background subtract</em> only show values of count rate.</p>
+<figure>
+<img src="images/interface/spectrum_view.jpg" id="fig:spectrum_view" alt="" /><figcaption>Spectra of Ba-133, C-60 and Cs-137 displayed in <em>Combined Spectrum View</em>.</figcaption>
+</figure>
+<ol>
+<li><p><strong>Rest Zoom</strong> resets the zoom of the spectrum and locks the y-axis if unlocked.</p></li>
+<li><p><strong>Unlock y-axis</strong> allows the y-axis to be zoomed independently and disables autoscaling.</p></li>
+<li><p><strong>Log</strong> set the scale of the y-axis to logarithmic.</p></li>
+<li><p><strong>CPS</strong> normalises the spectrum to the live time, or real time if live time is not available but real time is.</p></li>
+<li><p><strong>Cursor</strong> toggles the spectrum cursor, see .</p></li>
+<li><p><strong>Add ROI</strong> adds a customisable <em>region of interest</em> to the spectrum, see .</p></li>
+<li><p>Switch the use of background spectrum. Options are <em>No background</em>, <em>Background overlay</em> and <em>background subtract</em>. See the section above.</p></li>
+<li><p>Display for info from the cursor, see .</p></li>
+<li><p>The y-axis show either total counts or time normalised counts in units of .</p></li>
+<li><p>The x-axis always display energy in units of keV.</p></li>
+</ol>
+<p><em>Regions of interest</em> (<strong>ROI</strong>) are sub regions of the spectrum bounded in energy and are useful in the analysis of spectrum peaks. Spectrum peaks can in most cases be approximated with a Gaussian function and knowing the function parameters to describe is useful for many analyses. LuRaCs provides a method for fitting Gaussian functions to peaks inside ROIs and do so by default. These fits are required by other tools in the application. However, ROIs can also be configured to not perform fits, in these cases only the total ROIs counts are calculated.</p>
+<figure>
+<img src="images/interface/spectrum_with_roi.jpg" id="fig:spectrum_with_roi" alt="" /><figcaption>A Ba-133 spectrum with three ROIs, two are merged and fitted to the same background. The ROI editor is open for the right most ROI.</figcaption>
+</figure>
+<ol>
+<li><p>A ROI with one peak and a fitted Gaussian peak and linear background.</p></li>
+<li><p>Two merged ROIs that fit two Gaussian peaks on a shared quadratic background.</p></li>
+<li><p>The ROI editor for ’ROI_2’, see .</p></li>
+</ol>
+<div id="tab:ROI_editor">
+<table>
+<caption>ROI Editor options</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Field</strong></th>
+<th style="text-align: left;"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ROI Name</td>
+<td style="text-align: left;">An alias for the ROI used for display purposes and easier identification.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Lower Bound</td>
+<td style="text-align: left;">The lower energy bound of the ROI.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Upper Bound</td>
+<td style="text-align: left;">The upper energy bound of the ROI.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Peak Function</td>
+<td style="text-align: left;">The type function fitted to the peak. Options are: <em>Guassian</em>, <em>None</em></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Background</td>
+<td style="text-align: left;">Type of function used as peak background. Options are: <em>None</em>, <em>Linear</em>, <em>Quadratic</em></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Edge Channels</td>
+<td style="text-align: left;">The number of channels inside of ROI from the upper and lower bounds of the ROI used to fit the background.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Nuclide</td>
+<td style="text-align: left;">Assign a nuclide from the reference library to the ROI. Used for calculations by other tools.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Photopeak</td>
+<td style="text-align: left;">Choose the specific photon emission associated with the peak in the ROI. Options are based on the chosen nuclide.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Auto Match Nuclide</td>
+<td style="text-align: left;">Attempt to automatically find the Nuclide and Emission of the peak. If any nuclides are check and shown in the spectrum the match is limited to these. Blind matches are often unreliable.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Allow Merging</td>
+<td style="text-align: left;">Allow the ROI to merge with other ROIs with merging allowed.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Movable</td>
+<td style="text-align: left;">If the ROI can be moved by using the mouse.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Use Poission Weights</td>
+<td style="text-align: left;">Apply a 1/<span class="math inline"><em>σ</em></span> weight to the optimisation to force the peak to emulate a Poission distribution.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure>
+<img src="images/interface/spectrum_with_cursor.jpg" id="fig:spectrum_with_cursor" alt="" /><figcaption>Co-60 spectrum with an active cursor.</figcaption>
+</figure>
+<ol>
+<li><p>Tabs for selecting spectrum in <em>Tabbed Spectrum View</em>.</p></li>
+<li><p>Information about the cursor, it shows position of the cursor in units of energy, corresponding channels number, the number of counts in the channel, closest reference emission line as [<em>nuclide</em> <em>Emission Energy</em> <em>Decay chain if applicable</em>]. Channel and channel counts are only displayed in tabbed spectrum view.</p></li>
+<li><p>Cursor in the spectrum.</p></li>
+<li><p>Emission lines of the suggested nuclide. These are always to closest to the cursor and does not weigh intensity or anything else. Can be disabled by <code>View -&gt; Spectrum -&gt; Show Cursor Emissions</code>.</p></li>
+</ol>
+<h3 id="spectrogram">Spectrogram</h3>
+<p>A spectrogram allows time-series measurements to be conducted. A spectrogram stores data at specified time intervals and can be displayed in a waterfall plot. It is also the method LuRaCs uses for mobile measurements. If a GPS is connected the geolocation data provided is automatically stored in the spectrogram. These measurements can visualised on the embedded Map.</p>
+<figure>
+<img src="images/interface/spectrogram_view.jpg" id="fig:spectrogram_view" alt="" /><figcaption>Measured spectrogram with the <em>Time Selector</em> active and one ROI.</figcaption>
+</figure>
+<ol>
+<li><p>Opens a dialog for starting a new spectrogram.</p></li>
+<li><p>Close the viewed spectrogram.</p></li>
+<li><p>Shortcut to the Data Store Spectrogram page, see section <a href="#" data-reference-type="ref" data-reference="">1.7</a>.</p></li>
+<li><p>Selector for currently loaded spectrograms. Status is shown to the left as [ACTIVE], [LOADED] or [PAUSED].</p></li>
+<li><p>Pause or Resume data collections, requires that the same instrument used collect the previous data to be connected.</p></li>
+<li><p>Options menu, see</p></li>
+<li><p>Current information stored in the spectrogram and information about the <em>Time Selector</em> if active.</p></li>
+<li><p>Count histogram. Shows either total accumulated spectrum upon loading a measured spectrogram, summed channel counts inside the <em>Time Selector</em> if active or counts in the latest row.</p></li>
+<li><p>ROI illustrated in the histogram, can be deleted with Mouse-2.</p></li>
+<li><p>Waterfall diagram of the spectrogram.</p></li>
+<li><p><em>Time Selector</em> to study a specific time interval. Can be toggled in the options menu (6.).</p></li>
+<li><p>Break line, illustrates that the time between measured points exceeds the Time Interval. Can indicate a connection and caution should be taken to verify data integrity. Can be toggled in the options menu (6.).</p></li>
+<li><p>Y-axis displays the timestamps of when each row was measured.</p></li>
+<li><p>X-axis display spectrum energy if calibrated.</p></li>
+<li><p>Color slider for the waterfall diagram. Color map can be changed by clicking Mouse-2 on the gradient bar.</p></li>
+</ol>
+<p>The spectrogram format is based around an SQLite database, see section <a href="#sec:file_spectrogram" data-reference-type="ref" data-reference="sec:file_spectrogram">[sec:file_spectrogram]</a> for further details on the format. The following data is stored for each time point in the spectrogram:</p>
+<ul>
+<li><p>Timestamp.</p></li>
+<li><p>Average count rate measured since the last time point.</p></li>
+<li><p>Average dose rate measured since the last time point.</p></li>
+<li><p>Device temperature at the time the data is written.</p></li>
+<li><p>Longitude at the time the data is written, if a GPS is available.</p></li>
+<li><p>Latitude at the time the data is written, if a GPS is available.</p></li>
+<li><p>Spectrum difference since the last written data point, stored as compressed binary.</p></li>
+<li><p>Meta data, stored as a utf-8 encoded and zlib compressed json-string. Examples of stored metadata include extended GPS data.</p></li>
+</ul>
+<h3 id="map">Map</h3>
+<p>Loading a map enables viewing of geographic measurements made with a spectrogram and a GPS. Maps can be loaded from online API requiring an internet connection or loaded from a <em>.pmtiles</em>-file for offline use. Compatible APIs and files are offered by several vendors, the software <em>QGis</em> offers support for exporting <em>.pmtiles</em> from other formats using plugins.</p>
+<h4 id="disclaimer">Disclaimer</h4>
+<p>LuRaCs does not provide or distribute map data. Users are responsible for ensuring that any map data or tile services they use with LuRaCs are obtained and used in accordance with the applicable licenses, terms, and usage restrictions.</p>
+<p>The map is rendered using Qt’s web engine making it a powerful but heavy tool. Using offline maps can use a lot of system memory since the server needs to cache tiles for a smooth view. Use a system with enough memory for this method. However, both the map and datapoints are rendered using GPU acceleration with WebGL allowing for 10 000s of points to be displayed without excessive stress on the system.</p>
+<figure>
+<img src="images/interface/map_view.jpg" id="fig:map_view" alt="" /><figcaption>Map with a loaded track and connected GPS.</figcaption>
+</figure>
+<ol>
+<li><p>Options menu for loading maps and importing and exporting simple tracks.</p></li>
+<li><p>Longitude and Latitude of the cursor.</p></li>
+<li><p>Name of the loaded map.</p></li>
+<li><p>List of loaded spectrograms, if the selected contains no geolocation data no points are displayed.</p></li>
+<li><p>Selector for what data is shown. total Count Rate, Dose Rate or count rate inside a loaded ROI.</p></li>
+<li><p>Main map view.</p></li>
+<li><p>Color gradient selector for the track points and a histogram over measured values. Color map can be changed by clicking Mouse-2 on the gradient bar.</p></li>
+<li><p>Live data from the GPS, see</p></li>
+<li><p>Current GPS position, always displayed as a white and blue circle.</p></li>
+</ol>
+<h2 id="bottom-tabs">Bottom Tabs</h2>
+<h3 id="spectrum-info">Spectrum Info</h3>
+<p>Displays information spectra loaded spectra.</p>
+<figure>
+<img src="images/interface/spectrum_tab.jpg" id="fig:spectrum_info" alt="" /><figcaption>Spectrum Info Tab. For imported spectra with other formats than <code>XML</code> or <code>N42</code> file extensions are kept in the name.</figcaption>
+</figure>
+<div id="tab:spectrum_info_table">
+<table>
+<caption>Description of the column in the Spectrum Info tab</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Column</strong></th>
+<th style="text-align: left;"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Column 0</td>
+<td style="text-align: left;">Color button allowing for changing the color of a spectrum. Options button marked with ’...’, see .</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Spectrum</td>
+<td style="text-align: left;">The name of the spectrum.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Type</td>
+<td style="text-align: left;"><em>Foreground</em> or <em>Background</em>, these share the same name in the ’Spectrum’-column for the same spectrum.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Live Time</td>
+<td style="text-align: left;">The live time of the measurement, accounting for dead time.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Real Time</td>
+<td style="text-align: left;">The real time of the measurement.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Calibrated</td>
+<td style="text-align: left;"><em>True</em> or <em>False</em>, if an energy calibration is detected and applied.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Instrument</td>
+<td style="text-align: left;">Which instrument is assigned to the spectrum, see section <a href="#" data-reference-type="ref" data-reference="">1.7</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tab:spectrum_info_options_menu">
+<table>
+<caption>Description of the column in the Spectrum Info tab</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Field</strong></th>
+<th style="text-align: left;"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Save</td>
+<td style="text-align: left;">Save the spectrum to the Data Store.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Export</td>
+<td style="text-align: left;">Export the spectrum to a stand alone file of the following formats: <code>XML</code>, <code>CSV</code>, <code>xlsx</code>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hide/Show</td>
+<td style="text-align: left;">Toggle visibility of the spectrum in the spectrum view. ROIs are not applied to hidden spectra.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Edit</td>
+<td style="text-align: left;">Edit properties of the spectrum, see .</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Remove Spectrum</td>
+<td style="text-align: left;">Remove the spectrum and disconnect the detector connected to the spectrum.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="spectrum-rois">Spectrum ROIs</h3>
+<figure>
+<img src="images/interface/spectrum_roi_info_tab.jpg" id="fig:spectrum_rois" alt="" /><figcaption>Spectrum ROIs tab</figcaption>
+</figure>
+<ol>
+<li><p>Clear all loaded ROIs from all spectra.</p></li>
+<li><p>Debug view of all data contained in the loaded ROIs.</p></li>
+<li><p>Apply time normalisation to the calculated ROI data.</p></li>
+<li><p>Export the calculated data and the live of each ROI to a CSV-file.</p></li>
+<li><p>Save ROI references to the data store for later access. These save the settings of the ROI but not the data.</p></li>
+<li><p>Icon to display if the spectrum is background subtracted since this effects the results of ROI calculations.</p></li>
+</ol>
+<h3 id="spectrogram-rois">Spectrogram ROIs</h3>
+<h3 id="real-time-values">Real Time Values</h3>
+<p>Plots the values sampled for a detector in real time. Not all detectors provide both Count Rate and Dose Rate, in these cases the detector is still registered to the plot but noting is shown. Y-axes can be made logarithmic by right clicking the axis <code>Plot Options -&gt; Transforms -&gt; Log Y</code>.</p>
+<figure>
+<img src="images/interface/real_time_tab.jpg" id="fig:real_time_values" alt="" /><figcaption>Real Time Values with four different detectors connected.</figcaption>
+</figure>
+<ol>
+<li><p>Count Rate plot.</p></li>
+<li><p>Dose Rate plot, y-axis is always .</p></li>
+<li><p>Latest values sampled from the corresponding detector.</p></li>
+</ol>
+<h3 id="detectors">Detectors</h3>
+<p>Information and status of connected detectors are displayed in this tab.</p>
+<figure>
+<img src="images/interface/detectors_tab.jpg" id="fig:detector_tab" alt="" />
+</figure>
+<h3 id="isotopics">Isotopics</h3>
+<p>LuRaCs provides a library of data for a selection of common radionuclides and can be viewed in this tab. These can be used to draw reference lines for emissions in the spectrum plot. Most of the nuclide data is sourced from <em>Laboratoire National Henri Becquerel</em>, a few nuclides not provided by LNHB had be sourced from elsewhere. A citation is provided for each nuclide and full references can be found under <code>Help -&gt; Bibliography</code>.</p>
+<h3 id="console">Console</h3>
+<p>The console allows for entering text commands to control the application and running scripts for basic automation. See for information on available commands and their usage.</p>
+<p>The Console can be used for light automation by using the <code>exec</code> command and providing a file path. The file is executed line by line and can used to quickly start set up a measurement session.</p>
+<h3 id="system-log">System Log</h3>
+<p>The System Log displays messages from the application and detector clients. If something crashes the error and traceback will be displayed here.</p>
+<h2 id="gamma-tools">Gamma Tools</h2>
+<h3 id="calibration">Calibration</h3>
+<h3 id="deconvolution">Deconvolution</h3>
+<h3 id="efficiency">Efficiency</h3>
+<h3 id="resolution">Resolution</h3>
+<h2 id="subsec:cli">Command Line Interface (CLI)</h2>
+<p>Interaction with LuRaCs is done primarily through the GUI but it also provides a terminal based command line interface, allowing for detector control without a GUI. This can be useful for remote measurements or measurements run on a Raspberry Pi attached to a drone. This mode shares most of the same commands as the GUI Console with the exception of visualisation tools.</p>
+<p>This mode is started by running LuRaCs in a terminal with the <code>–headless</code> flag.</p>
+<figure>
+<img src="images/interface/CLI_start.png" id="fig:CLI_start" alt="" /><figcaption>LuRaCs command line interface.</figcaption>
+</figure>
+<h2 id="connection-dialogs">Connection Dialogs</h2>
+<h2 id="data-store">Data Store</h2>
+<h2 id="settings">Settings</h2>
+<p>The settings are devided into <code>Settings</code> which contain basic and cosmetic settings, such as what data should be imported files and what theme should the application use.</p>
+</body>
+</html>

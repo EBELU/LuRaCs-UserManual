@@ -107,6 +107,8 @@ SUBSYSTEM=="usb", ATTRS{idVendor}=="0a2d", GROUP="users", MODE="0666"
 
 Connecting devices over the network likely requires specific to that instrument so no general guide is provided. See example \ref{subsec:example_detx} for how this can be done for the Ortec Ametec Detective X.
 
+Connecting a digiBase requires the files containing the necessary firmware. These files can be found in the install directories of the \textit{Maestro} and \textit{Gamma Vision} software provided by Ortec. LuRaCs does not provide these files and users are responsible for acquiring these files in accordance with applicable licences. Once the files have been identified they can be reached by LuRaCs by saving them in the driver library. Select \texttt{File -> Import Drivers} and select the files. If they appear in \texttt{File -> Drivers} they can now be reached by LuRaCs.
+
 \subsection{Compatible file formats}
 LuRaCs is compatible with a selection of file formats, both standard and more niche third party formats. However, LuRaCs is not primarily intended to support general spectrum analysis so if you are looking for a general analysis application consider using InterSpec\footcite{SandialabsInterSpec2025} instead. 
 

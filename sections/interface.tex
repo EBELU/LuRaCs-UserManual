@@ -2,20 +2,20 @@
 % The GUI of LuRaCs is divided into two panes with tabs containing the most important information for viewing and measuring spectra. These are supported by popup windows and dialogs for performing specific tasks, like loading files or performing a certain analysis method.
 % \begin{figure}[H]
 %     \centering
-%     \includegraphics[width=0.95\linewidth]{images/interface/overview.pdf}
+%     \includegraphics[width=0.95\linewidth]{images/interface/overview.jpg}
 %     \caption{Enter Caption \\ second row}
 %     \label{fig:placeholder}
 % \end{figure}
 \subsection{Top Tabs}
 \subsubsection{Spectrum}
-The spectrum view shows spectra as a count histograms, retrieved from a connected device or loaded from a file. It can show several spectra combined in one plot or separately. This can be changed under \texttt{Options $\rightarrow$ Tabbed / Combined Spectrum View}.
+The spectrum view shows spectra as a count histograms, retrieved from a connected device or loaded from a file. It can show several spectra combined in one plot or separately. This can be changed under \texttt{Options -> Tabbed-/Combined Spectrum View}.
 
 
 Background spectra can be viewed as one the three following methods \textit{No background}, \textit{Background overlay} and \textit{background subtract}. \textit{Background overlay} shows the background spectrum overlaid on top of the main spectrum. \textit{Background subtract} does channel wise subtraction of the background from the foreground spectrum, this is a hard background subtraction and will effect ROI calculations on the spectrum. Both \textit{Background overlay} and \textit{background subtract} only show values of count rate.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width = .9\linewidth]{images/interface/spectrum_view.pdf}
+    \includegraphics[width = .9\linewidth]{images/interface/spectrum_view.jpg}
     \caption{Spectra of Ba-133, C-60 and Cs-137 displayed in \textit{Combined Spectrum View}.}
     \label{fig:spectrum_view}
     \begin{flushleft}
@@ -34,11 +34,11 @@ Background spectra can be viewed as one the three following methods \textit{No b
     \end{flushleft}
 \end{figure}
 
-\textit{Regions of interest} (ROI) are sub regions of the spectrum bounded in energy and are useful in the analysis of spectrum peaks. 
+\textit{Regions of interest} (\textbf{ROI}) are sub regions of the spectrum bounded in energy and are useful in the analysis of spectrum peaks. Spectrum peaks can in most cases be approximated with a Gaussian function and knowing the function parameters to describe is useful for many analyses. LuRaCs provides a method for fitting Gaussian functions to peaks inside ROIs and do so by default. These fits are required by other tools in the application. However, ROIs can also be configured to not perform fits, in these cases only the total ROIs counts are calculated.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width = .9\linewidth]{images/interface/spectrum_with_roi.pdf}
+    \includegraphics[width = .9\linewidth]{images/interface/spectrum_with_roi.jpg}
     \caption{A Ba-133 spectrum with three ROIs, two are merged and fitted to the same background. The ROI editor is open for the right most ROI.}
     \label{fig:spectrum_with_roi}
 
@@ -69,7 +69,7 @@ Background spectra can be viewed as one the three following methods \textit{No b
     Auto Match Nuclide & Attempt to automatically find the Nuclide and Emission of the peak. If any nuclides are check and shown in the spectrum the match is limited to these. Blind matches are often unreliable. \\
     Allow Merging & Allow the ROI to merge with other ROIs with merging allowed. \\
     Movable & If the ROI can be moved by using the mouse. \\
-    Use Poission Weights & Apply a $\nicefrac{1}{\sigma}$ weight to the optimisation to force the peak to emulate a Poission distribution. \\
+    Use Poission Weights & Apply a 1/$\sigma$ weight to the optimisation to force the peak to emulate a Poission distribution. \\
     \bottomrule
 
     \end{tabular}
@@ -79,7 +79,7 @@ Background spectra can be viewed as one the three following methods \textit{No b
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width = .9\linewidth]{images/interface/spectrum_with_cursor.pdf}
+    \includegraphics[width = .9\linewidth]{images/interface/spectrum_with_cursor.jpg}
     \caption{Co-60 spectrum with an active cursor.}
     \label{fig:spectrum_with_cursor}
 
@@ -97,11 +97,11 @@ Background spectra can be viewed as one the three following methods \textit{No b
 
 
 \subsubsection{Spectrogram}
-A spectrogram allows time-series measurements to be conducted. A spectrogram stores data at specified time intervals and can be displayed in a waterfall plot.
+A spectrogram allows time-series measurements to be conducted. A spectrogram stores data at specified time intervals and can be displayed in a waterfall plot. It is also the method LuRaCs uses for mobile measurements. If a GPS is connected the geolocation data provided is automatically stored in the spectrogram. These measurements can visualised on the embedded Map.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width = .9\linewidth]{images/interface/spectrogram_view.pdf}
+    \includegraphics[width = .9\linewidth]{images/interface/spectrogram_view.jpg}
     \caption{Measured spectrogram with the \textit{Time Selector} active and one ROI.}
     \label{fig:spectrogram_view}
 
@@ -142,13 +142,15 @@ The spectrogram format is based around an SQLite database, see section \ref{sec:
 
 
 \subsubsection{Map}
-Loading a map enables viewing of geographic measurements made with a spectrogram and a GPS. Maps can be loaded from online API requiring an internet connection or loaded from a \textit{.mbiles}-file for offline use. Compatible APIs and files are offered by several vendors, the software \textit{QGis} offers great support for exporting \textit{.mbiles} from other formats.
+Loading a map enables viewing of geographic measurements made with a spectrogram and a GPS. Maps can be loaded from online API requiring an internet connection or loaded from a \textit{.pmtiles}-file for offline use. Compatible APIs and files are offered by several vendors, the software \textit{QGis} offers support for exporting \textit{.pmtiles} from other formats using plugins.
 
 \paragraph{Disclaimer} LuRaCs does not provide or distribute map data. Users are responsible for ensuring that any map data or tile services they use with LuRaCs are obtained and used in accordance with the applicable licenses, terms, and usage restrictions.
 
+The map is rendered using Qt's web engine making it a powerful but heavy tool. Using offline maps can use a lot of system memory since the server needs to cache tiles for a smooth view. Use a system with enough memory for this method. However, both the map and datapoints are rendered using GPU acceleration with WebGL allowing for 10 000s of points to be displayed without excessive stress on the system.
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width = .9\linewidth]{images/interface/map_view.pdf}
+    \includegraphics[width = .9\linewidth]{images/interface/map_view.jpg}
     \caption{Map with a loaded track and connected GPS.}
     \label{fig:map_view}
     \begin{flushleft}
@@ -169,50 +171,108 @@ Loading a map enables viewing of geographic measurements made with a spectrogram
 \subsection{Bottom Tabs}
 
 \subsubsection{Spectrum Info}
-
+Displays information spectra loaded spectra.
 \begin{figure}[H]
     \centering
-    \includegraphics[width = .9\linewidth]{images/interface/spectrum_tab.pdf}
-    \caption{}
-    \label{fig:}
+    \includegraphics[width = .9\linewidth]{images/interface/spectrum_tab.jpg}
+    \caption{Spectrum Info Tab. For imported spectra with other formats than \texttt{XML} or \texttt{N42} file extensions are kept in the name.}
+    \label{fig:spectrum_info}
 \end{figure}
+
+\begin{table}[H]
+    \centering
+    \caption{Description of the column in the Spectrum Info tab}
+    \label{tab:spectrum_info_table}
+    \begin{tabular}{p{4cm}p{11cm}}
+    \toprule
+    \textbf{Column} & \textbf{Description} \\ \midrule
+        Column 0 & Color button allowing for changing the color of a spectrum. Options button marked with '...', see \autoref{tab:spectrum_info_options_menu}. \\
+        Spectrum & The name of the spectrum. \\
+        Type & \textit{Foreground} or \textit{Background}, these share the same name in the 'Spectrum'-column for the same spectrum. \\
+        Live Time & The live time of the measurement, accounting for dead time. \\
+        Real Time & The real time of the measurement. \\
+        Calibrated & \textit{True} or \textit{False}, if an energy calibration is detected and applied. \\
+        Instrument & Which instrument is assigned to the spectrum, see section \ref{} \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{Description of the column in the Spectrum Info tab}
+    \label{tab:spectrum_info_options_menu}
+    \begin{tabular}{p{4cm}p{11cm}}
+    \toprule
+    \textbf{Field} & \textbf{Description} \\ \midrule
+        Save & Save the spectrum to the Data Store. \\
+        Export & Export the spectrum to a stand alone file of the following formats: \texttt{XML}, \texttt{CSV}, \texttt{xlsx}. \\
+        Hide/Show & Toggle visibility of the spectrum in the spectrum view. ROIs are not applied to hidden spectra. \\
+        Edit & Edit properties of the spectrum, see \autoref{}. \\
+        Remove Spectrum & Remove the spectrum and disconnect the detector connected to the spectrum.
+    \\ \bottomrule
+    \end{tabular}
+\end{table}
+
 
 \subsubsection{Spectrum ROIs}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width = .9\linewidth]{images/interface/spectrum_roi_info_tab.pdf}
-    \caption{}
-    \label{fig:}
+    \includegraphics[width = .9\linewidth]{images/interface/spectrum_roi_info_tab.jpg}
+    \caption{Spectrum ROIs tab}
+    \label{fig:spectrum_rois}
+    \begin{flushleft}
+        \begin{enumerate}
+            \item Clear all loaded ROIs from all spectra.
+            \item Debug view of all data contained in the loaded ROIs.
+            \item Apply time normalisation to the calculated ROI data.
+            \item Export the calculated data and the live of each ROI to a CSV-file.
+            \item Save ROI references to the data store for later access. These save the settings of the ROI but not the data.
+            \item Icon to display if the spectrum is background subtracted since this effects the results of ROI calculations.
+        \end{enumerate}
+    \end{flushleft}
 \end{figure}
 
 \subsubsection{Spectrogram ROIs}
 
 \subsubsection{Real Time Values}
-
+Plots the values sampled for a detector in real time. Not all detectors provide both Count Rate and Dose Rate, in these cases the detector is still registered to the plot but noting is shown. Y-axes can be made logarithmic by right clicking the axis \texttt{Plot Options -> Transforms -> Log Y}.
 \begin{figure}[H]
     \centering
-    \includegraphics[width = .9\linewidth]{images/interface/real_time_tab.pdf}
-    \caption{}
-    \label{fig:}
+    \includegraphics[width = .9\linewidth]{images/interface/real_time_tab.jpg}
+    \caption{Real Time Values with four different detectors connected.}
+    \label{fig:real_time_values}
+    \begin{flushleft}
+        \begin{enumerate}
+            \item Count Rate plot.
+            \item Dose Rate plot, y-axis is always \unit{\micro\sievert}.
+            \item Latest values sampled from the corresponding detector.
+        \end{enumerate}
+    \end{flushleft}
 \end{figure}
 
-\subsubsection{Devices}
+\subsubsection{Detectors}
+Information and status of connected detectors are displayed in this tab.
 \begin{figure}[H]
     \centering
-    \includegraphics[width = .9\linewidth]{images/interface/detectors_tab.pdf}
+    \includegraphics[width = .9\linewidth]{images/interface/detectors_tab.jpg}
     \caption{}
-    \label{fig:}
+    \label{fig:detector_tab}
 \end{figure}
 
 \subsubsection{Isotopics}
+LuRaCs provides a library of data for a selection of common radionuclides and can be viewed in this tab. These can be used to draw reference lines for emissions in the spectrum plot. Most of the nuclide data is sourced from \textit{Laboratoire National Henri Becquerel}, a few nuclides not provided by LNHB had be sourced from elsewhere. A citation is provided for each nuclide and full references can be found under \texttt{Help -> Bibliography}.
 
 \subsubsection{Console}
 The console allows for entering text commands to control the application and running scripts for basic automation. See \autoref{subsec:cli} for information on available commands and their usage.
 
+The Console can be used for light automation by using the \texttt{exec} command and providing a file path. The file is executed line by line and can used to quickly start set up a measurement session.
+
 \subsubsection{System Log}
+The System Log displays messages from the application and detector clients. If something crashes the error and traceback will be displayed here.
 
 \subsection{Gamma Tools}
+
 \subsubsection{Calibration}
 
 \subsubsection{Deconvolution}
@@ -224,6 +284,16 @@ The console allows for entering text commands to control the application and run
 
 
 \subsection{Command Line Interface (CLI)}\label{subsec:cli}
+Interaction with LuRaCs is done primarily through the GUI but it also provides a terminal based command line interface, allowing for detector control without a GUI. This can be useful for remote measurements or measurements run on a Raspberry Pi attached to a drone. This mode shares most of the same commands as the GUI Console with the exception of visualisation tools.
+
+This mode is started by running LuRaCs in a terminal with the \texttt{--headless} flag.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = .8\linewidth]{images/interface/CLI_start.png}
+    \caption{LuRaCs command line interface.}
+    \label{fig:CLI_start}
+\end{figure}
 
 \subsection{Connection Dialogs}
 
@@ -231,3 +301,4 @@ The console allows for entering text commands to control the application and run
 
 \subsection{Settings}
 The settings are devided into \texttt{Settings} which contain basic and cosmetic settings, such as what data should be imported files and what theme should the application use. 
+
