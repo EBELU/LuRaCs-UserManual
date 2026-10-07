@@ -55,7 +55,7 @@ Background spectra can be viewed as one the three following methods \textit{No b
     \centering
     \caption{ROI Editor options}
     \label{tab:ROI_editor}
-    \begin{tabular}{p{4cm}p{11cm}}
+    \begin{tabular}{p{.3\textwidth}p{.7\textwidth}}
     \toprule
     \textbf{Field} & \textbf{Description} \\ \midrule
     ROI Name & An alias for the ROI used for display purposes and easier identification. \\
@@ -109,10 +109,10 @@ A spectrogram allows time-series measurements to be conducted. A spectrogram sto
         \begin{enumerate}
             \item Opens a dialog for starting a new spectrogram.
             \item Close the viewed spectrogram.
-            \item Shortcut to the Data Store Spectrogram page, see section \ref{}.
+            \item Shortcut to the Data Store Spectrogram page, see section \ref{sec:data_store}.
             \item Selector for currently loaded spectrograms. Status is shown to the left as [ACTIVE], [LOADED] or [PAUSED].
             \item Pause or Resume data collections, requires that the same instrument used collect the previous data to be connected.
-            \item Options menu, see \autoref{}
+            \item Options menu, see \autoref{fig:spectrogram_options}
             \item Current information stored in the spectrogram and information about the \textit{Time Selector} if active.
             \item Count histogram. Shows either total accumulated spectrum upon loading a measured spectrogram, summed channel counts inside the \textit{Time Selector} if active or counts in the latest row.
             \item ROI illustrated in the histogram, can be deleted with Mouse-2.
@@ -139,6 +139,36 @@ The spectrogram format is based around an SQLite database, see section \ref{sec:
     \item Meta data, stored as a utf-8 encoded and zlib compressed json-string. Examples of stored metadata include extended GPS data.
 \end{itemize}
 
+\paragraph{Exporting a spectrogram} is done trough the data store, quickly accessed via the \textit{Load}-button (2.).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = .4\linewidth]{images/interface/spectrogram_options.png}
+    \caption{Dropdown options menu in spectrogram pane, see \autoref{tab:spectrogram_options}.}
+    \label{fig:spectrogram_options}
+\end{figure}
+
+\begin{table}[H]
+    \centering
+    \caption{Description of fields in the spectrogram options menu}
+    \label{tab:spectrogram_options}
+    \begin{tabular}{p{.3\textwidth}p{.64\textwidth}}
+    \toprule
+    \textbf{Field} & \textbf{Description} \\ \midrule
+    Pause Visual Updates & Stop the view spectrogram from updating while the measurement is still going on in the background. \textbf{This does not stop the recording of the spectrogram}. \\
+    Time Selector & Show a selection ROI in the spectrogram (11.) that can select specific time interval and show the sum of the channels in the top count histogram (8.). \\
+    Live Time & Live time of the foreground \\
+    ROIs & How many ROIs are saved with the spectrum, if any. \\
+    Selection to Spectrum & Export the selected interval to the datastore as a spectrum. \\
+    Accumulated to Spectrum & Export all accumulated counts to the datastore as a spectrum. \\
+    Show Break Lines & If the red lines (12.) indicating if the interval between two rows exceed the specified save interval should be shown. \\
+    Keep Aspect Ratio & If the pixels in the spectrogram should always be square. For detectors with many channels it can be useful to turn this off. If this is off the pixels in the spectrogram may not align with the corresponding bar in the count histogram. \\
+    Load ROIs & Shortcut the to ROI tab of the Data Store. \\
+    Import ROIs & Load ROIs from a file. \\
+    Clear ROIs & Remove all spectrogram ROIs \\
+    \bottomrule
+    \end{tabular}
+\end{table}
 
 
 \subsubsection{Map}
@@ -162,16 +192,18 @@ The map is rendered using Qt's web engine making it a powerful but heavy tool. U
             \item Selector for what data is shown. total Count Rate, Dose Rate or count rate inside a loaded ROI.
             \item Main map view.
             \item Color gradient selector for the track points and a histogram over measured values. Color map can be changed by clicking Mouse-2 on the gradient bar.
-            \item Live data from the GPS, see \autoref{}
+            \item Live data from the GPS.
             \item Current GPS position, always displayed as a white and blue circle.
         \end{enumerate}
     \end{flushleft}
 \end{figure}
 
+\paragraph{Load a map} is done from \texttt{Map Options -> Load Online/Offline  Map}. An offline map takes the form of a \textit{.pmltiles} files and choosing this options prompts the selection of such a file. Choosing to load an online map prompts the entering of a URL to a tile serving API, possibly including an API key. The checkbox allows for saving the last used URL. If a personal API key is used be aware that URLs are saved unencrypted.
+
 \subsection{Bottom Tabs}
 
 \subsubsection{Spectrum Info}
-Displays information spectra loaded spectra.
+Displays information about loaded spectra, both from files and detectors.
 \begin{figure}[H]
     \centering
     \includegraphics[width = .9\linewidth]{images/interface/spectrum_tab.jpg}
@@ -181,9 +213,9 @@ Displays information spectra loaded spectra.
 
 \begin{table}[H]
     \centering
-    \caption{Description of the column in the Spectrum Info tab}
+    \caption{Description of the columns in the Spectrum Info tab}
     \label{tab:spectrum_info_table}
-    \begin{tabular}{p{4cm}p{11cm}}
+    \begin{tabular}{p{.3\textwidth}p{.64\textwidth}}
     \toprule
     \textbf{Column} & \textbf{Description} \\ \midrule
         Column 0 & Color button allowing for changing the color of a spectrum. Options button marked with '...', see \autoref{tab:spectrum_info_options_menu}. \\
@@ -192,16 +224,16 @@ Displays information spectra loaded spectra.
         Live Time & The live time of the measurement, accounting for dead time. \\
         Real Time & The real time of the measurement. \\
         Calibrated & \textit{True} or \textit{False}, if an energy calibration is detected and applied. \\
-        Instrument & Which instrument is assigned to the spectrum, see section \ref{} \\
+        Instrument & Which instrument is assigned to the spectrum, see section \ref{sec:definitions} \\
     \bottomrule
     \end{tabular}
 \end{table}
 
 \begin{table}[H]
     \centering
-    \caption{Description of the column in the Spectrum Info tab}
+    \caption{Description of the options menu opened by the button marked '...' on each row. Backgrounds are limited to only the 'Remove' option.}
     \label{tab:spectrum_info_options_menu}
-    \begin{tabular}{p{4cm}p{11cm}}
+    \begin{tabular}{p{.3\textwidth}p{.64\textwidth}}
     \toprule
     \textbf{Field} & \textbf{Description} \\ \midrule
         Save & Save the spectrum to the Data Store. \\
@@ -227,13 +259,18 @@ Displays information spectra loaded spectra.
             \item Debug view of all data contained in the loaded ROIs.
             \item Apply time normalisation to the calculated ROI data.
             \item Export the calculated data and the live of each ROI to a CSV-file.
-            \item Save ROI references to the data store for later access. These save the settings of the ROI but not the data.
+            \item Save ROI references to the Data Store, see section \ref{sec:data_store}, for later access. These save the settings of the ROI but not the data.
             \item Icon to display if the spectrum is background subtracted since this effects the results of ROI calculations.
         \end{enumerate}
     \end{flushleft}
 \end{figure}
 
 \subsubsection{Spectrogram ROIs}
+Spectrogram ROIs differ from Spectrum ROIs in that do no curve fitting. When applied to a spectrogram they sum the counts from all the channels within their bounds and do so for every row in the spectrogram. The results are displayed in count rate, the number of counts are normalised to the save interval, for easier comparison if the recorded spectrograms use different save intervals.
+
+For use in mobile measurements where several ROIs is monitored at the same time a 'Compact Mode' can be used. This is enabled under \texttt{View -> Spectrogram ROis -> Compact Mode}. This strips everything except the y-ticks and the plot itself.
+
+\textit{Calculation ROIs} are plots calculated from the results of other ROIs. \textbf{These perform element wise operations and do not account for differences in measurement parameters}. Element 0 from ROI 0 is combined with Element 0 of ROI 1, regardless of measurement date or spectrogram save interval.
 
 \subsubsection{Real Time Values}
 Plots the values sampled for a detector in real time. Not all detectors provide both Count Rate and Dose Rate, in these cases the detector is still registered to the plot but noting is shown. Y-axes can be made logarithmic by right clicking the axis \texttt{Plot Options -> Transforms -> Log Y}.
@@ -256,12 +293,106 @@ Information and status of connected detectors are displayed in this tab.
 \begin{figure}[H]
     \centering
     \includegraphics[width = .9\linewidth]{images/interface/detectors_tab.jpg}
-    \caption{}
+    \caption{List of connected detectors. An entry can not be removed, if a detector is disconnected it is listed as \texttt{STOPPED}.}
     \label{fig:detector_tab}
+\end{figure}
+
+\begin{table}[H]
+    \centering
+    \caption{Description of the columns in the Detectors tab}
+    \label{tab:detectors_tab}
+    \begin{tabular}{p{.3\textwidth}p{.64\textwidth}}
+    \toprule
+    \textbf{Column} & \textbf{Description} \\ \midrule
+        Column 0 & Options button marked with '...', see \autoref{tab:detectors_options_button}. \\
+        Detector & The name of the detector. \\
+        Temperature & The temperature reading reported by the detector in $^\circ$C. \\
+        Battery & Reported battery charge in \%. \\
+        Charging & If the detector reports that it is charging. \\
+        Voltage & The actual voltage reported by the detector in V. \\
+        Status & Detector state machine reporting the current status of the detector. 
+        \begin{itemize}
+            \item \texttt{UNINITIALIZED} - Detector client created but not started.
+            \item \texttt{CONNECTING} - The detector is starting.
+            \item \texttt{CONNECTED} - The detector is connected and running. Default for normal detector function.
+            \item \texttt{CONNECTION\_FAILED} - Detector start failed. Check System Log.
+            \item \texttt{CONNECTION\_LOST} - Connection was lost after a successful start. Not universally implemented.
+            \item \texttt{STOPPING} - The detector has received and acknowledged the command to stop.
+            \item \texttt{STOPPED} - The detector has successfully stopped.
+            \item \texttt{ERROR} - An error occurred while connected and the detector is no longer functioning as expected.
+        \end{itemize} \\
+        Type & Type of detector by the name defined in the detector client. \\
+        Connection & How the detector is connected. Can be \texttt{BLE, USB} or \texttt{NETWORK}. \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{Description of the options menu in the detector tab, opened with the button marked '...' in the table.}
+    \label{tab:detectors_options_button}
+    \begin{tabular}{p{.3\textwidth}p{.64\textwidth}}
+    \toprule
+    \textbf{Field} & \textbf{Description} \\ \midrule
+        Disconnect & Sends a stop signal to the detector. \\
+        Reset Spectrum & Signals to the selected detector to clear its spectrum. \\
+        Start Acquisition & Signals to the selected detector to start spectrum acquisition. \\
+        Stop Acquisition & Signals to the selected detector to stop spectrum acquisition. \\
+        Make Instrument & Shortcut for creating a \textit{Unique Instrument} for the detector based on a \texttt{Generic Instrument} and save the current calibration of the connected spectrum. Useful for detectors that do not store their own energy calibration. \\
+        Settings & Opens the detector settings dialog, see \autoref{fig:detector_settings_calibration} and \autoref{fig:detector_settings_mca}. \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = .6\linewidth]{images/interface/detector_settings_calibration.jpg}
+    \caption{Detector settings dialog showing the options for setting device calibration.}
+    \label{fig:detector_settings_calibration}
+    \begin{flushleft}
+        \begin{enumerate}
+            \item Unique Instrument from the library to pull settings from.
+            \item Interact with the detector. \texttt{Pull Calibration} will request a calibration from the detector set in the coefficients buffer, not possible for all detectors. \texttt{Push Calibration} will call the setter function for calibration, not possible for all detectors.
+            \item Pull the calibration coefficients from the spectrum connected to the detector and set in the coefficients buffer.
+            \item Pull the calibration coefficients from the instrument set in (1.) and set in the coefficients buffer
+        \end{enumerate}
+    \end{flushleft}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = .6\linewidth]{images/interface/detector_settings_mca.png}
+    \caption{Detector settings dialog showing the options for MCA settings. The first column of spinboxes show the requested setting and the second row shows the actual value reported by the instrument. \texttt{Apply} signals the entered value to the detector's setter function.}
+    \label{fig:detector_settings_mca}
+    \begin{tabular}{ll}
+    LLD & Lower Level Discriminator \\
+    ULD & Upper Lever Discriminator
+    \end{tabular}
+  
 \end{figure}
 
 \subsubsection{Isotopics}
 LuRaCs provides a library of data for a selection of common radionuclides and can be viewed in this tab. These can be used to draw reference lines for emissions in the spectrum plot. Most of the nuclide data is sourced from \textit{Laboratoire National Henri Becquerel}, a few nuclides not provided by LNHB had be sourced from elsewhere. A citation is provided for each nuclide and full references can be found under \texttt{Help -> Bibliography}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = .9\linewidth]{images/interface/isotopics.jpg}
+    \caption{Ba-133 spectrum with Ba-133 selected in the Isotopics Tab.}
+    \label{fig:isotopics}
+    \begin{flushleft}
+        \begin{enumerate}
+            \item Spectrum and gamma emission lines, drawn as solid lines. Line height corresponds to emission intensity,
+            \item X-ray emission lines, drawn as dashed lines. Line height corresponds to emission intensity.
+            \item Nuclide list, select nuclide with the checkbox to the left and change colour of the lines with the right coloured button.
+            \item Information of the current clicked nuclide.
+            \item Peak automation, see bellow.
+        \end{enumerate}
+    \end{flushleft}
+\end{figure}
+
+Auto matching nuclides to ROIs is accomplished by using the centroid of a fitted peak and finding emission close in energy. The matching is weighted by the emission intensity so a strong emission will be chosen over a weak of they are the same distance from the peak centroid. By selecting nuclides the auto matching of nuclides to ROIs, including from using the button inside the \textit{ROI Editor}, are limited emission from the selected nuclides. Using auto match nuclides against all possible candidates are often unreliable, especially if the energy calibration is imperfect. 
+
+The peak search is based on Savitzky-Golay Smoothing and the filter derivatives to compute peak candidates. These candidates are then filtered and the accepted peaks are added as ROIs. The length of the window in the Savitzky-Golay filter can be set in units of channels. 
 
 \subsubsection{Console}
 The console allows for entering text commands to control the application and running scripts for basic automation. See \autoref{subsec:cli} for information on available commands and their usage.
@@ -272,16 +403,89 @@ The Console can be used for light automation by using the \texttt{exec} command 
 The System Log displays messages from the application and detector clients. If something crashes the error and traceback will be displayed here.
 
 \subsection{Gamma Tools}
-
 \subsubsection{Calibration}
+Calibration is the operation of determining the energy each channel corresponds to.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = .7\linewidth]{images/interface/gtools_calibration.jpg}
+    \caption{Calibration window of a spectrum with 4 ROIs and assigned nuclides.}
+    \label{fig:gtools_calibration}
+    \begin{flushleft}
+        \begin{enumerate}
+            \item Which spectrum should be calibration. Only data from one spectrum can be used for one calibration.
+            \item Add a calibration point not associated with a ROI. Measured and Reference energies must be set manually.
+            \item Current calibration points detected and information about them. By unchecking a row it will be ignored in the calculation.
+            \item Polynomial degree of the calibration function and the current coefficients. Coefficients can be changed manually but will be overwritten by pressing \texttt{Calculate}.
+            \item The spectrum instrument. Can not be changed here, instead edit the spectrum before starting the calibration.
+            \item Plot showing the energy as a function of channels based on the latest calculated coefficients.
+            \item Assign the coefficients to the \textit{Unique Instrument} set in (5.).
+            \item Assign the coefficients and recalculate the x-axis for the spectrum selected in (1.), updating the view in the Spectrum-tab. This will not change the calibration of an already started spectrogram.
+        \end{enumerate}
+    \end{flushleft}
+\end{figure}
 
 \subsubsection{Deconvolution}
+This tool does more than simply reducing the effect of energy resolution but will still be referred to as a deconvolution operation. Deconvolution in this sense is more similar to reconstruction as, like image reconstruction in nuclear medicine, it employs the ML-EM algorithm. By using a detector response matrix, most simply acquired using Mone Carlo-simulations, the effects of the detector resolution, scattering in the detector and other effects can be reduced. The response matrix represents the expected detector response to a photon emitted at a certain energy, see \autoref{tab:response_matrix_schema} and section \ref{sec:}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = .9\linewidth]{images/interface/gtools_deconvolution.jpg}
+    \caption{A Co-60 spectrum deconvolved using ML-EM and a response matrix for a Radiacode-103G detecting a parallel beam of monoenergetic photons.}
+    \label{fig:gtools_deconvolution}
+    \begin{flushleft}
+        \begin{enumerate}
+            \item The original Co-60 spectrum  in blue and the deconvolved spectrum in orange.
+            \item Control window for the deconvolution operation, see \autoref{tab:gtools_deconvolution}.
+            \item The deconvolved spectrum is added as new spectrum, copying information from the original.
+        \end{enumerate}
+    \end{flushleft}
+\end{figure}
+
+\begin{table}[H]
+    \centering
+    \caption{Description of the deconvolution window.}
+    \label{tab:gtools_deconvolution}
+    \begin{tabular}{p{.3\textwidth}p{.64\textwidth}}
+    \toprule
+    \textbf{Field} & \textbf{Description} \\ \midrule
+        Algorithm & Which algorithm should be used. Options are \texttt{ML-EM} (use this) and \texttt{Generalized Richardson-Lucy}. \\
+        Iterations & The number of iterations the algorithm should run. \\
+        (ML-EM) Response Matrix & The path to a .npz file containing the detector response matrix to be used. \\
+        Instrument & Instrument providing information the algorithm. For instance, \texttt{Generalized Richardson-Lucy} is based on the resolution saved in the instrument. \\
+        Spectrum & Which spectrum should be the operation be executed on. \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
 
 \subsubsection{Efficiency}
+The intrinsic efficiency is an important detector property and describes the fraction of photons hitting the detector that is actually detected.
 
 \subsubsection{Resolution}
+The energy resolution describes how well the detector can resolve detected photons of different energies. A low resolution results in broad peaks which can cover smaller peaks, making them harder to detect.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = .9\linewidth]{images/interface/gtools_resolution.jpg}
+    \caption{Resolution window with several different spectra measured with a 3"x3" NaI(Tl) scintillator loaded. Using \texttt{Tabbed Spectrum View} so the ROIs are only evaluating one spectrum each.}
+    \label{fig:gtools_resolution}
 
+    \begin{flushleft}
+        \begin{enumerate}
+            \item Fitted peaks from all loaded spectra and ROIs. A ROI without a fit can not be included. Unchecked entries will be ignored in the calculation.
+            \item Instrument to be given the calculation result. Can be Unique or Generic.
+            \item How the calculation results should be plotted. These do not affect the results, only the view.
+            \item The resolution function, coefficients are in arbitrary units and not \% (\% = au * 100). The $R^2$ value of the fitted function compared with the data points.
+            \item Assign the calculation results to the instrument set in (2.).
+        \end{enumerate}
+    \end{flushleft}
+\end{figure}
+
+\subsection{Command Line Arguments}
+Command Line Arguments can be provided when starting the application from a terminal. 
+
+\input{tables/cli_arguments.tex}
 
 \subsection{Command Line Interface (CLI)}\label{subsec:cli}
 Interaction with LuRaCs is done primarily through the GUI but it also provides a terminal based command line interface, allowing for detector control without a GUI. This can be useful for remote measurements or measurements run on a Raspberry Pi attached to a drone. This mode shares most of the same commands as the GUI Console with the exception of visualisation tools.
@@ -290,15 +494,218 @@ This mode is started by running LuRaCs in a terminal with the \texttt{--headless
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width = .8\linewidth]{images/interface/CLI_start.png}
+    \includegraphics[width = .8\linewidth]{images/interface/cli.png}
     \caption{LuRaCs command line interface.}
-    \label{fig:CLI_start}
+    \label{fig:cli}
 \end{figure}
 
-\subsection{Connection Dialogs}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = .8\linewidth]{images/interface/cli_spectrum.png}
+    \caption{Two spectra viewed through the command line using the command \texttt{view spectrum -Emax 1000 all}. The \texttt{-Emax 1000} flag limits the x-axis to $< 1000$ keV.}
+    \label{fig:cli_spectrum}
+\end{figure}
 
-\subsection{Data Store}
+\input{tables/cli_commands.tex}
+
+\subsection{Detector Connection \& Control}
+Connecting detectors using the GUI is facilitated through a dialog for each type of connection, the are found under \texttt{Detector -> Connect Bluetooth/USB/Network}. Connecting to bluetooth and USB requires the application the scan for available devices, the serial number of the found devices are then displayed for selection.
+
+Connecting the a network devices requires knowing the device IP and type beforehand. Connecting to network detectors have the unique option to use the detector as a GPS. This is primarily intended for the Ortec Detective X which has a built in GPS.
+
+When connecting to serial GPS devices the application scans serial ports and lists suggestions but the port can also be entered manually. The baud rate is typically 4800 but a selection of other common rates are also presented.
+
+\subsection{Data Store}\label{sec:data_store}
+The \textit{Data Store} allows for saving data objects in the application it self for easy access. It also allows for limited editing of previously saved objects. It contains the following object types \textit{Spectra}, \textit{Spectrograms}, \textit{ROIs}, \textit{Unique Instruments} and \textit{Generic Instruments}. 
+
+All data items saved in the Data Store can be exported to a single zip-file with \texttt{File -> Export Data Store}. Such a file can be imported with \texttt{File -> Import Data Store}. 
+
+\subsubsection*{Spectrum Library}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = .8\linewidth]{images/interface/data_store_spectrum.png}
+    \caption{}
+    \label{fig:data_store_spectrum}
+\end{figure}
+
+\begin{table}[H]
+    \centering
+    \caption{Description of fields in toolbar at the bottom of the Spectrum Library-tab}
+    \label{tab:spectrum_library_fields}
+    \begin{tabular}{p{.3\textwidth}p{.64\textwidth}}
+    \toprule
+    \textbf{Field} & \textbf{Description} \\ \midrule
+    Delete & Remove selected items. \\
+    Load Instrument & Load the instrument contained in the specific spectrum file. If not selected LuRaCs will attempt to match the instrument name to an existing \textit{Unique Instrument} save in the Data Store. \\
+    Load ROIs & Should the ROIs contained in the spectrum be loaded with the spectrum. \\
+    Edit & Edit the spectrum name or remark. \\
+    Export & Export the spectrum. Available formats: \texttt{XML}, \texttt{CSV} and \texttt{xlsx}. \\
+    Load & Load the spectrum into view. \\
+    Close & Close the data store. \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{Description of columns in the Spectrum Library-tab}
+    \label{tab:spectrum_library_columns}
+    \begin{tabular}{p{.3\textwidth}p{.64\textwidth}}
+    \toprule
+    \textbf{Column} & \textbf{Description} \\ \midrule
+    Name & Spectrum name \\
+    Date & Date when the measurement of the foreground started \\
+    Live Time & Live time of the foreground \\
+    ROIs & How many ROIs are saved with the spectrum, if any. \\
+    Instrument & Which instrument is saved with the spectrum if any. If an instrument with the same name exists the in the Data Store, it will be used instead of the instrument saved with the spectrum. This can be changed in setting. \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsubsection*{Spectrogram Library}
+All created spectrograms are placed in the Spectrogram Library. From here they can be loaded back for analysis or continued measurement.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = .8\linewidth]{images/interface/data_store_spectrogram.png}
+    \caption{}
+    \label{fig:data_store_spectrogram}
+\end{figure}
+
+
+\begin{table}[H]
+    \centering
+    \caption{Description of fields in toolbar at the bottom of the Spectrum Library-tab}
+    \label{tab:spectrogram_library_fields}
+    \begin{tabular}{p{.3\textwidth}p{.64\textwidth}}
+    \toprule
+    \textbf{Field} & \textbf{Description} \\ \midrule
+    Delete & Remove selected items. \\
+    Export Spectrum Data & If checked the data for  individual channels are included when exporting, everything else is exported the same. \\
+    Edit & Edit the spectrogram name. \\
+    Export & Export the spectrogram to another file. Available formats: \texttt{.db} (SQLite3) and \texttt{xlsx}. \\
+    Load & Load the spectrum into view. \\
+    Close & Close the data store. \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{Description of columns in the Spectrum Library-tab}
+    \label{tab:spectrogram_library_columns}
+    \begin{tabular}{p{.3\textwidth}p{.64\textwidth}}
+    \toprule
+    \textbf{Column} & \textbf{Description} \\ \midrule
+    Name & Spectrogram name \\
+    Start Date & Date when the measurement started. \\
+    End Date & Date when the measurement was last stopped. \\
+    Duration & Total measurement duration. \\
+    Instrument & Identifier for the detector used the measure the spectrogram. \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsubsection*{ROI Library}
+The ROI Library allows for saving references to ROIs to then be loaded to a spectrum or spectrogram. This means the roi options like the energy bounds, fitting options and assigned nuclide are saved but data like fitting parameters or peak counts are not.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = .8\linewidth]{images/interface/data_store_rois.png}
+    \caption{}
+    \label{fig:data_store_rois}
+\end{figure}
+
+
+\begin{table}[H]
+    \centering
+    \caption{Description of fields in toolbar at the bottom of the Spectrum Library-tab}
+    \label{tab:roi_library_fields}
+    \begin{tabular}{p{.3\textwidth}p{.64\textwidth}}
+    \toprule
+    \textbf{Field} & \textbf{Description} \\ \midrule
+    Delete & Remove selected items. \\
+    Edit & Edit the ROI collection name and the ROIs contained within, see \autoref{fig:data_store_roi_edit}. \\
+    Export & Export the ROIs to another file. Available formats: \texttt{.xml}. \\
+    Load to Spectrogram & Load the ROIs as spectrogram ROIs. \\
+    Load to Spectrum & Load the ROIs as spectrum ROIs. \\
+    Close & Close the data store. \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{Description of columns in the Spectrum Library-tab}
+    \label{tab:roi_library_columns}
+    \begin{tabular}{p{.3\textwidth}p{.64\textwidth}}
+    \toprule
+    \textbf{Column} & \textbf{Description} \\ \midrule
+    Name & Spectrogram name \\
+    Start Date & Date when the measurement started. \\
+    End Date & Date when the measurement was last stopped. \\
+    Duration & Total measurement duration. \\
+    Instrument & Identifier for the detector used the measure the spectrogram. \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = .7\linewidth]{images/interface/data_store_roi_edit.png}
+    \caption{ROI editor inside the Data Store. ROI alias/name can be changed, upper and lower bounds and nuclide and emission can be selected from the nuclide library.}
+    \label{fig:data_store_roi_edit}
+\end{figure}
+
+\subsubsection*{Unique-/Generic Instruments}
+The tabs for the Unique and Generic Instruments are very similar and treated in the same section. 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = .8\linewidth]{images/interface/data_store_instrument.png}
+    \caption{Instruments-tab in the Data Store containing Unique Instruments.}
+    \label{fig:data_store_instruments}
+\end{figure}
+
+
+\begin{table}[H]
+    \centering
+    \caption{Description of fields in toolbar at the bottom of the Spectrum Library-tab}
+    \label{tab:instrument_library_fields}
+    \begin{tabular}{p{.3\textwidth}p{.64\textwidth}}
+    \toprule
+    \textbf{Field} & \textbf{Description} \\ \midrule
+    Delete & Remove selected items. \\
+    Edit & Edit an existing instrument, see \autoref{fig:data_store_instrument_edit}. \\
+    Export & Export the instrument data to another file. Available formats: \texttt{.xml}. \\
+    New & Create a new instrument. \textit{Unique Instruments} can inherit data from \textit{Generic Instruments}. \\
+    Close & Close the data store. \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{Description of columns in the Spectrum Library-tab}
+    \label{tab:instrument_library_columns}
+    \begin{tabular}{p{.3\textwidth}p{.64\textwidth}}
+    \toprule
+    \textbf{Column} & \textbf{Description} \\ \midrule
+    Name & Instrument name (Only for \textit{Unique Instrument}) \\
+    Model & Name of the instrument model. \\
+    Calibration & If the instrument stores an energy calibration. (Only for \textit{Unique Instrument}) \\
+    Resolution & If the instrument stores an energy resolution. \\
+    Efficiency & If the instrument stores an intrinsic efficiency. \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = .8\linewidth]{images/interface/data_store_instrument_edit.png}
+    \caption{The dialog for creating a new instrument or editing an existing one.}
+    \label{fig:data_store_instrument_edit}
+\end{figure}
 
 \subsection{Settings}
-The settings are devided into \texttt{Settings} which contain basic and cosmetic settings, such as what data should be imported files and what theme should the application use. 
+The settings are devided into \texttt{Settings} which contain basic and cosmetic settings, and \texttt{Advanced Settings} containing settings that users rarely need to interact with. 
+
+\input{tables/settings.tex}
 

@@ -57,6 +57,8 @@ Peak fitting are based in ROIs in which a peak is assumed to be. Each ROI can co
 
 The uncertainties of the peak fitting is calculated as follows. Firstly, the counts in channel \textit{i}, $N_i$ is assumed to follow Poisson distribution, thus $\sigma_i = \sqrt{N_i}$. The uncertainty of each channel is used as weights for the polynomial fit. 
 
+\subsubsection{Peak Search}
+
 \subsubsection{Deconvolution}
 The deconvolution method implemented is based on the \textit{Maximum Likelihood - Expectation Maximisation} or ML-EM algorithm. 
 
@@ -71,9 +73,387 @@ Before reconstruction the response matrices are processed and rows for the reque
 
 \subsection{File Types}
 \subsubsection{Spectrum, ROI and Instrument (.xml)}
-Spectra are stored in the XML format and is interoperable with the ANSI/IEEE N42.42 format \cite{}.
+Spectra are stored in the XML format and is interoperable with the ANSI/IEEE N42.42 format \footcite{DocumentaryStandardsANSI}.
 
-ROIs and Instrument data are stored as an extension to the N42 standard using the \textit{LRC} namespace.
+ROIs and Instrument data are stored as an extension to the N42 standard using the \textit{LRC} namespace. All datatypes are converted to strings before XML serialisation. The tables bellow describe the XML fields and their corresponding Python type.
+
+\begin{table}[H]
+    \centering
+    \caption{Fields stored in the XML representation of spectrum data.}
+    \label{tab:spectrum-data-xml-fields}
+    \begin{tabular}{p{0.32\textwidth} p{0.18\textwidth} p{0.40\textwidth}}
+    \toprule
+    \textbf{XML field} & \textbf{Python type} & \textbf{Description} \\ \midrule
+
+    \url{RadMeasurement/@id}
+        & \texttt{str}
+        & Identifier of the radiation measurement. \\
+
+    \url{MeasurementClassCode}
+        & \texttt{str}
+        & Specifies whether the measurement is a foreground or background spectrum. \\
+
+    \url{StartDateTime}
+        & \texttt{str}
+        & Measurement start time formatted as an ISO 8601 date-time string. \\
+
+    \url{RealTimeDuration}
+        & \texttt{str}
+        & Real measurement duration encoded as an ISO 8601 duration. \\
+
+    \url{Spectrum/@energyCalibrationReference}
+        & \texttt{str}
+        & Reference to the energy calibration used by the spectrum. \\
+
+    \url{Spectrum/@id}
+        & \texttt{str}
+        & Identifier of the spectrum. \\
+
+    \url{LiveTimeDuration}
+        & \texttt{str}
+        & Measurement live time encoded as an ISO 8601 duration. \\
+
+    \url{ChannelData}
+        & \texttt{np.ndarray}
+        & Spectrum channel counts, converted to integer values before serialization. \\
+
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+
+\begin{table}[H]
+    \centering
+    \caption{Fields stored in the XML representation of a ROI.}
+    \label{tab:roi-xml-fields}
+    \begin{tabular}{p{0.30\textwidth} p{0.15\textwidth} p{0.45\textwidth}}
+    \toprule
+    \textbf{XML field} & \textbf{Python type} & \textbf{Description} \\ \midrule
+
+    \url{Roi/@id}
+        & \url{str}
+        & Internal tag identifying the ROI. \\
+
+    \url{Roi/@alias}
+        & \url{str}
+        & User-defined name or alias of the ROI. \\
+
+    \url{Roi/@spectrum\_ref}
+        & \url{str}
+        & Name of the spectrum associated with the ROI. \\
+
+    \url{Roi/@version}
+        & \url{str}
+        & Version of the XML representation. \\
+
+    \url{PeakContinuum/@merge}
+        & \url{bool}
+        & Indicates whether the ROI is merged with other ROIs. \\
+
+    \url{PeakContinuum/@movable}
+        & \url{bool}
+        & Indicates whether the ROI can be moved interactively. \\
+
+    \url{PeakContinuum/@background\_subtracted}
+        & \url{bool}
+        & Indicates whether background subtraction has been applied. \\
+
+    \url{PeakContinuum/RegionCounts}
+        & \url{float}
+        & Total counts within the ROI. \\
+
+    \url{PeakContinuum/LiveTime}
+        & \url{float}
+        & Measurement live time. \\
+
+    \url{PeakContinuum/LowerEnergy}
+        & \url{float}
+        & Lower energy boundary of the ROI. \\
+
+    \url{PeakContinuum/UpperEnergy}
+        & \url{float}
+        & Upper energy boundary of the ROI. \\
+
+    \url{Fit}
+        & \url{str}
+        & Type of peak fitting method applied to the ROI. \\
+
+    \url{Fit/@chi2\_weighted\_err}
+        & \url{bool}
+        & Indicates whether weighted $\chi^2$ errors are used. \\
+
+    \url{BackgroundType}
+        & \url{str}
+        & Type of background model used for fitting. \\
+
+    \url{Peak/BackgroundParameters}
+        & \url{np.ndarray}
+        & Parameters of the fitted background model. \\
+
+    \url{Peak/FitParameters}
+        & \url{np.ndarray}
+        & Optimized parameters of the peak-fitting function. \\
+
+    \url{Peak/FitParametersErr}
+        & \url{np.ndarray}
+        & Uncertainties of the fitted peak parameters. \\
+
+    \url{Peak/Centroid}
+        & \url{list}
+        & Fitted centroid and its uncertainty. \\
+
+    \url{Peak/StandardDeviation}
+        & \url{list}
+        & Fitted standard deviation and its uncertainty. \\
+
+    \url{Peak/Amplitude}
+        & \url{list}
+        & Fitted amplitude and its uncertainty. \\
+
+    \url{Peak/PeakArea}
+        & \url{list}
+        & Integrated peak area and its uncertainty. \\
+
+    \url{Peak/NetCounts}
+        & \url{list}
+        & Net peak counts and their uncertainty. \\
+
+    \url{Peak/BkgCounts}
+        & \url{list}
+        & Estimated background counts and their uncertainty. \\
+
+    \url{Peak/GrossCounts}
+        & \url{list}
+        & Gross peak counts and their uncertainty. \\
+
+    \url{Nuclide/Name}
+        & \url{str}
+        & Name of the associated nuclide. \\
+
+    \url{Nuclide/Energy}
+        & \url{list}
+        & Emission energy and its uncertainty in keV. \\
+
+    \url{Nuclide/Intensity}
+        & \url{list}
+        & Emission intensity and its uncertainty in percent. \\
+
+    \url{Nuclide/Type}
+        & \url{str}
+        & Type of nuclear emission. \textit{g} or \textit{x-ray}. \\
+
+    \url{Nuclide/EmissionOrigin}
+        & \url{str}
+        & Origin of the nuclear emission information. \\
+
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{Basic instrument information stored in XML.}
+    \label{tab:instrument-basic-xml}
+    \begin{tabular}{>{\raggedright\arraybackslash}p{0.35\textwidth}
+                    >{\raggedright\arraybackslash}p{0.18\textwidth}
+                    >{\raggedright\arraybackslash}p{0.37\textwidth}}
+    \toprule
+    \textbf{XML field} & \textbf{Python type} & \textbf{Description} \\ \midrule
+
+    \url{Instrument/@generic_instrument}
+        & \texttt{bool}
+        & Indicates whether the instrument is generic rather than unique. \\
+
+    \url{Instrument/Name}
+        & \texttt{str}
+        & Name of the instrument. \\
+
+    \url{Instrument/Model}
+        & \texttt{str}
+        & Model of the instrument. \\
+
+    \url{Instrument/Manufacturer}
+        & \texttt{str}
+        & Manufacturer of the instrument. \\
+
+    \url{Instrument/DetectorMaterial}
+        & \texttt{str}
+        & Material of the detector. \\
+
+    \url{Instrument/DetectorShape}
+        & \texttt{str}
+        & Shape of the detector. \\
+
+    \url{Instrument/DetectorType}
+        & \texttt{str}
+        & Type of detector. \\
+
+    \url{Instrument/DetectorDimensions}
+        & \texttt{tuple}
+        & Physical dimensions of the detector in centimetres. \\
+
+    \url{Instrument/DetectorDimensionsUncertainty}
+        & \texttt{tuple}
+        & Uncertainties of the detector dimensions in centimetres. \\
+
+    \url{Instrument/Remark}
+        & \texttt{str}
+        & Optional free-text remark associated with the instrument. \\
+
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{Energy resolution information stored in XML.}
+    \label{tab:instrument-resolution-xml}
+    \begin{tabular}{>{\raggedright\arraybackslash}p{0.35\textwidth}
+                    >{\raggedright\arraybackslash}p{0.18\textwidth}
+                    >{\raggedright\arraybackslash}p{0.37\textwidth}}
+    \toprule
+    \textbf{XML field} & \textbf{Python type} & \textbf{Description} \\ \midrule
+
+    \url{Resolution/@type}
+        & \texttt{str}
+        & Type of resolution model, set to \texttt{energy}. \\
+
+    \url{Resolution/CreatedTS}
+        & \texttt{datetime}
+        & Date and time at which the resolution model was created. \\
+
+    \url{Resolution/Function}
+        & \texttt{str}
+        & Function used to describe the energy resolution. \\
+
+    \url{Resolution/Parameters}
+        & \texttt{list}
+        & Parameters of the energy resolution function. \\
+
+    \url{Resolution/ResolutionPoints/@energy_unit}
+        & \texttt{str}
+        & Unit of energy for the resolution points, specified as keV. \\
+
+    \url{Resolution/ResolutionPoints/@FWHM_unit}
+        & \texttt{str}
+        & Unit of FWHM, specified as keV. \\
+
+    \url{Resolution/ResolutionPoints/DataPoint/FWHM}
+        & \texttt{float}
+        & Measured full width at half maximum. \\
+
+    \url{Resolution/ResolutionPoints/DataPoint/FWHMUncertainty}
+        & \texttt{float}
+        & Uncertainty of the measured FWHM. \\
+
+    \url{Resolution/ResolutionPoints/DataPoint/Energy}
+        & \texttt{float}
+        & Energy corresponding to the measured resolution. \\
+
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{Intrinsic efficiency information stored in XML.}
+    \label{tab:instrument-efficiency-xml}
+    \begin{tabular}{>{\raggedright\arraybackslash}p{0.35\textwidth}
+                    >{\raggedright\arraybackslash}p{0.18\textwidth}
+                    >{\raggedright\arraybackslash}p{0.37\textwidth}}
+    \toprule
+    \textbf{XML field} & \textbf{Python type} & \textbf{Description} \\ \midrule
+
+    \url{Efficiency/@type}
+        & \texttt{str}
+        & Type of efficiency model, set to \texttt{intrinsic}. \\
+
+    \url{Efficiency/CreatedTS}
+        & \texttt{datetime}
+        & Date and time at which the efficiency model was created. \\
+
+    \url{Efficiency/Function}
+        & \texttt{str}
+        & Function used to describe the intrinsic efficiency. \\
+
+    \url{Efficiency/Parameters}
+        & \texttt{list}
+        & Parameters of the intrinsic efficiency function. \\
+
+    \url{Efficiency/ParametersUncertainty}
+        & \texttt{list}
+        & Uncertainties of the intrinsic efficiency parameters. \\
+
+    \url{Efficiency/EfficiencyPoints/@energy_unit}
+        & \texttt{str}
+        & Unit of energy for the efficiency points, specified as keV. \\
+
+    \url{Efficiency/EfficiencyPoints/@efficiency_unit}
+        & \texttt{str}
+        & Unit of efficiency, specified as unitless. \\
+
+    \url{Efficiency/EfficiencyPoints/DataPoint/Efficiency}
+        & \texttt{float}
+        & Measured intrinsic efficiency. \\
+
+    \url{Efficiency/EfficiencyPoints/DataPoint/EfficiencyUncertainty}
+        & \texttt{float}
+        & Uncertainty of the measured efficiency. \\
+
+    \url{Efficiency/EfficiencyPoints/DataPoint/Energy}
+        & \texttt{float}
+        & Energy corresponding to the measured efficiency. \\
+
+    \url{Efficiency/Description}
+        & \texttt{str}
+        & Description of the intrinsic efficiency data or model. \\
+
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{Energy calibration information stored in XML.}
+    \label{tab:instrument-calibration-xml}
+    \begin{tabular}{>{\raggedright\arraybackslash}p{0.35\textwidth}
+                    >{\raggedright\arraybackslash}p{0.18\textwidth}
+                    >{\raggedright\arraybackslash}p{0.37\textwidth}}
+    \toprule
+    \textbf{XML field} & \textbf{Python type} & \textbf{Description} \\ \midrule
+
+    \url{Calibration/PolynomialOrder}
+        & \texttt{int}
+        & Order of the polynomial used for energy calibration. \\
+
+    \url{Calibration/Coefficients}
+        & \texttt{list}
+        & Polynomial coefficients used for channel-to-energy conversion. \\
+
+    \url{Calibration/CalibrationPoints/@energy_unit}
+        & \texttt{str}
+        & Unit of calibration energy, specified as keV. \\
+
+    \url{Calibration/CalibrationPoints/DataPoint/Energy}
+        & \texttt{float}
+        & Known energy of a calibration point. \\
+
+    \url{Calibration/CalibrationPoints/DataPoint/Channel}
+        & \texttt{float}
+        & Channel corresponding to the calibration energy. \\
+
+    \url{Calibration/CreatedTS}
+        & \texttt{datetime}
+        & Date and time at which the energy calibration was created. \\
+
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+
+
+
+
  
 \subsubsection{Spectrogram (.db)}\label{sec:file_spectrogram}
 Spectrograms are saved to an SQLite3 database file. One file contains one spectrogram. Saved files can be loaded and measurement resumed. A spectrogram database contains three tables described in \autoref{tab:header-schema}, \ref{tab:summary-schema} and \ref{tab:spectrogram-schema}.
@@ -97,7 +477,7 @@ Detector response matrices are stored as serialized and compressed numpy arrays 
   float32 &
   2D (m x n) &
   Detector response values. First index is the simulated photon energy and second index is the normalized count bins (\#bin / \#fired photons) \\
-\texttt{indices}      & float32 & 1D (m) & Simulated photon energy of the corresponding row in \texttt{response\_matrix} in keV \\
+\texttt{indices}      & float32 & 1D (m) & Energy of the simulated monoenergetic photons of the corresponding row in \texttt{response\_matrix} in keV \\
 \texttt{bin\_centres} & float32 & 1D (n) & Energy of the bin centres of the detector energy response in keV.           \\ \bottomrule
 \end{tabular}
 \end{table}
@@ -110,4 +490,4 @@ Spectrograms are the primary way to store GPS position data these are however no
 \subsection{Embedded map}
 The embedded map is rendered using \textit{MapLibre GL JS}\footcite{MaplibreMaplibregljs2026} in a QWebEngine widget. The packages for MapLibre is included in the LuRaCs code and does not require any installation. MapLibre handles requesting tiles is connected to an online API it requires minimal work. Using maps offline works by using an embedded tile server run using \textit{uvicorn} and \textit{fastapi} to supply MapLibre with tiles. The embedded tile server runs on host 127.0.0.1 and port 8080. PMTiles are loaded using a fork of the \textit{pmtiles} Python package, having improved cacheing and performance, incorporated in the LuRaCs code.
 
-The code is written so that the the Python side handles most of the logic, using only simple calls to JS for creating or updating points, etc. 
+The code is written so that the the Python side handles most of the logic, using only simple calls to JS for creating or updating points, etc. To minimise the overhead incurred from the \textit{Python} $\leftrightarrow$ \textit{JS}-bridge send lists as a one object and let JS iterate over it, as opposed to sending every point over the bridge.

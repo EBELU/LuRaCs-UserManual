@@ -228,13 +228,15 @@ separate-uncertainty = true}
             \fi 
             %%%
         \end{minipage}
-        \begin{minipage}{.35\textwidth}
+        \begin{minipage}{.40\textwidth}
         \begin{flushright}
             %%% Date [top right corner]
             \ifdefined\@conducted
             \else
             \Large \date
             \fi
+            
+            \Large LuRaCs version: \input{version.tex}
             %%%
         \end{flushright}  
         \end{minipage}

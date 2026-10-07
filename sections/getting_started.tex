@@ -1,4 +1,26 @@
 \section{Getting Started}
+\textbf{Licence, Warranty and Research Use}
+
+This software is free and open-source software distributed under the terms of the GNU General Public License, version 3 (GPLv3).
+
+The software is provided “AS IS” and WITHOUT WARRANTY OF ANY KIND, to the maximum extent permitted by applicable law. The warranty disclaimer and limitation of liability contained in Sections 15 and 16 of the GPLv3 apply to the software.
+
+Lund University and its contributors make no representation or warranty that the software is accurate, reliable, error-free, uninterrupted, or suitable for any particular purpose.
+
+\textbf{Research Use}
+
+This software is intended as a research and experimental tool for gamma spectroscopy and mobile radiation measurements. It is not intended to constitute a certified measurement system, and measurement results should not be assumed to be accurate or suitable for regulatory, safety-critical, medical, environmental, or other consequential applications without appropriate independent validation.
+
+Measurement results may be affected by the detector, electronics, calibration, measurement geometry, environmental conditions, acquisition parameters, data processing, and other factors.
+
+Users are responsible for evaluating and validating the software and its results for their particular research application.
+
+To the maximum extent permitted by applicable law, Lund University and its contributors accept no liability for any loss, damage, decision, action, or omission arising from or in connection with the use of the software or reliance on measurements or results obtained using the software.
+
+Nothing in this notice excludes or limits any liability that cannot legally be excluded or limited under applicable law.
+
+The complete GNU General Public License version 3 is provided with the software.
+
 \subsection{Introduction}
 
 \subsubsection{LuRaCs-H3}
@@ -8,6 +30,8 @@ LuRaCs-H3 is a light weight version of the compiled program indented for system 
 \end{itemize}
 
 \subsection{Installation}
+LuRaCs distributed as binary does not require any installs before use, with the exception of usb drivers on Windows.
+
 Before installing, ensure that Python version 3.10, 3.11, 3.12 or 3.13 is installed on the system. The Python installation can be verified by opening \textit{cmd} on windows or a Terminal on MacOS and Linux and entering \texttt{python --version} or \texttt{python3 --version}, if Python is correctly installed the version will be displayed.
 \subsubsection{With \texttt{pip}}
 When Python has been correctly set up, make a new folder for the install and open \textit{cmd} or a terminal in that folder. On Windows enter the following commands in \textit{cmd}:
@@ -105,9 +129,9 @@ SUBSYSTEM=="usb", ATTRS{idVendor}=="0a2d", GROUP="users", MODE="0666"
 
 \end{minted}
 
-Connecting devices over the network likely requires specific to that instrument so no general guide is provided. See example \ref{subsec:example_detx} for how this can be done for the Ortec Ametec Detective X.
+\textbf{Connecting devices over the network } likely requires setup specific to that instrument so no general guide is provided. See example \ref{subsec:example_detx} for how this can be done for the Ortec Ametec Detective X.
 
-Connecting a digiBase requires the files containing the necessary firmware. These files can be found in the install directories of the \textit{Maestro} and \textit{Gamma Vision} software provided by Ortec. LuRaCs does not provide these files and users are responsible for acquiring these files in accordance with applicable licences. Once the files have been identified they can be reached by LuRaCs by saving them in the driver library. Select \texttt{File -> Import Drivers} and select the files. If they appear in \texttt{File -> Drivers} they can now be reached by LuRaCs.
+\textbf{Connecting a digiBase} requires the files containing the necessary firmware. These files can be found in the install directories of the \textit{Maestro} and \textit{Gamma Vision} software provided by Ortec. LuRaCs does not provide these files and users are responsible for acquiring these files in accordance with applicable licences. Once the files have been identified they can be reached by LuRaCs by saving them in the driver library. Select \texttt{File -> Import Drivers} and select the files. If they appear in \texttt{File -> Drivers} they can now be reached by LuRaCs.
 
 \subsection{Compatible file formats}
 LuRaCs is compatible with a selection of file formats, both standard and more niche third party formats. However, LuRaCs is not primarily intended to support general spectrum analysis so if you are looking for a general analysis application consider using InterSpec\footcite{SandialabsInterSpec2025} instead. 
@@ -138,3 +162,63 @@ Radiacode         & .rctrk \\ \bottomrule
 \end{table}
 
 \subsection{Package dependencies and Resources}
+
+\subsection{Terms \& Object Definitions}\label{sec:definitions}
+\paragraph{Spectrum} is a data object that contains count histograms from a radiation detector and associated meta data. A spectrum contains the following information:
+
+\begin{itemize}
+    \item Spectrum name.
+    \item Number of channels, fore- and background must have the same number of channels.
+    \item Optional remark or description.
+    \item Detector identifier.
+    \item Detector model.
+    \item Fore- and Background spectrum.
+    \item ROIs and analysis results from evaluating the ROI on the spectrum like counts and parameters from a curve fit.
+    \item Calibration coefficients for converting channel number to energy.
+    \item Calibrated X-axis expressed in keV.
+    \item Reference to the instrument used for calculations.
+\end{itemize}
+
+
+
+\paragraph{Region Of Interest (ROI)} is a spectrum region bounded by energy. They can be applied both in a spectrum and in a spectrogram. When applied to a spectrum a Gaussian function can be fitted to a peak contained inside the ROI.
+
+When applied to spectrograms ROIs do not perform any curve fitting, only the summed counts inside the ROI are calculated. The time series produced from a spectrogram ROI can be viewed separately in the map. Spectrograms can use special ROIs called \textit{Calculation ROIs} or CalcROIs. These are calculated from data produced by two other ROIs by combining their values with addition, subtraction or division. For example, CAL\_0 (a Calculation ROI) can show the results of ROI\_0 / ROI\_1 where ROI\_0 is placed over the K-40 peak and ROI\_1 is placed over the Cs-137 peak.
+
+\paragraph{Spectrogram} is the primary method for recording time series data. It allows for measuring the difference in counts in each channel between time points separated by a fixed time. It also interfaces with the GPS function and can store geolocational information for mobile measurements. A spectrogram is a rather complicated object and is discussed further in other parts of this manual, see section \ref{sec:file_spectrogram}.
+
+Options when creating a spectrogram are
+\begin{itemize}
+    \item Detector to use for data.
+    \item Spectrogram name.
+    \item Save interval, the time between each row.
+    \item If channels should be concatenated, concatenating by a factor 2 means summing two channels to one, halving to total number of channels. Useful for reducing filesize and improving visual analysis.
+\end{itemize}
+If spectrum corresponding to the detector used for the spectrogram is energy calibrated this calibration is also used for the spectrogram.
+
+
+\paragraph{Instrument}s are divided into \textit{Generic} and \textit{Unique} instruments. \textit{Generic Instrument} represent an instrument model. All instruments of the same model share some properties, of which the \textit{Generic Instrument} stores the following:
+\begin{itemize}
+    \item Model name.
+    \item Manufacturer.
+    \item Detector material.
+    \item Sensitive volume size.
+    \item Energy Resolution.
+    \item Intrinsic Energy Efficiency.
+\end{itemize}
+A \textit{Unique Instrument} represents a specific instrument of a certain model. The \textit{Generic Instruments} serve as a basis for quickly making a new \textit{Unique Instrument}. A \textit{Unique Instrument} store the same information as a \textit{Generic Instrument} in addition to an energy calibration. \textit{Unique Instruments} can be assigned to a spectrum from which certain tools can pull required data for calculations and they can store the energy calibration for instruments that do not store it themselves.
+
+\paragraph{Detector} denotes an external instrument for detecting radiation that LuRaCs can sample data from. They can be connected through USB, Bluetooth or a network. Each type of detector have their own 'client'. LuRaCs interacts with detectors through clients which contain the code needed to interact with the physical detector but each client can be implemented differently. This structure makes detector implementations in LuRaCs flexible and easily extensible.
+
+\subsubsection{Abbreviations}
+\begin{table}[H]
+    \centering
+    \caption{List of abbreviations used in this manual}
+    \label{tab:abbreviations}
+    \begin{tabular}{ll}
+        CLI & Command Line Interface \\
+        CPS & Counts Per Second \\
+        GUI & Graphical User Interface \\
+        ML-EM & Maximum Likelihood - Expectation Maximisation \\
+    \end{tabular}
+\end{table}

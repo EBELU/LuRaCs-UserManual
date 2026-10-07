@@ -2,6 +2,36 @@
 %\subsection{Multiple USB devices on Windows}
 %Due to limitations in Windows the serial number of connected USB devices can not be easily retrieved. Instead of showing the serial number, which usually contains an easily identifiable name, like in Linux it instead shows the manufacturer and the connected port. The user must then identify the instrument based on the port number.
 
+\subsection{Quick Starting Several Radiacode Detectors for mobile measurements}
+This examples demonstrates how the terminal can be used to effectively control several detectors at once, without having to repeat the connection and start measurement procedure for each one. In this example three Radiacode detectors are used but the principle is the same for all other types of detector. The code bellow illustrates the commands start an offline map, connect the GPS and instruments and start spectrograms for all detectors.
+
+\begin{minted}[
+    framesep=2mm,
+    baselinestretch=1.2,
+    bgcolor=backcolour,
+    fontsize=\footnotesize,
+    breaklines
+    ]{bash}
+    # Start the map first, cacheing a large map with require all available resources and will cause the application the freeze momentarily. This can disturb the sampling of the detectors.
+    map file ~/Downloads/sverige.pmtiles
+
+    # Once the map is loaded connect the GPS
+    # This assumes only one GPS device is connected to the PC, if several are connected the first serial port is chosen
+    gps connect
+
+    # This command will scan all bluetooth devices and match the given name to the serial number of the found devices
+    device connect ble Radia
+    # This will connect all detectors with 'radia' in the name, matching is case insensitive
+    # Check if all detectors connected, if not repeat the above command
+    list devices
+
+    # Start recording spectrograms for all devices
+    spectrogram start all 
+
+    # When the measurements are concluded stop the recordings
+    spectrogram pause all
+\end{minted}
+
 \subsection{Connecting Detective X using direct ethernet}\label{subsec:example_detx}
 \textit{LuRaCs} communicates with a Detective X detector using the \textit{Mobile Field Kit} API described in the Detective X manual. Using this interface requires a network connection between the instrument and a host computer. A simple and stable way to establish such a connection is a direct ethernet cable from the instrument to the PC with no router in between. This method requires some setup before \textit{LuRaCs} can connect to a Detective X and is described in this example.
 
@@ -14,3 +44,18 @@ Once the network is configured check the connection by pinging Detective X. On m
 
 If the ping succeeds everything is ready. In \textit{LuRaCs} go to \texttt{Devices $\rightarrow$ Connect Network} and enter the instrument IP, 192.168.50.2 in this example.
 
+\subsection{Preparing and Running the LU mobile detector setup}
+This setup consists of two \qty{4}{\litre} NaI(Tl) scintillators with digiBase MCAs and one HPGe detector with a digiDart system mounted in a car, equipped with an external usb GPS device.
+
+\begin{enumerate}
+    \item Ensure that the digiBase firmware is imported. \texttt{File -> Drivers}
+    \item Connect the detectors, neither the digiBase nor the digiDart save their calibration when used with LuRaCs. \texttt{Detector -> Connect USB}
+    \item Enable the correct voltage on each detector, this might be remembered by the detector. \texttt{Detector-tab -> 'A detector Row' -> '...'-button -> Settings -> MCA-tab -> HV: Enable}
+    \item (Optional) Calibrate the detectors with the K-40 and Tl-208 peaks and the 0 channel using the Calibration tool. Apply to the spectrum. \texttt{Gamma Tools -> Calibration}
+    \item With the calibration a new instrument can now be created from the Detectors-tab to save the calibration. It will automatically be fetched next time the detector is connected. \texttt{Detectors-tab -> 'A detector Row' -> '...'-button -> Make Instrument -> 'Save Calibration' is checked}
+    \item Start the map. If an offline map is used start it before any spectrogram, loading a large only map might interfere with sampling of the instruments, messing up the even save interval. \texttt{Map-tab -> Map Options -> Load Offline Map}
+    \item Connect the GPS. \texttt{Detector -> Connect Serial GPS}, determine the correct port if required and connect. 4800 is likely the correct Baud Rate.
+    \item Check that the GPS has a signal. \texttt{Map-tab -> Line Bellow the map -> 'Fix' should be 'Yes'}
+    \item Ensure all detectors are running by clearing all spectra. \texttt{Detector -> Clear All Spectra}
+    \item Start the spectrograms individually, \texttt{Spectrum-tab -> Start New} or use the console, \texttt{Console -> 'spectrogram start all'}.
+\end{enumerate}

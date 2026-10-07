@@ -1,0 +1,185 @@
+% ============================================================
+% General Settings
+% ============================================================
+
+\begin{longtable}{p{0.30\textwidth} p{0.62\textwidth}}
+    \caption{Application settings.}
+    \label{tab:settings} \\
+
+    \hline
+    \textbf{Setting} &
+    \textbf{Description} \\
+    \hline
+    \endfirsthead
+
+    \multicolumn{2}{c}%
+    {\tablename\ \thetable{} -- continued from previous page} \\
+    \hline
+    \textbf{Setting} &
+    \textbf{Description} \\
+    \hline
+    \endhead
+
+    \hline
+    \multicolumn{2}{r}{Continued on next page} \\
+    \endfoot
+
+    \hline
+    \endlastfoot
+
+    % ------------------------------------------------------------
+    % Appearance
+    % ------------------------------------------------------------
+
+    \multicolumn{2}{l}{\textbf{Appearance}} \\
+
+    Theme &
+        Select the visual theme used by the application interface and plots. \\
+
+    Plot Colour Scheme &
+        Select the colour scheme used when automatically assigning colours
+        to plotted spectra. \\
+
+    Spectrum Draw Style &
+        Select how spectra are rendered. Available options are
+        \emph{Pen}, \emph{Brush}, and \emph{Pen + Brush}. \\
+
+    Font Size &
+        Set the application font size in points. \\
+
+    Spectrum Plot xMax &
+        Set the maximum energy displayed on spectrum plots, in keV. \\
+
+    Verbose Calculation Logging &
+        Enable additional logging during calculations. This can be useful
+        when diagnosing calculation or processing problems. \\
+
+    % ------------------------------------------------------------
+    % Import Options
+    % ------------------------------------------------------------
+
+    \multicolumn{2}{l}{\textbf{Import Options}} \\
+
+    Load ROIs on import &
+        Automatically load regions of interest when importing a spectrum from a file. \\
+
+    Load instrument on import &
+        Automatically load instrument information when importing a spectrum from a file. \\
+
+    Load calibration from instrument &
+        Load the energy calibration associated with the instrument when
+        importing data from the Data Store or from a file. \\
+
+\end{longtable}
+
+
+% ============================================================
+% Advanced Settings
+% ============================================================
+
+\begin{longtable}{p{0.30\textwidth} p{0.62\textwidth}}
+    \caption{Advanced application settings.}
+    \label{tab:advanced-settings} \\
+
+    \hline
+    \textbf{Setting} &
+    \textbf{Description} \\
+    \hline
+    \endfirsthead
+
+    \multicolumn{2}{c}%
+    {\tablename\ \thetable{} -- continued from previous page} \\
+    \hline
+    \textbf{Setting} &
+    \textbf{Description} \\
+    \hline
+    \endhead
+
+    \hline
+    \multicolumn{2}{r}{Continued on next page} \\
+    \endfoot
+
+    \hline
+    \endlastfoot
+
+    % ------------------------------------------------------------
+    % Device Running
+    % ------------------------------------------------------------
+
+    \multicolumn{2}{l}{\textbf{Device Running}} \\
+
+    Update Loop Delay &
+        Set the delay between iterations of the device monitoring and update
+        loop, in seconds. \\
+
+    Spectrum Update Delay &
+        Set the delay between spectrum updates during live acquisition,
+        in seconds. \\
+
+    % ------------------------------------------------------------
+    % Device Scanning
+    % ------------------------------------------------------------
+
+    \multicolumn{2}{l}{\textbf{Device Scanning}} \\
+
+    GUI Scan Length &
+        Set the duration of Bluetooth Low Energy scans initiated through
+        the graphical user interface, in seconds. \\
+
+    Headless Scan Length &
+        Set the duration of Bluetooth Low Energy scans when no the scan is not tracked in the GUI, in seconds. \\
+
+    % ------------------------------------------------------------
+    % Optimizer
+    % ------------------------------------------------------------
+
+    \multicolumn{2}{l}{\textbf{Optimizer}} \\
+
+    Optimizer Max Iter &
+        Set the maximum number of iterations allowed by the optimizer. \\
+
+    Optimizer Tolerance &
+        Set the convergence tolerance used by the optimizer. \\
+
+    Use Chi$^2$ Weight &
+        Enable $\chi^2$ weighting during optimization. \\
+
+    % ------------------------------------------------------------
+    % Logging
+    % ------------------------------------------------------------
+
+    \multicolumn{2}{l}{\textbf{Logging}} \\
+
+    Log Exceptions &
+        Enable logging of unhandled exceptions. \\
+
+    Write logs to file &
+        Enable writing log messages to the application log file. \\
+
+    Write logs to console &
+        Enable writing log messages to the terminal or console. \\
+
+    Headless Log Buffer Length &
+        Set the maximum number of log entries retained in the in-memory
+        log buffer. Changes to this setting require an application restart. \\
+
+    % ------------------------------------------------------------
+    % Spectrogram
+    % ------------------------------------------------------------
+
+    \multicolumn{2}{l}{\textbf{Spectrogram}} \\
+
+    Spectrogram View Buffer &
+        Set the number of recent spectrogram data points retained for
+        display. \\
+
+    % ------------------------------------------------------------
+    % Maps
+    % ------------------------------------------------------------
+
+    \multicolumn{2}{l}{\textbf{Maps}} \\
+
+    Save extra GPS data &
+        Enable saving additional GPS information with map-related data. \\
+
+\end{longtable}

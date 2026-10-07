@@ -1,0 +1,120 @@
+% ============================================================
+% Command-Line Options
+% ============================================================
+
+\begin{longtable}{p{0.34\textwidth} p{0.58\textwidth}}
+    \caption{Command-line options available when starting LuRaCs.}
+    \label{tab:cli-options} \\
+
+    \hline
+    \textbf{Option} &
+    \textbf{Description} \\
+    \hline
+    \endfirsthead
+
+    \multicolumn{2}{c}%
+    {\tablename\ \thetable{} -- continued from previous page} \\
+    \hline
+    \textbf{Option} &
+    \textbf{Description} \\
+    \hline
+    \endhead
+
+    \hline
+    \multicolumn{2}{r}{Continued on next page} \\
+    \endfoot
+
+    \hline
+    \endlastfoot
+
+    % ------------------------------------------------------------
+    % General
+    % ------------------------------------------------------------
+
+    \multicolumn{2}{l}{\textbf{General}} \\
+
+    \texttt{--debug} &
+        Launch the application in debug mode. A mock device is added
+        automatically for testing and development. \\
+
+    \texttt{--headless} &
+        Run the application without the graphical user interface,
+        using terminal mode instead. \\
+
+    \texttt{--clear\_local\_cache} &
+        Remove all locally stored files and exit the application. \\
+
+    % ------------------------------------------------------------
+    % Data Import
+    % ------------------------------------------------------------
+
+    \multicolumn{2}{l}{\textbf{Data Import}} \\
+
+    \texttt{--import\_spectrum <file> [file ...]} &
+        Load one or more spectrum files when starting the application.
+        Each specified file must exist and be supported by the
+        application's file importer. \\
+
+    \texttt{--import\_rois <file>} &
+        Load regions of interest from the specified XML file. \\
+
+    \texttt{-roi <lower> <upper>} &
+        Add a region of interest with the specified lower and upper
+        energy bounds in keV. The option can be specified multiple
+        times to add several ROIs. \\
+
+    \texttt{--nuclides <nuclide> [nuclide ...]} &
+        Preset one or more nuclides in the isotopics interface.
+        This option is applied when the graphical user interface is
+        available. \\
+
+    % ------------------------------------------------------------
+    % Device Connections
+    % ------------------------------------------------------------
+
+    \multicolumn{2}{l}{\textbf{Device Connections}} \\
+
+    \texttt{-ble <device> [device ...]} &
+        Attempt to establish Bluetooth Low Energy connections using
+        the specified device names. \\
+
+    \texttt{--bluetooth <device> [device ...]} &
+        Long-form alias for \texttt{-ble}. Attempts Bluetooth Low
+        Energy connections using the specified device names. \\
+
+    \texttt{-usb <device> [device ...]} &
+        Attempt to establish USB connections using the specified
+        device names. Matching is performed against detected USB
+        device product names. \\
+
+    \texttt{-nw <ip> [ip ...]} &
+        Attempt to connect to network devices using their IP addresses. \\
+
+    \texttt{--network <ip> [ip ...]} &
+        Long-form alias for \texttt{-nw}. Connects to network devices
+        using their IP addresses. \\
+
+    \texttt{--serial\_gps <interface>} &
+        Connect a GPS receiver using a USB serial interface. The
+        specified value identifies the serial interface used by
+        the GPS receiver. \\
+
+    % ------------------------------------------------------------
+    % Maps
+    % ------------------------------------------------------------
+
+    \multicolumn{2}{l}{\textbf{Maps}} \\
+
+    \texttt{--map\_url <URL>} &
+        Load an online map from the specified URL at application startup. \\
+
+    \texttt{--map\_file <path>} &
+        Load a local offline map from the specified \texttt{.pmtiles}
+        file at application startup. \\
+
+    \texttt{--map\_url} and \texttt{--map\_file} &
+        Only one map source may be specified at startup. If both
+        options are provided, no map is loaded and a warning is
+        written to the application log. \\
+
+\end{longtable}

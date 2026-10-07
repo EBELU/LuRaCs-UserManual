@@ -1,0 +1,25 @@
+\section{Python Tools}
+While LuRaCs is primarily a stand alone application it can also be used as a python module when installed with \texttt{pip} or from source, exposing a number of internal functions to make it easier to use its file formats.
+
+\subsection{Parsing XML}
+XML is the primary format for spectra, ROIs and instruments used by LuRaCs. The application parser is exposed through the \texttt{file\_io} module. The parser is a class that takes a filepath in the constructor and then exposes the parsed results through methods.
+
+\begin{minted}[
+    framesep=2mm,
+    baselinestretch=1.2,
+    bgcolor=backcolour,
+    fontsize=\footnotesize,
+    breaklines
+    ]{python}
+    from luracs.file_io import xml_parser
+
+    file_path = "~/Spectrum.xml"
+    parser = xml_parser(file_path)
+
+    
+
+
+\end{minted}
+
+\subsection{Parsing Spectrogram Databases}
+Spectrograms are stored as SQLite3 databases and a parser is provided in the \texttt{file\_io} module.
