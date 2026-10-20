@@ -174,9 +174,9 @@ separate-uncertainty = true}
 % Author
 \RenewDocumentCommand\author{s m}{
     \IfBooleanTF{#1}
-    {\def\@author{\textit{authors} \\  \textbf{#2}
+    {\def\@author{\textbf{#2}
     \def\@auth{#2}}
-    }{\def\@author{\textit{author} \\  \textbf{#2}}
+    }{\def\@author{\textbf{#2}}
     \def\@auth{#2}}
 }
 %Conducted
@@ -241,7 +241,7 @@ separate-uncertainty = true}
         \end{flushright}  
         \end{minipage}
 
-        \vspace*{3cm} % Space for title
+        \vspace*{2.5cm} % Space for title
         \LARGE
         %%% Text above the title
         \ifdefined\toptext

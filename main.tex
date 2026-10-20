@@ -3,8 +3,7 @@
 %_________________________________________________
 % Titlepage settings
 \title{LuRaCs - Reference Manual}
-\subtext{}
-\author{Erik Ewald}
+\author{Erik Ewald \\ Christian Bernhardsson}
 \logo{main_icon_green.png}
 
 
@@ -46,6 +45,10 @@
 \usepackage{array}
 \usepackage{longtable}
 
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
 
 %_________________________________________________
 % Document
@@ -66,5 +69,8 @@
 
 \printbibliography
 
+\appendix
+\include{sections/appendix/LuRaCs-Xe}
+\include{sections/appendix/change_log}
 
 \end{document}

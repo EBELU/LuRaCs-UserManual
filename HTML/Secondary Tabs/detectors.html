@@ -1,0 +1,125 @@
+<h3 id="detectors">Detectors</h3>
+<p>Information and status of connected detectors are displayed in this tab.</p>
+<figure>
+<img src="images/interface/detectors_tab.jpg" id="fig:detector_tab" alt="" /><figcaption>List of connected detectors. An entry can not be removed, if a detector is disconnected it is listed as <code>STOPPED</code>.</figcaption>
+</figure>
+<div id="tab:detectors_tab">
+<table>
+<caption>Description of the columns in the Detectors tab</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Column</strong></th>
+<th style="text-align: left;"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Column 0</td>
+<td style="text-align: left;">Options button marked with ’...’, see .</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Detector</td>
+<td style="text-align: left;">The name of the detector.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Temperature</td>
+<td style="text-align: left;">The temperature reading from the detector in <span class="math inline"><sup>∘</sup></span>C. Most detectors report the ambient temperature but some, like the Detective X, report the cooled crystal temperature, as seen in .</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Battery</td>
+<td style="text-align: left;">The current battery level in %.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Charging</td>
+<td style="text-align: left;">Indicate if the detector is connected to a power source.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Voltage</td>
+<td style="text-align: left;">The actual voltage reported of the detector in V.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Status</td>
+<td style="text-align: left;"><p>Detector state reported as one of the following options:</p>
+<ul>
+<li><p><code>UNINITIALIZED</code> - Detector client created but not started.</p></li>
+<li><p><code>CONNECTING</code> - The detector is starting.</p></li>
+<li><p><code>CONNECTED</code> - The detector is connected and running. Default for normal detector function.</p></li>
+<li><p><code>CONNECTION_FAILED</code> - Detector start failed. Check System Log.</p></li>
+<li><p><code>CONNECTION_LOST</code> - Connection was lost after a successful start. Not universally implemented.</p></li>
+<li><p><code>STOPPING</code> - The detector has received and acknowledged the command to stop.</p></li>
+<li><p><code>STOPPED</code> - The detector has successfully stopped.</p></li>
+<li><p><code>ERROR</code> - An error occurred while connected and the detector is no longer functioning as expected.</p></li>
+</ul></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Type</td>
+<td style="text-align: left;">Type of detector by the name defined in the detector client.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Connection</td>
+<td style="text-align: left;">How the detector is connected. Can be <code>BLE, USB</code> or <code>NETWORK</code>.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tab:detectors_options_button">
+<table>
+<caption>Description of the options menu in the detector tab, opened with the button marked ’...’ in the table.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Field</strong></th>
+<th style="text-align: left;"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Disconnect</td>
+<td style="text-align: left;">Sends a stop signal to the detector.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Reset Spectrum</td>
+<td style="text-align: left;">Signals to the selected detector to clear its spectrum.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Start Acquisition</td>
+<td style="text-align: left;">Signals to the selected detector to start spectrum acquisition.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Stop Acquisition</td>
+<td style="text-align: left;">Signals to the selected detector to stop spectrum acquisition.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Make Instrument</td>
+<td style="text-align: left;">Shortcut for creating a <em>Unique Instrument</em> for the detector based on a <code>Generic Instrument</code> and save the current calibration of the connected spectrum. Useful for detectors that do not Library their own energy calibration.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Settings</td>
+<td style="text-align: left;">Opens the detector settings dialog, see and .</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure>
+<img src="images/interface/detector_settings_calibration.jpg" id="fig:detector_settings_calibration" alt="" /><figcaption>Detector settings dialog showing the options for setting device calibration.</figcaption>
+</figure>
+<ol>
+<li><p>Unique Instrument from the library to pull settings from.</p></li>
+<li><p>Interact with the detector. <code>Pull Calibration</code> will request a calibration from the detector set in the coefficients buffer, not possible for all detectors. <code>Push Calibration</code> will attempt to set the calibration of the detector, not possible for all detectors.</p></li>
+<li><p>Pull the calibration coefficients from the spectrum connected to the detector and set in the coefficients buffer.</p></li>
+<li><p>Pull the calibration coefficients from the instrument set in (1.) and set in the coefficients buffer</p></li>
+</ol>
+<figure>
+<img src="images/interface/detector_settings_mca.png" id="fig:detector_settings_mca" alt="" /><figcaption>Detector settings dialog showing the options for MCA settings. The first column of spinboxes show the requested setting and the second row shows the actual value reported by the instrument. <code>Apply</code> attempts to set the given value to the detector.</figcaption>
+</figure>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">LLD</td>
+<td style="text-align: left;">Lower Level Discriminator</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ULD</td>
+<td style="text-align: left;">Upper Lever Discriminator</td>
+</tr>
+</tbody>
+</table>

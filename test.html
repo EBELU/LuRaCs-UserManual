@@ -1,23 +1,10 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
-  <meta charset="utf-8" />
-  <meta name="generator" content="pandoc" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>interface</title>
-  <style>
-    code{white-space: pre-wrap;}
-    span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
-    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
-    
-  </style>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>My Website</title>
 
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
+
 <h1 id="interface">Interface</h1>
 <h2 id="top-tabs">Top Tabs</h2>
 <h3 id="spectrum">Spectrum</h3>
@@ -125,7 +112,7 @@
 <ol>
 <li><p>Opens a dialog for starting a new spectrogram.</p></li>
 <li><p>Close the viewed spectrogram.</p></li>
-<li><p>Shortcut to the Data Store Spectrogram page, see section <a href="#" data-reference-type="ref" data-reference="">1.7</a>.</p></li>
+<li><p>Shortcut to the Data Store Spectrogram page, see section <a href="#sec:data_store" data-reference-type="ref" data-reference="sec:data_store">1.7</a>.</p></li>
 <li><p>Selector for currently loaded spectrograms. Status is shown to the left as [ACTIVE], [LOADED] or [PAUSED].</p></li>
 <li><p>Pause or Resume data collections, requires that the same instrument used collect the previous data to be connected.</p></li>
 <li><p>Options menu, see</p></li>
@@ -150,11 +137,65 @@
 <li><p>Spectrum difference since the last written data point, stored as compressed binary.</p></li>
 <li><p>Meta data, stored as a utf-8 encoded and zlib compressed json-string. Examples of stored metadata include extended GPS data.</p></li>
 </ul>
+<h4 id="exporting-a-spectrogram">Exporting a spectrogram</h4>
+<p>is done trough the data store, quickly accessed via the <em>Load</em>-button (2.).</p>
+<figure>
+<img src="images/interface/spectrogram_options.png" id="fig:spectrogram_options" alt="" /><figcaption>Dropdown options menu in spectrogram pane, see .</figcaption>
+</figure>
+<div id="tab:spectrogram_options">
+<table>
+<caption>Description of fields in the spectrogram options menu</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Field</strong></th>
+<th style="text-align: left;"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Pause Visual Updates</td>
+<td style="text-align: left;">Stop the view spectrogram from updating while the measurement is still going on in the background. <strong>This does not stop the recording of the spectrogram</strong>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Time Selector</td>
+<td style="text-align: left;">Show a selection ROI in the spectrogram (11.) that can select specific time interval and show the sum of the channels in the top count histogram (8.).</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Selection to Spectrum</td>
+<td style="text-align: left;">Export the selected interval to the datastore as a spectrum.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Accumulated to Spectrum</td>
+<td style="text-align: left;">Export all accumulated counts to the datastore as a spectrum.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Show Break Lines</td>
+<td style="text-align: left;">If the red lines (12.) indicating if the interval between two rows exceed the specified save interval should be shown.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Keep Aspect Ratio</td>
+<td style="text-align: left;">If the pixels in the spectrogram should always be square. For detectors with many channels it can be useful to turn this off. If this is off the pixels in the spectrogram may not align with the corresponding bar in the count histogram.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Load ROIs</td>
+<td style="text-align: left;">Shortcut the to ROI tab of the Data Store.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Import ROIs</td>
+<td style="text-align: left;">Load ROIs from a file.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Clear ROIs</td>
+<td style="text-align: left;">Remove all spectrogram ROIs</td>
+</tr>
+</tbody>
+</table>
+</div>
 <h3 id="map">Map</h3>
 <p>Loading a map enables viewing of geographic measurements made with a spectrogram and a GPS. Maps can be loaded from online API requiring an internet connection or loaded from a <em>.pmtiles</em>-file for offline use. Compatible APIs and files are offered by several vendors, the software <em>QGis</em> offers support for exporting <em>.pmtiles</em> from other formats using plugins.</p>
 <h4 id="disclaimer">Disclaimer</h4>
 <p>LuRaCs does not provide or distribute map data. Users are responsible for ensuring that any map data or tile services they use with LuRaCs are obtained and used in accordance with the applicable licenses, terms, and usage restrictions.</p>
-<p>The map is rendered using Qt’s web engine making it a powerful but heavy tool. Using offline maps can use a lot of system memory since the server needs to cache tiles for a smooth view. Use a system with enough memory for this method. However, both the map and datapoints are rendered using GPU acceleration with WebGL allowing for 10 000s of points to be displayed without excessive stress on the system.</p>
+<p>The map is rendered using Qt’s web engine making it a powerful but heavy tool. Using offline maps can use a lot of system memory since the server needs to cache tiles for a smooth view. Use a system with enough memory for this method. However, both the map and datapoints are rendered using GPU acceleration with WebGL allowing for 10 000s of points to be displayed without excessive stress on the system. For reference, a Raspberry Pi 5 with 8 GB of RAM can render a 1.4 GB map file without any stutter, total memory usage was approximately 2 GB.</p>
 <figure>
 <img src="images/interface/map_view.jpg" id="fig:map_view" alt="" /><figcaption>Map with a loaded track and connected GPS.</figcaption>
 </figure>
@@ -166,18 +207,20 @@
 <li><p>Selector for what data is shown. total Count Rate, Dose Rate or count rate inside a loaded ROI.</p></li>
 <li><p>Main map view.</p></li>
 <li><p>Color gradient selector for the track points and a histogram over measured values. Color map can be changed by clicking Mouse-2 on the gradient bar.</p></li>
-<li><p>Live data from the GPS, see</p></li>
+<li><p>Live data from the GPS.</p></li>
 <li><p>Current GPS position, always displayed as a white and blue circle.</p></li>
 </ol>
+<h4 id="load-a-map">Load a map</h4>
+<p>is done from <code>Map Options -&gt; Load Online/Offline Map</code>. An offline map takes the form of a <em>.pmltiles</em> files and choosing this options prompts the selection of such a file. Choosing to load an online map prompts the entering of a URL to a tile serving API, possibly including an API key. The checkbox allows for saving the last used URL. If a personal API key is used be aware that URLs are saved unencrypted.</p>
 <h2 id="bottom-tabs">Bottom Tabs</h2>
 <h3 id="spectrum-info">Spectrum Info</h3>
-<p>Displays information spectra loaded spectra.</p>
+<p>Displays information about loaded spectra, both from files and detectors.</p>
 <figure>
 <img src="images/interface/spectrum_tab.jpg" id="fig:spectrum_info" alt="" /><figcaption>Spectrum Info Tab. For imported spectra with other formats than <code>XML</code> or <code>N42</code> file extensions are kept in the name.</figcaption>
 </figure>
 <div id="tab:spectrum_info_table">
 <table>
-<caption>Description of the column in the Spectrum Info tab</caption>
+<caption>Description of the columns in the Spectrum Info tab</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;"><strong>Column</strong></th>
@@ -211,14 +254,14 @@
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Instrument</td>
-<td style="text-align: left;">Which instrument is assigned to the spectrum, see section <a href="#" data-reference-type="ref" data-reference="">1.7</a></td>
+<td style="text-align: left;">Which instrument is assigned to the spectrum, see section <a href="#sec:definitions" data-reference-type="ref" data-reference="sec:definitions">[sec:definitions]</a></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div id="tab:spectrum_info_options_menu">
 <table>
-<caption>Description of the column in the Spectrum Info tab</caption>
+<caption>Description of the options menu opened by the button marked ’...’ on each row. Backgrounds are limited to only the ’Remove’ option.</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;"><strong>Field</strong></th>
@@ -258,10 +301,29 @@
 <li><p>Debug view of all data contained in the loaded ROIs.</p></li>
 <li><p>Apply time normalisation to the calculated ROI data.</p></li>
 <li><p>Export the calculated data and the live of each ROI to a CSV-file.</p></li>
-<li><p>Save ROI references to the data store for later access. These save the settings of the ROI but not the data.</p></li>
+<li><p>Save ROI references to the Data Store, see section <a href="#sec:data_store" data-reference-type="ref" data-reference="sec:data_store">1.7</a>, for later access. These save the settings of the ROI but not the data.</p></li>
 <li><p>Icon to display if the spectrum is background subtracted since this effects the results of ROI calculations.</p></li>
 </ol>
 <h3 id="spectrogram-rois">Spectrogram ROIs</h3>
+<p>Spectrogram ROIs differ from Spectrum ROIs in that do no curve fitting. When applied to a spectrogram they sum the counts from all the channels within their bounds and do so for every row in the spectrogram. The results are displayed in count rate, the number of counts are normalised to the save interval, for easier comparison if the recorded spectrograms use different save intervals.</p>
+<figure>
+<img src="images/interface/spectrogram_rois.jpg" id="fig:spectrogram_rois" alt="" /><figcaption>Spectrogram ROI tab with two loaded spectrograms and with two loaded ROIs. Additionally one <em>Calculation ROI</em> is added.</figcaption>
+</figure>
+<ol>
+<li><p>Plots over two spectrogram ROIs evaluated on two spectrograms.</p></li>
+<li><p>Calculation ROI</p></li>
+<li><p>Button for removing the calculation ROI</p></li>
+<li><p>Settings for the first spectrogram in the calculation ROI. The first combobox lists loaded spectrograms and the second selects the data, total count rate or count rate from a ROI.</p></li>
+<li><p>Mathematical operation used to compare the values, <code>+</code>, <code>-</code> or <code>/</code>.</p></li>
+<li><p>Settings for the second spectrogram in the calculation ROI. Setting identical to the first (4.).</p></li>
+<li><p>ROI names. Calculation ROIs currently only have a tag.</p></li>
+<li><p>ROI data in text form. Shown is the latest value and (mean+-std) calculated from the data shown in the plot.</p></li>
+</ol>
+<p>For use in mobile measurements where several ROIs is monitored at the same time a ’Compact View’ can be used. This is enabled under <code>View -&gt; Spectrogram ROis -&gt; Compact View</code>. This strips everything except the y-ticks and the plot itself.</p>
+<figure>
+<img src="images/interface/spectrogram_rois_compact.jpg" id="fig:spectrogram_rois_compact" alt="" /><figcaption>Same spectrograms and ROIs as in but in compact view.</figcaption>
+</figure>
+<p><em>Calculation ROIs</em> are plots calculated from the results of other ROIs. <strong>These perform element wise operations and do not account for differences in measurement parameters</strong>. Element 0 from ROI 0 is combined with Element 0 of ROI 1, regardless of measurement date or spectrogram save interval.</p>
 <h3 id="real-time-values">Real Time Values</h3>
 <p>Plots the values sampled for a detector in real time. Not all detectors provide both Count Rate and Dose Rate, in these cases the detector is still registered to the plot but noting is shown. Y-axes can be made logarithmic by right clicking the axis <code>Plot Options -&gt; Transforms -&gt; Log Y</code>.</p>
 <figure>
@@ -275,10 +337,142 @@
 <h3 id="detectors">Detectors</h3>
 <p>Information and status of connected detectors are displayed in this tab.</p>
 <figure>
-<img src="images/interface/detectors_tab.jpg" id="fig:detector_tab" alt="" />
+<img src="images/interface/detectors_tab.jpg" id="fig:detector_tab" alt="" /><figcaption>List of connected detectors. An entry can not be removed, if a detector is disconnected it is listed as <code>STOPPED</code>.</figcaption>
 </figure>
+<div id="tab:detectors_tab">
+<table>
+<caption>Description of the columns in the Detectors tab</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Column</strong></th>
+<th style="text-align: left;"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Column 0</td>
+<td style="text-align: left;">Options button marked with ’...’, see .</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Detector</td>
+<td style="text-align: left;">The name of the detector.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Temperature</td>
+<td style="text-align: left;">The temperature reading reported by the detector in <span class="math inline"><sup>∘</sup></span>C.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Battery</td>
+<td style="text-align: left;">Reported battery charge in %.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Charging</td>
+<td style="text-align: left;">If the detector reports that it is charging.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Voltage</td>
+<td style="text-align: left;">The actual voltage reported by the detector in V.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Status</td>
+<td style="text-align: left;"><p>Detector state machine reporting the current status of the detector.</p>
+<ul>
+<li><p><code>UNINITIALIZED</code> - Detector client created but not started.</p></li>
+<li><p><code>CONNECTING</code> - The detector is starting.</p></li>
+<li><p><code>CONNECTED</code> - The detector is connected and running. Default for normal detector function.</p></li>
+<li><p><code>CONNECTION_FAILED</code> - Detector start failed. Check System Log.</p></li>
+<li><p><code>CONNECTION_LOST</code> - Connection was lost after a successful start. Not universally implemented.</p></li>
+<li><p><code>STOPPING</code> - The detector has received and acknowledged the command to stop.</p></li>
+<li><p><code>STOPPED</code> - The detector has successfully stopped.</p></li>
+<li><p><code>ERROR</code> - An error occurred while connected and the detector is no longer functioning as expected.</p></li>
+</ul></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Type</td>
+<td style="text-align: left;">Type of detector by the name defined in the detector client.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Connection</td>
+<td style="text-align: left;">How the detector is connected. Can be <code>BLE, USB</code> or <code>NETWORK</code>.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tab:detectors_options_button">
+<table>
+<caption>Description of the options menu in the detector tab, opened with the button marked ’...’ in the table.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Field</strong></th>
+<th style="text-align: left;"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Disconnect</td>
+<td style="text-align: left;">Sends a stop signal to the detector.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Reset Spectrum</td>
+<td style="text-align: left;">Signals to the selected detector to clear its spectrum.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Start Acquisition</td>
+<td style="text-align: left;">Signals to the selected detector to start spectrum acquisition.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Stop Acquisition</td>
+<td style="text-align: left;">Signals to the selected detector to stop spectrum acquisition.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Make Instrument</td>
+<td style="text-align: left;">Shortcut for creating a <em>Unique Instrument</em> for the detector based on a <code>Generic Instrument</code> and save the current calibration of the connected spectrum. Useful for detectors that do not store their own energy calibration.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Settings</td>
+<td style="text-align: left;">Opens the detector settings dialog, see and .</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure>
+<img src="images/interface/detector_settings_calibration.jpg" id="fig:detector_settings_calibration" alt="" /><figcaption>Detector settings dialog showing the options for setting device calibration.</figcaption>
+</figure>
+<ol>
+<li><p>Unique Instrument from the library to pull settings from.</p></li>
+<li><p>Interact with the detector. <code>Pull Calibration</code> will request a calibration from the detector set in the coefficients buffer, not possible for all detectors. <code>Push Calibration</code> will call the setter function for calibration, not possible for all detectors.</p></li>
+<li><p>Pull the calibration coefficients from the spectrum connected to the detector and set in the coefficients buffer.</p></li>
+<li><p>Pull the calibration coefficients from the instrument set in (1.) and set in the coefficients buffer</p></li>
+</ol>
+<figure>
+<img src="images/interface/detector_settings_mca.png" id="fig:detector_settings_mca" alt="" /><figcaption>Detector settings dialog showing the options for MCA settings. The first column of spinboxes show the requested setting and the second row shows the actual value reported by the instrument. <code>Apply</code> signals the entered value to the detector’s setter function.</figcaption>
+</figure>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">LLD</td>
+<td style="text-align: left;">Lower Level Discriminator</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ULD</td>
+<td style="text-align: left;">Upper Lever Discriminator</td>
+</tr>
+</tbody>
+</table>
 <h3 id="isotopics">Isotopics</h3>
 <p>LuRaCs provides a library of data for a selection of common radionuclides and can be viewed in this tab. These can be used to draw reference lines for emissions in the spectrum plot. Most of the nuclide data is sourced from <em>Laboratoire National Henri Becquerel</em>, a few nuclides not provided by LNHB had be sourced from elsewhere. A citation is provided for each nuclide and full references can be found under <code>Help -&gt; Bibliography</code>.</p>
+<figure>
+<img src="images/interface/isotopics.jpg" id="fig:isotopics" alt="" /><figcaption>Ba-133 spectrum with Ba-133 selected in the Isotopics Tab.</figcaption>
+</figure>
+<ol>
+<li><p>Spectrum and gamma emission lines, drawn as solid lines. Line height corresponds to emission intensity,</p></li>
+<li><p>X-ray emission lines, drawn as dashed lines. Line height corresponds to emission intensity.</p></li>
+<li><p>Nuclide list, select nuclide with the checkbox to the left and change colour of the lines with the right coloured button.</p></li>
+<li><p>Information of the current clicked nuclide.</p></li>
+<li><p>Peak automation, see bellow.</p></li>
+</ol>
+<p>Auto matching nuclides to ROIs is accomplished by using the centroid of a fitted peak and finding emission close in energy. The matching is weighted by the emission intensity so a strong emission will be chosen over a weak of they are the same distance from the peak centroid. By selecting nuclides the auto matching of nuclides to ROIs, including from using the button inside the <em>ROI Editor</em>, are limited emission from the selected nuclides. Using auto match nuclides against all possible candidates are often unreliable, especially if the energy calibration is imperfect.</p>
+<p>The peak search is based on Savitzky-Golay Smoothing and the filter derivatives to compute peak candidates. These candidates are then filtered and the accepted peaks are added as ROIs. The length of the window in the Savitzky-Golay filter can be set in units of channels.</p>
 <h3 id="console">Console</h3>
 <p>The console allows for entering text commands to control the application and running scripts for basic automation. See for information on available commands and their usage.</p>
 <p>The Console can be used for light automation by using the <code>exec</code> command and providing a file path. The file is executed line by line and can used to quickly start set up a measurement session.</p>
@@ -286,18 +480,919 @@
 <p>The System Log displays messages from the application and detector clients. If something crashes the error and traceback will be displayed here.</p>
 <h2 id="gamma-tools">Gamma Tools</h2>
 <h3 id="calibration">Calibration</h3>
+<p>Calibration is the operation of determining the energy each channel corresponds to.</p>
+<figure>
+<img src="images/interface/gtools_calibration.jpg" id="fig:gtools_calibration" alt="" /><figcaption>Calibration window of a spectrum with 4 ROIs and assigned nuclides.</figcaption>
+</figure>
+<ol>
+<li><p>Which spectrum should be calibration. Only data from one spectrum can be used for one calibration.</p></li>
+<li><p>Add a calibration point not associated with a ROI. Measured and Reference energies must be set manually.</p></li>
+<li><p>Current calibration points detected and information about them. By unchecking a row it will be ignored in the calculation.</p></li>
+<li><p>Polynomial degree of the calibration function and the current coefficients. Coefficients can be changed manually but will be overwritten by pressing <code>Calculate</code>.</p></li>
+<li><p>The spectrum instrument. Can not be changed here, instead edit the spectrum before starting the calibration.</p></li>
+<li><p>Plot showing the energy as a function of channels based on the latest calculated coefficients.</p></li>
+<li><p>Assign the coefficients to the <em>Unique Instrument</em> set in (5.).</p></li>
+<li><p>Assign the coefficients and recalculate the x-axis for the spectrum selected in (1.), updating the view in the Spectrum-tab. This will not change the calibration of an already started spectrogram.</p></li>
+</ol>
 <h3 id="deconvolution">Deconvolution</h3>
+<p>This tool does more than simply reducing the effect of energy resolution but will still be referred to as a deconvolution operation. Deconvolution in this sense is more similar to reconstruction as, like image reconstruction in nuclear medicine, it employs the ML-EM algorithm. By using a detector response matrix, most simply acquired using Mone Carlo-simulations, the effects of the detector resolution, scattering in the detector and other effects can be reduced. The response matrix represents the expected detector response to a photon emitted at a certain energy, see and section <a href="#sec:" data-reference-type="ref" data-reference="sec:">[sec:]</a></p>
+<figure>
+<img src="images/interface/gtools_deconvolution.jpg" id="fig:gtools_deconvolution" alt="" /><figcaption>A Co-60 spectrum deconvolved using ML-EM and a response matrix for a Radiacode-103G detecting a parallel beam of monoenergetic photons.</figcaption>
+</figure>
+<ol>
+<li><p>The original Co-60 spectrum in blue and the deconvolved spectrum in orange.</p></li>
+<li><p>Control window for the deconvolution operation, see .</p></li>
+<li><p>The deconvolved spectrum is added as new spectrum, copying information from the original.</p></li>
+</ol>
+<div id="tab:gtools_deconvolution">
+<table>
+<caption>Description of the deconvolution window.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Field</strong></th>
+<th style="text-align: left;"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Algorithm</td>
+<td style="text-align: left;">Which algorithm should be used. Options are <code>ML-EM</code> (use this) and <code>Generalized Richardson-Lucy</code>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Iterations</td>
+<td style="text-align: left;">The number of iterations the algorithm should run.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">(ML-EM) Response Matrix</td>
+<td style="text-align: left;">The path to a .npz file containing the detector response matrix to be used.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Instrument</td>
+<td style="text-align: left;">Instrument providing information the algorithm. For instance, <code>Generalized Richardson-Lucy</code> is based on the resolution saved in the instrument.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Spectrum</td>
+<td style="text-align: left;">Which spectrum should be the operation be executed on.</td>
+</tr>
+</tbody>
+</table>
+</div>
 <h3 id="efficiency">Efficiency</h3>
+<p>The intrinsic efficiency is an important detector property and describes the fraction of photons hitting the detector that is actually detected.</p>
 <h3 id="resolution">Resolution</h3>
+<p>The energy resolution describes how well the detector can resolve detected photons of different energies. A low resolution results in broad peaks which can cover smaller peaks, making them harder to detect.</p>
+<figure>
+<img src="images/interface/gtools_resolution.jpg" id="fig:gtools_resolution" alt="" /><figcaption>Resolution window with several different spectra measured with a 3"x3" NaI(Tl) scintillator loaded. Using <code>Tabbed Spectrum View</code> so the ROIs are only evaluating one spectrum each.</figcaption>
+</figure>
+<ol>
+<li><p>Fitted peaks from all loaded spectra and ROIs. A ROI without a fit can not be included. Unchecked entries will be ignored in the calculation.</p></li>
+<li><p>Instrument to be given the calculation result. Can be Unique or Generic.</p></li>
+<li><p>How the calculation results should be plotted. These do not affect the results, only the view.</p></li>
+<li><p>The resolution function, coefficients are in arbitrary units and not % (% = au * 100). The <span class="math inline"><em>R</em><sup>2</sup></span> value of the fitted function compared with the data points.</p></li>
+<li><p>Assign the calculation results to the instrument set in (2.).</p></li>
+</ol>
+<h2 id="command-line-arguments">Command Line Arguments</h2>
+<p>Command Line Arguments can be provided when starting the application from a terminal.</p>
+<div id="tab:cli-options">
+<table>
+<caption>Command-line options available when starting LuRaCs.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Option</strong></th>
+<th style="text-align: left;"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span>Table  – continued from previous page</span></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Option</strong></td>
+<td style="text-align: left;"><strong>Description</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>–debug</code></td>
+<td style="text-align: left;">Launch the application in debug mode. A mock device is added automatically for testing and development.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>–headless</code></td>
+<td style="text-align: left;">Run the application without the graphical user interface, using terminal mode instead.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>–clear_local_cache</code></td>
+<td style="text-align: left;">Remove all locally stored files and exit the application.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>–import_spectrum &lt;file&gt; [file ...]</code></td>
+<td style="text-align: left;">Load one or more spectrum files when starting the application. Each specified file must exist and be supported by the application’s file importer.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>–import_rois &lt;file&gt;</code></td>
+<td style="text-align: left;">Load regions of interest from the specified XML file.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>-roi &lt;lower&gt; &lt;upper&gt;</code></td>
+<td style="text-align: left;">Add a region of interest with the specified lower and upper energy bounds in keV. The option can be specified multiple times to add several ROIs.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>–nuclides &lt;nuclide&gt; [nuclide ...]</code></td>
+<td style="text-align: left;">Preset one or more nuclides in the isotopics interface. This option is applied when the graphical user interface is available.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>-ble &lt;device&gt; [device ...]</code></td>
+<td style="text-align: left;">Attempt to establish Bluetooth Low Energy connections using the specified device names.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>–bluetooth &lt;device&gt; [device ...]</code></td>
+<td style="text-align: left;">Long-form alias for <code>-ble</code>. Attempts Bluetooth Low Energy connections using the specified device names.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>-usb &lt;device&gt; [device ...]</code></td>
+<td style="text-align: left;">Attempt to establish USB connections using the specified device names. Matching is performed against detected USB device product names.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>-nw &lt;ip&gt; [ip ...]</code></td>
+<td style="text-align: left;">Attempt to connect to network devices using their IP addresses.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>–network &lt;ip&gt; [ip ...]</code></td>
+<td style="text-align: left;">Long-form alias for <code>-nw</code>. Connects to network devices using their IP addresses.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>–serial_gps &lt;interface&gt;</code></td>
+<td style="text-align: left;">Connect a GPS receiver using a USB serial interface. The specified value identifies the serial interface used by the GPS receiver.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>–map_url &lt;URL&gt;</code></td>
+<td style="text-align: left;">Load an online map from the specified URL at application startup.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>–map_file &lt;path&gt;</code></td>
+<td style="text-align: left;">Load a local offline map from the specified <code>.pmtiles</code> file at application startup.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>–map_url</code> and <code>–map_file</code></td>
+<td style="text-align: left;">Only one map source may be specified at startup. If both options are provided, no map is loaded and a warning is written to the application log.</td>
+</tr>
+</tbody>
+</table>
+</div>
 <h2 id="subsec:cli">Command Line Interface (CLI)</h2>
 <p>Interaction with LuRaCs is done primarily through the GUI but it also provides a terminal based command line interface, allowing for detector control without a GUI. This can be useful for remote measurements or measurements run on a Raspberry Pi attached to a drone. This mode shares most of the same commands as the GUI Console with the exception of visualisation tools.</p>
 <p>This mode is started by running LuRaCs in a terminal with the <code>–headless</code> flag.</p>
 <figure>
-<img src="images/interface/CLI_start.png" id="fig:CLI_start" alt="" /><figcaption>LuRaCs command line interface.</figcaption>
+<img src="images/interface/cli.png" id="fig:cli" alt="" /><figcaption>LuRaCs command line interface.</figcaption>
 </figure>
-<h2 id="connection-dialogs">Connection Dialogs</h2>
-<h2 id="data-store">Data Store</h2>
+<figure>
+<img src="images/interface/cli_spectrum.png" id="fig:cli_spectrum" alt="" /><figcaption>Two spectra viewed through the command line using the command <code>view spectrum -Emax 1000 all</code>. The <code>-Emax 1000</code> flag limits the x-axis to <span class="math inline"> &lt; 1000</span> keV.</figcaption>
+</figure>
+<div id="tab:command-reference">
+<table>
+<caption>Command-line interface command reference.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><span class="nodecor"><strong>Command</strong></span></th>
+<th style="text-align: left;"><span class="nodecor"><strong>Description</strong></span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span>Table  – continued from previous page</span></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="nodecor"><strong>Command</strong></span></td>
+<td style="text-align: left;"><span class="nodecor"><strong>Description</strong></span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>help</code></td>
+<td style="text-align: left;">Display the available commands and their descriptions.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>clear</code></td>
+<td style="text-align: left;">Clear the console and display the application logo.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>exit</code>, <code>quit</code>, <code>shutdown</code></td>
+<td style="text-align: left;">Exit the application.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>device scan usb</code></td>
+<td style="text-align: left;">Scan for connected USB devices.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>device scan ble</code></td>
+<td style="text-align: left;">Scan for nearby Bluetooth Low Energy devices.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>device connect usb &lt;device&gt;</code></td>
+<td style="text-align: left;">Connect to a USB device matching the specified name.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>device connect ble &lt;device1&gt; [device2 ...]</code></td>
+<td style="text-align: left;">Connect to one or more Bluetooth Low Energy devices.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>device disconnect &lt;device&gt;</code></td>
+<td style="text-align: left;">Disconnect the specified device.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>device disconnect all</code></td>
+<td style="text-align: left;">Disconnect all connected devices.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>list devices</code></td>
+<td style="text-align: left;">Display all connected devices.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>list spectra</code></td>
+<td style="text-align: left;">Display all loaded spectra.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>list spectrogram</code></td>
+<td style="text-align: left;">Display all loaded spectrograms.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>list rois</code></td>
+<td style="text-align: left;">Display all loaded regions of interest.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>index spectrum</code></td>
+<td style="text-align: left;">Display indexed spectrum files.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>index spectrogram</code></td>
+<td style="text-align: left;">Display indexed spectrogram files.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>index roi</code></td>
+<td style="text-align: left;">Display indexed ROI files.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>view spectrum &lt;name&gt;</code></td>
+<td style="text-align: left;">Display the specified spectrum. The spectrum can be selected by name or by its index in the loaded spectrum list.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>view spectrum -n &lt;name&gt;</code></td>
+<td style="text-align: left;">Specify the spectrum to display by name.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>view spectrum all</code></td>
+<td style="text-align: left;">Display all loaded spectra on the same plot.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>view spectrum -A</code></td>
+<td style="text-align: left;">Display all loaded spectra on the same plot.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>view spectrum -Emin &lt;energy&gt;</code></td>
+<td style="text-align: left;">Set the lower energy limit of the displayed spectrum, in keV.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>view spectrum -Emax &lt;energy&gt;</code></td>
+<td style="text-align: left;">Set the upper energy limit of the displayed spectrum, in keV.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>view spectrum -cps</code></td>
+<td style="text-align: left;">Display the spectrum as counts per second (CPS) instead of total counts.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>view spectrum -log</code></td>
+<td style="text-align: left;">Display the spectrum using the logarithmic representation.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>view spectrum -bkgSub</code></td>
+<td style="text-align: left;">Display the background-subtracted spectrum.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>view rois</code></td>
+<td style="text-align: left;">Display the currently loaded regions of interest.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>view log</code></td>
+<td style="text-align: left;">Display recent application log entries.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>roi &lt;lower&gt; &lt;upper&gt;</code></td>
+<td style="text-align: left;">Add a region of interest between the specified lower and upper bounds.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>roi -c</code></td>
+<td style="text-align: left;">Clear all regions of interest.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>spectrogram start &lt;device&gt;</code></td>
+<td style="text-align: left;">Start a spectrogram for the specified device.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>spectrogram start all</code></td>
+<td style="text-align: left;">Start spectrograms for all connected devices.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>spectrogram pause &lt;name&gt;</code></td>
+<td style="text-align: left;">Pause the specified spectrogram.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>spectrogram pause all</code></td>
+<td style="text-align: left;">Pause all running spectrograms.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>spectrogram unpause &lt;name&gt;</code></td>
+<td style="text-align: left;">Resume the specified spectrogram.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>spectrogram unpause all</code></td>
+<td style="text-align: left;">Resume all paused spectrograms.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>spectrogram load &lt;path&gt;</code></td>
+<td style="text-align: left;">Load a spectrogram from the specified file.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>spectrogram unload &lt;name&gt;</code></td>
+<td style="text-align: left;">Unload the specified spectrogram.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>spectrogram unload all</code></td>
+<td style="text-align: left;">Unload all loaded spectrograms.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>-n &lt;name&gt;</code></td>
+<td style="text-align: left;">Specify a custom name when starting a spectrogram.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>-i &lt;seconds&gt;</code></td>
+<td style="text-align: left;">Set the spectrogram save interval. Default: <span class="math inline">1</span> second.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>-c &lt;count&gt;</code></td>
+<td style="text-align: left;">Set the number of spectra to concatenate before saving. Default: <span class="math inline">1</span>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>map url &lt;https-URL&gt;</code></td>
+<td style="text-align: left;">Load an online map from the specified HTTPS URL.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>map file &lt;path&gt;</code></td>
+<td style="text-align: left;">Load a local offline map from a PMTiles file.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>watch</code></td>
+<td style="text-align: left;">Continuously display live information from connected devices. Press <code>Ctrl+C</code> to stop.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>exec &lt;script-file&gt;</code></td>
+<td style="text-align: left;">Execute commands from a script file. Empty lines and lines beginning with <code>#</code> are ignored.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="detector-connection-control">Detector Connection &amp; Control</h2>
+<p>Connecting detectors using the GUI is facilitated through a dialog for each type of connection, the are found under <code>Detector -&gt; Connect Bluetooth/USB/Network</code>. Connecting to bluetooth and USB requires the application the scan for available devices, the serial number of the found devices are then displayed for selection.</p>
+<p>Connecting the a network devices requires knowing the device IP and type beforehand. Connecting to network detectors have the unique option to use the detector as a GPS. This is primarily intended for the Ortec Detective X which has a built in GPS.</p>
+<p>When connecting to serial GPS devices the application scans serial ports and lists suggestions but the port can also be entered manually. The baud rate is typically 4800 but a selection of other common rates are also presented.</p>
+<h2 id="sec:data_store">Data Store</h2>
+<p>The <em>Data Store</em> allows for saving data objects in the application it self for easy access. It also allows for limited editing of previously saved objects. It contains the following object types <em>Spectra</em>, <em>Spectrograms</em>, <em>ROIs</em>, <em>Unique Instruments</em> and <em>Generic Instruments</em>.</p>
+<p>All data items saved in the Data Store can be exported to a single zip-file with <code>File -&gt; Export Data Store</code>. Such a file can be imported with <code>File -&gt; Import Data Store</code>.</p>
+<h3 class="unnumbered" id="spectrum-library">Spectrum Library</h3>
+<figure>
+<img src="images/interface/data_store_spectrum.png" id="fig:data_store_spectrum" alt="" />
+</figure>
+<div id="tab:spectrum_library_fields">
+<table>
+<caption>Description of fields in toolbar at the bottom of the Spectrum Library-tab</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Field</strong></th>
+<th style="text-align: left;"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Delete</td>
+<td style="text-align: left;">Remove selected items.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Load Instrument</td>
+<td style="text-align: left;">Load the instrument contained in the specific spectrum file. If not selected LuRaCs will attempt to match the instrument name to an existing <em>Unique Instrument</em> save in the Data Store.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Load ROIs</td>
+<td style="text-align: left;">Should the ROIs contained in the spectrum be loaded with the spectrum.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Edit</td>
+<td style="text-align: left;">Edit the spectrum name or remark.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Export</td>
+<td style="text-align: left;">Export the spectrum. Available formats: <code>XML</code>, <code>CSV</code> and <code>xlsx</code>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Load</td>
+<td style="text-align: left;">Load the spectrum into view.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Close</td>
+<td style="text-align: left;">Close the data store.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tab:spectrum_library_columns">
+<table>
+<caption>Description of columns in the Spectrum Library-tab</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Column</strong></th>
+<th style="text-align: left;"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">Spectrum name</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Date</td>
+<td style="text-align: left;">Date when the measurement of the foreground started</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Live Time</td>
+<td style="text-align: left;">Live time of the foreground</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ROIs</td>
+<td style="text-align: left;">How many ROIs are saved with the spectrum, if any.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Instrument</td>
+<td style="text-align: left;">Which instrument is saved with the spectrum if any. If an instrument with the same name exists the in the Data Store, it will be used instead of the instrument saved with the spectrum. This can be changed in setting.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 class="unnumbered" id="spectrogram-library">Spectrogram Library</h3>
+<p>All created spectrograms are placed in the Spectrogram Library. From here they can be loaded back for analysis or continued measurement.</p>
+<figure>
+<img src="images/interface/data_store_spectrogram.png" id="fig:data_store_spectrogram" alt="" />
+</figure>
+<div id="tab:spectrogram_library_fields">
+<table>
+<caption>Description of fields in toolbar at the bottom of the Spectrogram Library-tab</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Field</strong></th>
+<th style="text-align: left;"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Delete</td>
+<td style="text-align: left;">Remove selected items.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Export Spectrum Data</td>
+<td style="text-align: left;">If checked the data for individual channels are included when exporting, everything else is exported the same.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Edit</td>
+<td style="text-align: left;">Edit the spectrogram name.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Export</td>
+<td style="text-align: left;">Export the spectrogram to another file. Available formats: <code>.db</code> (SQLite3) and <code>xlsx</code>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Load</td>
+<td style="text-align: left;">Load the spectrum into view.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Close</td>
+<td style="text-align: left;">Close the data store.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tab:spectrogram_library_columns">
+<table>
+<caption>Description of columns in the Spectrogram Library-tab</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Column</strong></th>
+<th style="text-align: left;"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">Spectrogram name</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Start Date</td>
+<td style="text-align: left;">Date when the measurement started.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">End Date</td>
+<td style="text-align: left;">Date when the measurement was last stopped.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Duration</td>
+<td style="text-align: left;">Total measurement duration.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Instrument</td>
+<td style="text-align: left;">Identifier for the detector used the measure the spectrogram.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 class="unnumbered" id="roi-library">ROI Library</h3>
+<p>The ROI Library allows for saving references to ROIs to then be loaded to a spectrum or spectrogram. This means the roi options like the energy bounds, fitting options and assigned nuclide are saved but data like fitting parameters or peak counts are not.</p>
+<figure>
+<img src="images/interface/data_store_rois.png" id="fig:data_store_rois" alt="" />
+</figure>
+<div id="tab:roi_library_fields">
+<table>
+<caption>Description of fields in toolbar at the bottom of the ROI Library-tab</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Field</strong></th>
+<th style="text-align: left;"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Delete</td>
+<td style="text-align: left;">Remove selected items.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Edit</td>
+<td style="text-align: left;">Edit the ROI collection name and the ROIs contained within, see .</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Export</td>
+<td style="text-align: left;">Export the ROIs to another file. Available formats: <code>.xml</code>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Load to Spectrogram</td>
+<td style="text-align: left;">Load the ROIs as spectrogram ROIs.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Load to Spectrum</td>
+<td style="text-align: left;">Load the ROIs as spectrum ROIs.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Close</td>
+<td style="text-align: left;">Close the data store.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tab:roi_library_columns">
+<table>
+<caption>Description of columns in the ROI Library-tab</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Column</strong></th>
+<th style="text-align: left;"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">Spectrogram name</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Start Date</td>
+<td style="text-align: left;">Date when the measurement started.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">End Date</td>
+<td style="text-align: left;">Date when the measurement was last stopped.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Duration</td>
+<td style="text-align: left;">Total measurement duration.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Instrument</td>
+<td style="text-align: left;">Identifier for the detector used the measure the spectrogram.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure>
+<img src="images/interface/data_store_roi_edit.png" id="fig:data_store_roi_edit" alt="" /><figcaption>ROI editor inside the Data Store. ROI alias/name can be changed, upper and lower bounds and nuclide and emission can be selected from the nuclide library.</figcaption>
+</figure>
+<h3 class="unnumbered" id="unique-generic-instruments">Unique-/Generic Instruments</h3>
+<p>The tabs for the Unique and Generic Instruments are very similar and treated in the same section.</p>
+<figure>
+<img src="images/interface/data_store_instrument.png" id="fig:data_store_instruments" alt="" /><figcaption>Instruments-tab in the Data Store containing Unique Instruments.</figcaption>
+</figure>
+<div id="tab:instrument_library_fields">
+<table>
+<caption>Description of fields in toolbar at the bottom of the Instruments-tab</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Field</strong></th>
+<th style="text-align: left;"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Delete</td>
+<td style="text-align: left;">Remove selected items.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Edit</td>
+<td style="text-align: left;">Edit an existing instrument, see .</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Export</td>
+<td style="text-align: left;">Export the instrument data to another file. Available formats: <code>.xml</code>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">New</td>
+<td style="text-align: left;">Create a new instrument. <em>Unique Instruments</em> can inherit data from <em>Generic Instruments</em>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Close</td>
+<td style="text-align: left;">Close the data store.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tab:instrument_library_columns">
+<table>
+<caption>Description of columns in the Instruments-tab</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Column</strong></th>
+<th style="text-align: left;"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">Instrument name (Only for <em>Unique Instrument</em>)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Model</td>
+<td style="text-align: left;">Name of the instrument model.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Calibration</td>
+<td style="text-align: left;">If the instrument stores an energy calibration. (Only for <em>Unique Instrument</em>)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Resolution</td>
+<td style="text-align: left;">If the instrument stores an energy resolution.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Efficiency</td>
+<td style="text-align: left;">If the instrument stores an intrinsic efficiency.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure>
+<img src="images/interface/data_store_instrument_edit.png" id="fig:data_store_instrument_edit" alt="" /><figcaption>The dialog for creating a new instrument or editing an existing one. ’Instrument Name’ can not be set for a generic instrument.</figcaption>
+</figure>
 <h2 id="settings">Settings</h2>
-<p>The settings are devided into <code>Settings</code> which contain basic and cosmetic settings, such as what data should be imported files and what theme should the application use.</p>
-</body>
-</html>
+<p>The settings are devided into <code>Settings</code> which contain basic and cosmetic settings, and <code>Advanced Settings</code> containing settings that users rarely need to interact with.</p>
+<div id="tab:settings">
+<table>
+<caption>Application settings.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Setting</strong></th>
+<th style="text-align: left;"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span>Table  – continued from previous page</span></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Setting</strong></td>
+<td style="text-align: left;"><strong>Description</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Theme</td>
+<td style="text-align: left;">Select the visual theme used by the application interface and plots.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Plot Colour Scheme</td>
+<td style="text-align: left;">Select the colour scheme used when automatically assigning colours to plotted spectra.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Spectrum Draw Style</td>
+<td style="text-align: left;">Select how spectra are rendered. Available options are <em>Pen</em>, <em>Brush</em>, and <em>Pen + Brush</em>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Font Size</td>
+<td style="text-align: left;">Set the application font size in points.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Spectrum Plot xMax</td>
+<td style="text-align: left;">Set the maximum energy displayed on spectrum plots, in keV.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Verbose Calculation Logging</td>
+<td style="text-align: left;">Enable additional logging during calculations. This can be useful when diagnosing calculation or processing problems.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Load ROIs on import</td>
+<td style="text-align: left;">Automatically load regions of interest when importing a spectrum from a file.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Load instrument on import</td>
+<td style="text-align: left;">Automatically load instrument information when importing a spectrum from a file.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Load calibration from instrument</td>
+<td style="text-align: left;">Load the energy calibration associated with the instrument when importing data from the Data Store or from a file.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tab:advanced-settings">
+<table>
+<caption>Advanced application settings.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Setting</strong></th>
+<th style="text-align: left;"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span>Table  – continued from previous page</span></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Setting</strong></td>
+<td style="text-align: left;"><strong>Description</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Update Loop Delay</td>
+<td style="text-align: left;">Set the delay between iterations of the device monitoring and update loop, in seconds.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Spectrum Update Delay</td>
+<td style="text-align: left;">Set the delay between spectrum updates during live acquisition, in seconds.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">GUI Scan Length</td>
+<td style="text-align: left;">Set the duration of Bluetooth Low Energy scans initiated through the graphical user interface, in seconds.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Headless Scan Length</td>
+<td style="text-align: left;">Set the duration of Bluetooth Low Energy scans when no the scan is not tracked in the GUI, in seconds.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Optimizer Max Iter</td>
+<td style="text-align: left;">Set the maximum number of iterations allowed by the optimizer.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Optimizer Tolerance</td>
+<td style="text-align: left;">Set the convergence tolerance used by the optimizer.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Use Chi<span class="math inline"><sup>2</sup></span> Weight</td>
+<td style="text-align: left;">Enable <span class="math inline"><em>χ</em><sup>2</sup></span> weighting during optimization.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Log Exceptions</td>
+<td style="text-align: left;">Enable logging of unhandled exceptions.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Write logs to file</td>
+<td style="text-align: left;">Enable writing log messages to the application log file.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Write logs to console</td>
+<td style="text-align: left;">Enable writing log messages to the terminal or console.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Headless Log Buffer Length</td>
+<td style="text-align: left;">Set the maximum number of log entries retained in the in-memory log buffer. Changes to this setting require an application restart.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Spectrogram View Buffer</td>
+<td style="text-align: left;">Set the number of recent spectrogram data points retained for display.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Save extra GPS data</td>
+<td style="text-align: left;">Enable saving additional GPS information with map-related data.</td>
+</tr>
+</tbody>
+</table>
+</div>

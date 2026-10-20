@@ -1,0 +1,87 @@
+<h3 id="spectrogram">Spectrogram</h3>
+<p>A spectrogram allows acquisition of data time-series. A spectrogram stores data with specified time intervals and can be displayed in a waterfall plot. It is also the function LuRaCs utilise for mobile measurements. If a GPS is connected, the geolocation data is automatically stored in the spectrogram. These measurements can be visualised on the embedded Map (or an online map).</p>
+<figure>
+<img src="images/interface/spectrogram_view.jpg" id="fig:spectrogram_view" alt="" /><figcaption>Acquisition of a spectrogram with the <em>Time Selector</em> active and one ROI.</figcaption>
+</figure>
+<ol>
+<li><p>Opens a dialog for starting a new spectrogram.</p></li>
+<li><p>Close the viewed spectrogram.</p></li>
+<li><p>Shortcut to the Data Library Spectrogram page, see section <a href="#sec:data_store" data-reference-type="ref" data-reference="sec:data_store">[sec:data_store]</a>.</p></li>
+<li><p>Toggle the currently loaded spectrograms. Status is shown to the left as [ACTIVE], [LOADED] or [PAUSED].</p></li>
+<li><p>Pause or Resume data collection, requires that the same detector used to collect the previous data is connected.</p></li>
+<li><p>Options menu, see</p></li>
+<li><p>Current information stored in the spectrogram and information about the <em>Time Selector</em>, if active.</p></li>
+<li><p>Count histogram. Shows either total accumulated spectrum when loading a previously acquired spectrogram, summed channel counts inside the <em>Time Selector</em>, if active, or counts in the latest row.</p></li>
+<li><p>ROI illustrated in the histogram, can be removed with Mouse-2.</p></li>
+<li><p>Waterfall diagram of the spectrogram.</p></li>
+<li><p><em>Time Selector</em> to study the summed spectra within a specific time interval. Can be toggled in the options menu (6.).</p></li>
+<li><p>Data break line, illustrates that the time between measured points exceeds the Time Interval. Can indicate a lost connection and thus caution should be taken to verify data integrity. Can be toggled in the options menu (6.).</p></li>
+<li><p>Y-axis displays the timestamps of when each row was measured.</p></li>
+<li><p>X-axis display spectrum energy, if calibrated.</p></li>
+<li><p>Color slider for the waterfall diagram. The color map can be changed by clicking Mouse-2 on the gradient bar.</p></li>
+</ol>
+<p>The spectrogram format is based around an SQLite database, see section <a href="#sec:file_spectrogram" data-reference-type="ref" data-reference="sec:file_spectrogram">[sec:file_spectrogram]</a> for further details on the format. The following data is stored for each time point in the spectrogram:</p>
+<ul>
+<li><p>Timestamp.</p></li>
+<li><p>Average count rate measured since the last time point.</p></li>
+<li><p>Average dose rate measured since the last time point.</p></li>
+<li><p>Device temperature at the time the data is stored.</p></li>
+<li><p>Longitude at the time the data is stored, if a GPS is available.</p></li>
+<li><p>Latitude at the time the data is stored, if a GPS is available.</p></li>
+<li><p>Spectrum difference since the previous data point was stored, as compressed binary.</p></li>
+<li><p>Meta data, stored as a utf-8 encoded and zlib compressed json-string. Examples of stored metadata include extended GPS data.</p></li>
+</ul>
+<h4 id="exporting-a-spectrogram">Exporting a spectrogram</h4>
+<p>is done trough the Data Library, accessed via the <em>Load</em>-button (2.).</p>
+<figure>
+<img src="images/interface/spectrogram_options.png" id="fig:spectrogram_options" alt="" /><figcaption>Dropdown options menu in spectrogram pane, see .</figcaption>
+</figure>
+<div id="tab:spectrogram_options">
+<table>
+<caption>Description of the possible operations in the spectrogram options menu</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Field</strong></th>
+<th style="text-align: left;"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Pause Visual Updates</td>
+<td style="text-align: left;">Stop the view spectrogram from updating while the measurement is still on going in the background. <strong>This does not stop the recording of the spectrogram</strong>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Time Selector</td>
+<td style="text-align: left;">Add a selected ROI in the spectrogram (11.) that can indicate the specific time interval, as opposed to all other ROIs that have energy bounds, and show the sum over time of the channels in the top count histogram (8.).</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Selection to Spectrum</td>
+<td style="text-align: left;">Export the data within a selected time interval to the Data Library as a spectrum.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Accumulated to Spectrum</td>
+<td style="text-align: left;">Export the accumulated counts to the Data Library as a spectrum.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Show Break Lines</td>
+<td style="text-align: left;">If the red lines (12.) indicating if the interval between two rows exceed the specified save interval should be shown.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Keep Aspect Ratio</td>
+<td style="text-align: left;">If the pixels in the spectrogram should always be square. For detectors with many channels it can be useful to turn this off. If this option is off the pixels in the spectrogram may not align with the corresponding bar in the count histogram.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Load ROIs</td>
+<td style="text-align: left;">Shortcut to the ROI tab of the Data Library.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Import ROIs</td>
+<td style="text-align: left;">Load ROIs from a LuRaCs XML-file.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Clear ROIs</td>
+<td style="text-align: left;">Remove all spectrogram ROIs</td>
+</tr>
+</tbody>
+</table>
+</div>

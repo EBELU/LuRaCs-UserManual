@@ -3,7 +3,7 @@
 %Due to limitations in Windows the serial number of connected USB devices can not be easily retrieved. Instead of showing the serial number, which usually contains an easily identifiable name, like in Linux it instead shows the manufacturer and the connected port. The user must then identify the instrument based on the port number.
 
 \subsection{Quick Starting Several Radiacode Detectors for mobile measurements}
-This examples demonstrates how the terminal can be used to effectively control several detectors at once, without having to repeat the connection and start measurement procedure for each one. In this example three Radiacode detectors are used but the principle is the same for all other types of detector. The code bellow illustrates the commands start an offline map, connect the GPS and instruments and start spectrograms for all detectors.
+This example demonstrates how the terminal can be used to effectively control several detectors at once, without having to repeat the connection and re-start the measurement procedure for each connection. For the example, three Radiacode detectors are used but the principle is the same for all other types of detectors. The code below illustrates how the commands start an offline map, connect to a GPS and the instruments, and start spectrograms for all detectors.
 
 \begin{minted}[
     framesep=2mm,
@@ -12,17 +12,14 @@ This examples demonstrates how the terminal can be used to effectively control s
     fontsize=\footnotesize,
     breaklines
     ]{bash}
-    # Start the map first, cacheing a large map with require all available resources and will cause the application the freeze momentarily. This can disturb the sampling of the detectors.
+    # Start the map first, cacheing a large map will require all available resources, that will cause the application to freeze momentarily. This can disturb the sampling of the detectors. map file  /Downloads/sverige.pmtiles
     map file ~/Downloads/sverige.pmtiles
 
-    # Once the map is loaded connect the GPS
-    # This assumes only one GPS device is connected to the PC, if several are connected the first serial port is chosen
+    # Once the map is loaded and connect to the GPS # This assumes that only one GPS device is connected to the PC. If several GPS are connected, the GPS with the first serial port is selected to be connected.
     gps connect
 
-    # This command will scan all bluetooth devices and match the given name to the serial number of the found devices
     device connect ble Radia
-    # This will connect all detectors with 'radia' in the name, matching is case insensitive
-    # Check if all detectors connected, if not repeat the above command
+    # This command will scan all Bluetooth devices and match the given name to the serial number of the found devices, device connect ble Radia # This will connect all detectors with ’radia’ in the name, note that matching is case insensitive # Check if all detectors are connected. If not, repeat the above command list devices
     list devices
 
     # Start recording spectrograms for all devices
@@ -33,29 +30,43 @@ This examples demonstrates how the terminal can be used to effectively control s
 \end{minted}
 
 \subsection{Connecting Detective X using direct ethernet}\label{subsec:example_detx}
-\textit{LuRaCs} communicates with a Detective X detector using the \textit{Mobile Field Kit} API described in the Detective X manual. Using this interface requires a network connection between the instrument and a host computer. A simple and stable way to establish such a connection is a direct ethernet cable from the instrument to the PC with no router in between. This method requires some setup before \textit{LuRaCs} can connect to a Detective X and is described in this example.
+\textit{LuRaCs} communicates with an Ortec Detective X detector using the \textit{Mobile Field Kit} API described in the Detective X manual. Using this interface requires a network connection between the instrument and a host computer. A simple and stable way to establish such a connection is a direct ethernet cable from the instrument to the PC with no router in between. This method requires some setup before \textit{LuRaCs} can connect to a Detective X and is described in this example.
 
 The first step is to configure the ethernet interface on the Detective X.
-Go to \texttt{Settings $\rightarrow$ Communications $\rightarrow$ Ethernet}. Ensure ethernet is enabled and disable DHCP. Manually enter the IP-address and network mask. A good choice of IP is \textbf{192.168.50.2}, as long as does not interfere with another connected device, and set the network mask to \textbf{255.255.255.0}.
+Go to \texttt{Settings $\rightarrow$ Communications $\rightarrow$ Ethernet}. Ensure that ethernet is enabled and disable DHCP. Manually enter the IP-address and network mask. A good choice of IP is \textbf{192.168.50.2}, as long as it does not interfere with another connected device, and set the network mask to \textbf{255.255.255.0}.
 
-The second step is to configure the PC to have a static IP address on the ethernet connection. The used IP will be \textbf{192.168.50.1} and the network mask 255.255.255.0, leave gateway empty. Examples are shown for Windows 11 and Linux Mint but the principle is the same for most systems.
+The second step is to configure the PC to have a static IP address on the ethernet connection. The IP-address will be \textbf{192.168.50.1} and the network mask 255.255.255.0, leave gateway empty. Examples are shown for Windows 11 (\autoref{fig:static_ipv4_windows}) and Linux Mint (\autoref{fig:static_ipv4_lm}) but the principle is the same for most systems.
 
-Once the network is configured check the connection by pinging Detective X. On most Linux systems, if the ping fails try restarting the network manager with the following command \texttt{sudo systemctl restart NetworkManager}. If that does not work, try rebooting the PC.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = .8\linewidth]{images/examples/static_ipv4_windows.jpg}
+    \caption{Steps for settings a static IPV4 address on Windows 11.}
+    \label{fig:static_ipv4_windows}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = .8\linewidth]{images/examples/static_ipv4_lm.jpg}
+    \caption{Steps for settings a static IPV4 address on Linux Mint 21.3 (Cinnamon).}
+    \label{fig:static_ipv4_lm}
+\end{figure}
+
+Once the network is configured check the connection by pinging Detective X. The ping the same on most operating systems and in this example would be \texttt{ping 192.168.50.2}. On most Linux systems, if the ping fails try restarting the network manager with the following command \texttt{sudo systemctl restart NetworkManager}. If that does not work, try rebooting the PC.
 
 If the ping succeeds everything is ready. In \textit{LuRaCs} go to \texttt{Devices $\rightarrow$ Connect Network} and enter the instrument IP, 192.168.50.2 in this example.
 
 \subsection{Preparing and Running the LU mobile detector setup}
-This setup consists of two \qty{4}{\litre} NaI(Tl) scintillators with digiBase MCAs and one HPGe detector with a digiDart system mounted in a car, equipped with an external usb GPS device.
+This setup consists of two \qty{4}{\litre} NaI(Tl) scintillation detectors with digiBase MCAs and one HPGe detector with a digiDart system, all mounted in a car, equipped with an external usb connected GPS.
 
 \begin{enumerate}
-    \item Ensure that the digiBase firmware is imported. \texttt{File -> Drivers}
-    \item Connect the detectors, neither the digiBase nor the digiDart save their calibration when used with LuRaCs. \texttt{Detector -> Connect USB}
-    \item Enable the correct voltage on each detector, this might be remembered by the detector. \texttt{Detector-tab -> 'A detector Row' -> '...'-button -> Settings -> MCA-tab -> HV: Enable}
+    \item Ensure that the digiBase firmware is imported. \texttt{File -> Drivers}. If not se section \ref{sec:connecting_devices}
+    \item Connect the detectors, neither the digiBase nor the digiDart save their calibration when used with LuRaCs. Hence, only the channel numbers will be shown on the energy axis. When connecting from a Linux system, serial numbers and detector type will be displayed for easy identification. On a Windows system they must be identified through the Windows Device Manager. \texttt{Detector -> Connect USB}
+    \item Enable the correct voltage on each detector. This information might be remembered by the detector MCA.. Otherwise check the serial numbers of the detectors to find which is which. \texttt{Detector-tab -> 'A detector Row' -> '...'-button -> Settings -> MCA-tab -> HV: Enable}
     \item (Optional) Calibrate the detectors with the K-40 and Tl-208 peaks and the 0 channel using the Calibration tool. Apply to the spectrum. \texttt{Gamma Tools -> Calibration}
-    \item With the calibration a new instrument can now be created from the Detectors-tab to save the calibration. It will automatically be fetched next time the detector is connected. \texttt{Detectors-tab -> 'A detector Row' -> '...'-button -> Make Instrument -> 'Save Calibration' is checked}
-    \item Start the map. If an offline map is used start it before any spectrogram, loading a large only map might interfere with sampling of the instruments, messing up the even save interval. \texttt{Map-tab -> Map Options -> Load Offline Map}
-    \item Connect the GPS. \texttt{Detector -> Connect Serial GPS}, determine the correct port if required and connect. 4800 is likely the correct Baud Rate.
-    \item Check that the GPS has a signal. \texttt{Map-tab -> Line Bellow the map -> 'Fix' should be 'Yes'}
+    \item With the calibration a new instrument can now be created from the Detectors-tab to save the calibration. It will automatically be fetched the next time the detector is connected. \texttt{Detectors-tab -> 'A detector Row' -> '...'-button -> Make Instrument -> 'Save Calibration' is checked}
+    \item Start the map. If an offline map is used, start it before any spectrogram, loading a large map might interfere with sampling of the instruments data, that disrupts the even save intervals. \texttt{Map-tab -> Map Options -> Load Offline Map}
+    \item Connect the GPS. \texttt{Detector -> Connect Serial GPS}, determine the correct port if required and connect. LuRaCs will display all available serial ports and if only one device is connected it is trivial to identify it. 4800 is likely the correct Baud Rate.
+    \item Check that the GPS has a signal. \texttt{Map-tab -> Line Bellow the map -> 'Fix' should be 'Yes'} It might take some time for the GPS to warm up.
     \item Ensure all detectors are running by clearing all spectra. \texttt{Detector -> Clear All Spectra}
     \item Start the spectrograms individually, \texttt{Spectrum-tab -> Start New} or use the console, \texttt{Console -> 'spectrogram start all'}.
 \end{enumerate}

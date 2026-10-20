@@ -1,0 +1,300 @@
+<h2 id="sec:data_store">Data Library</h2>
+<p>The <em>Data Library</em> allows for saving data objects in the application it self for easy access. It also allows for limited editing of previously saved objects. It contains the following object types <em>Spectra</em>, <em>Spectrograms</em>, <em>ROIs</em>, <em>Unique Instruments</em> and <em>Generic Instruments</em>.</p>
+<p>All data items saved in the Data Library can be exported to a single zip-file, with a specific internal structure (see <a href="#" data-reference-type="ref" data-reference="">[]</a>), using <code>File -&gt; Export Data Library</code>. Such a file can be imported with <code>File -&gt; Import Data Library</code>.</p>
+<h3 class="unnumbered" id="spectrum-library">Spectrum Library</h3>
+<figure>
+<img src="images/interface/data_store_spectrum.png" id="fig:data_store_spectrum" alt="" />
+</figure>
+<div id="tab:spectrum_library_fields">
+<table>
+<caption>Description of the possible operations in toolbar at the bottom of the Spectrum Library-tab</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Field</strong></th>
+<th style="text-align: left;"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Delete</td>
+<td style="text-align: left;">Remove selected items.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Load Instrument</td>
+<td style="text-align: left;">Load the instrument contained in the specific spectrum file. If not selected LuRaCs will attempt to match the instrument name to an existing <em>Unique Instrument</em> save in the Data Library.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Load ROIs</td>
+<td style="text-align: left;">Should the ROIs contained in the spectrum be loaded with the spectrum.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Edit</td>
+<td style="text-align: left;">Edit the spectrum name or remark.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Export</td>
+<td style="text-align: left;">Export the spectrum. Available formats: <code>XML</code>, <code>CSV</code> and <code>xlsx</code>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Load</td>
+<td style="text-align: left;">Load the spectrum into view.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Close</td>
+<td style="text-align: left;">Close the data Library.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tab:spectrum_library_columns">
+<table>
+<caption>Description of columns in the Spectrum Library-tab</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Column</strong></th>
+<th style="text-align: left;"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">Spectrum name</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Date</td>
+<td style="text-align: left;">Date when the measurement of the foreground started</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Live Time</td>
+<td style="text-align: left;">Live time of the foreground</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ROIs</td>
+<td style="text-align: left;">Number of ROIs saved with the spectrum, if any.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Instrument</td>
+<td style="text-align: left;">Which instrument is saved with the spectrum if any. If an instrument with the same name already exists in the Data Library, it will be used instead of the instrument saved with the spectrum. This can be changed in setting.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 class="unnumbered" id="spectrogram-library">Spectrogram Library</h3>
+<p>All created spectrograms are placed in the Spectrogram Library. From here they can be loaded back for analysis or continued measurement.</p>
+<figure>
+<img src="images/interface/data_store_spectrogram.png" id="fig:data_store_spectrogram" alt="" />
+</figure>
+<div id="tab:spectrogram_library_fields">
+<table>
+<caption>Description of the possible operations in toolbar at the bottom of the Spectrogram Library-tab</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Field</strong></th>
+<th style="text-align: left;"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Delete</td>
+<td style="text-align: left;">Remove selected items.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Export Spectrum Data</td>
+<td style="text-align: left;">If checked the data for individual channels are included when exporting, everything else is exported the same.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Edit</td>
+<td style="text-align: left;">Edit the spectrogram name.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Export</td>
+<td style="text-align: left;">Export the spectrogram to another file. Available formats: <code>.db</code> (SQLite3) and <code>xlsx</code>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Load</td>
+<td style="text-align: left;">Load the spectrum into view.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Close</td>
+<td style="text-align: left;">Close the data Library.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tab:spectrogram_library_columns">
+<table>
+<caption>Description of columns in the Spectrogram Library-tab</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Column</strong></th>
+<th style="text-align: left;"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">Spectrogram name</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Start Date</td>
+<td style="text-align: left;">Date when the measurement started.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">End Date</td>
+<td style="text-align: left;">Date when the measurement was last stopped.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Duration</td>
+<td style="text-align: left;">Total measurement duration.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Instrument</td>
+<td style="text-align: left;">Identifier for the detector used for acquiring the spectrogram.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 class="unnumbered" id="roi-library">ROI Library</h3>
+<p>The ROI Library allows for saving references to ROIs. These can later be loaded to a spectrum or spectrogram. This means the roi options, like the energy bounds, fitting options and assigned nuclide, are saved but data like fitting parameters and peak counts are not.</p>
+<figure>
+<img src="images/interface/data_store_rois.png" id="fig:data_store_rois" alt="" />
+</figure>
+<div id="tab:roi_library_fields">
+<table>
+<caption>Description of the possible operations in toolbar at the bottom of the ROI Library-tab</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Field</strong></th>
+<th style="text-align: left;"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Delete</td>
+<td style="text-align: left;">Remove selected items.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Edit</td>
+<td style="text-align: left;">Edit the ROI collection name and the ROIs contained within, see .</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Export</td>
+<td style="text-align: left;">Export the ROIs to another file. Available formats: <code>.xml</code>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Load to Spectrogram</td>
+<td style="text-align: left;">Load the ROIs as spectrogram ROIs.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Load to Spectrum</td>
+<td style="text-align: left;">Load the ROIs as spectrum ROIs.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Close</td>
+<td style="text-align: left;">Close the data Library.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tab:roi_library_columns">
+<table>
+<caption>Description of columns in the ROI Library-tab</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Column</strong></th>
+<th style="text-align: left;"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">Name of the ROI group.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ROIs</td>
+<td style="text-align: left;">Number of ROIs in the group.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Regions</td>
+<td style="text-align: left;">The bounds of all ROIs in the group.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure>
+<img src="images/interface/data_store_roi_edit.png" id="fig:data_store_roi_edit" alt="" /><figcaption>ROI editor inside the Data Store. From the nuclide library, it is possible to change the ROI alias/name as well as upper and lower bounds, nuclide, emission.</figcaption>
+</figure>
+<h3 class="unnumbered" id="unique-generic-instruments">Unique-/Generic Instruments</h3>
+<p>The tabs for the Unique and Generic Instruments are very similar and therefore described in the same section.</p>
+<figure>
+<img src="images/interface/data_store_instrument.png" id="fig:data_store_instruments" alt="" /><figcaption>Instruments-tab in the Data Library, with eight listed Unique Instruments.</figcaption>
+</figure>
+<div id="tab:instrument_library_fields">
+<table>
+<caption>Description of the possible operations in toolbar at the bottom of the Instruments-tab</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Field</strong></th>
+<th style="text-align: left;"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Delete</td>
+<td style="text-align: left;">Remove selected items.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Edit</td>
+<td style="text-align: left;">Edit an existing instrument, see .</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Export</td>
+<td style="text-align: left;">Export the instrument data to another file. Available formats: <code>.xml</code>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">New</td>
+<td style="text-align: left;">Create a new instrument. <em>Unique Instruments</em> can inherit data from <em>Generic Instruments</em>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Close</td>
+<td style="text-align: left;">Close the data Library.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tab:instrument_library_columns">
+<table>
+<caption>Description of columns in the Instruments-tab</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Column</strong></th>
+<th style="text-align: left;"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">Instrument name (Only for <em>Unique Instrument</em>)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Model</td>
+<td style="text-align: left;">Name of the instrument model. Ex. RadiaCode-110 or Identifinder R400.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Calibration</td>
+<td style="text-align: left;">Shows if the instrument stores an energy calibration. (Only for <em>Unique Instrument</em>)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Resolution</td>
+<td style="text-align: left;">Shows if the instrument stores an energy resolution.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Efficiency</td>
+<td style="text-align: left;">Shows if the instrument stores an intrinsic efficiency.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure>
+<img src="images/interface/data_store_instrument_edit.png" id="fig:data_store_instrument_edit" alt="" /><figcaption>The dialog for creating a new instrument or editing an existing one. ’Instrument Name’ can not be changed for a generic instrument.</figcaption>
+</figure>

@@ -9,7 +9,7 @@ Lund University and its contributors make no representation or warranty that the
 
 \textbf{Research Use}
 
-This software is intended as a research and experimental tool for gamma spectroscopy and mobile radiation measurements. It is not intended to constitute a certified measurement system, and measurement results should not be assumed to be accurate or suitable for regulatory, safety-critical, medical, environmental, or other consequential applications without appropriate independent validation.
+This software is intended as a research and experimental tool for gamma spectroscopy and mobile radiation measurements. It is not intended to constitute a certified measurement system. Measurement results should not be assumed to be accurate or suitable for regulatory, safety-critical, medical, environmental, or other consequential applications without appropriate independent validation.
 
 Measurement results may be affected by the detector, electronics, calibration, measurement geometry, environmental conditions, acquisition parameters, data processing, and other factors.
 
@@ -22,19 +22,49 @@ Nothing in this notice excludes or limits any liability that cannot legally be e
 The complete GNU General Public License version 3 is provided with the software.
 
 \subsection{Introduction}
+The Lund Radiation Analysis Computer Software (LuRaCs) is developed and maintained by the Department of Medical Radiation Physics at Lund University, Sweden. Its development originated from a project benchmarking citizen science radiation detectors, during which the need for a more standardised and versatile software platform became apparent. In particular, integrating data acquisition from multiple detectors, simulations, and subsequent analysis within a single application was identified as a means of simplifying experimental workflows and improving the consistency of future studies.
+
+Developing and maintaining the software in-house also provides a foundation for implementing and evaluating advanced experimental methods, such as spectrum deconvolution. Furthermore, the existing software used for mobile gamma-ray spectroscopy at the department was no longer actively maintained and had become increasingly outdated. Given the importance of reliable radiation protection and emergency preparedness, the ability to operate independently of an internet connection was established as an additional design requirement. These needs were consequently incorporated into a single software development project.
+
+LuRaCs is therefore primarily intended as a research platform, while also seeking to support the growing field of citizen science. It is designed to accommodate a broad range of users and applications, balancing flexibility and analytical capabilities with ease of use. By integrating data acquisition and analysis in a single, standalone application, LuRaCs aims to provide a common and extensible platform for radiation measurement and research.
+
+In addition to its research applications, LuRaCs is designed with radiation protection, defence, and emergency preparedness requirements in mind. The software is cross-platform and can be deployed across supported operating systems. Its mapping functionality supports offline maps and generic GPS devices, enabling location-based measurements without requiring an internet connection. Furthermore, its use of open file formats, including an interoperable spectral data format, facilitates data exchange with other software and supports integration into existing workflows.
+
+This manual serves as both a user guide and a technical reference, documenting the use of LuRaCs as well as its internal structure and implementation. As an open-source project licenced under GPL-3.0, LuRaCs encourages reuse, adaptation, and further development by researchers who may find the software useful in their own work. Its architecture is designed with extensibility in mind, allowing additional analysis tools and detector integrations to be incorporated with minimal modifications to the existing codebase. In this way, the project aims to facilitate not only the use of the software in a broad range of research applications, but also its continued development and adaptation to emerging experimental needs.
+
+If you use LuRaCs in your research or other projects, please cite the following publication when reporting or sharing your work:
+
+[Full reference to the accompanying publication]
+
+We thank the people who have worked on and contributed to this project.
+
+\begin{tabular}{ll}
+    Erik Ewald, M.Sc. & Software Lead \\
+    Christian Bernhardsson, Ph.D. & Project Supervisor \\
+    Malte Axner & Contributor \\
+    Sigurður Emil Pálsson, Ph.D. & Software Tester \\
+\end{tabular}
+
+For bugs and other issues with the software, please report this through \textit{Issues} on the project GitHub page:
+
+\url{https://github.com/EBELU/LuRaCs/issues}
 
 \subsubsection{LuRaCs-H3}
-LuRaCs-H3 is a light weight version of the compiled program indented for system with limited storage. It excludes heavy components to reduce file size of the executable. It is approximately 250 MB smaller than the regular version. The following systems are excluded in the H3 version.
+LuRaCs-H3 is a light weight version of the compiled program indented for systems with limited storage capacity. It excludes large components to reduce the executable file size. This version is approximately 250 MB smaller than the regular version. The following component is excluded in the H3 version.
 \begin{itemize}
-    \item The embedded map, position data can still be recorded.
+    \item The embedded map (position data can still be recorded)
 \end{itemize}
 
-\subsection{Installation}
-LuRaCs distributed as binary does not require any installs before use, with the exception of usb drivers on Windows.
+\subsubsection{LuRaCs-Si}
+LuRaCs-Si is a special version of LuRaCs that starts the application in \textit{Si}-mode by default. This is intended for users who do not need and might be confused by the more advanced features. Therefore, it soft locks the application the \textit{Measure}-tab, see section \ref{sec:measure_view}, and hides most other tooling. \textit{Si}-mode can still be turned of and the application will then be identical to the \textit{H3} version.
 
-Before installing, ensure that Python version 3.10, 3.11, 3.12 or 3.13 is installed on the system. The Python installation can be verified by opening \textit{cmd} on windows or a Terminal on MacOS and Linux and entering \texttt{python --version} or \texttt{python3 --version}, if Python is correctly installed the version will be displayed.
+\subsection{Installation}
+The binary distribution of LuRaCs does not require any installation before use, except for usb drivers on Windows.
+
+Before installation, ensure that Python version 3.10, 3.11, 3.12 or 3.13 is installed on the system. The Python installation can be verified by opening \textit{cmd} on windows or a Terminal on MacOS and Linux and entering \texttt{python --version} or \texttt{python3 --version}. If Python is correctly installed the version will be displayed.
+
 \subsubsection{With \texttt{pip}}
-When Python has been correctly set up, make a new folder for the install and open \textit{cmd} or a terminal in that folder. On Windows enter the following commands in \textit{cmd}:
+With Python correctly set up, make a new folder for the installation and open \textit{cmd} or a terminal in that folder. On Windows enter the following commands in \textit{cmd}:
 \begin{minted}[
     framesep=2mm,
     baselinestretch=1.2,
@@ -55,7 +85,7 @@ pip install luracs
 LuRaCs
 \end{minted}
 
-On Linux and MacOS run the following bash commands:
+On Linux and MacOS run the following bash commands in a Terminal:
 \begin{minted}[
     framesep=2mm,
     baselinestretch=1.2,
@@ -75,9 +105,10 @@ pip install luracs
 # Run
 LuRaCs
 \end{minted}
-This will install all decencies for the full version of the application and provide the start script \texttt{LuRaCs}.
+This will install all dependencies required for the full version of the application and provide the start script \texttt{LuRaCs}.
+
 \subsubsection{From source}
-LuRaCs can be installed from source by cloning the GitHub repository. Installing from source requires a C/C++-compiler for compiling \textit{Cython} extensions. When installing from source to edit the code, run \texttt{pip install -e .[dev]} to install in editable mode. The will also install development tools like \texttt{pyinstaller} and \texttt{pytest}.
+LuRaCs can be installed from source by cloning the GitHub repository. Installing from source requires a C/C++-compiler for compiling \textit{Cython} extensions. When installing from source to edit the code, run \texttt{pip install -e .[dev]} to install in editable mode. This will also install the development tools like \texttt{pyinstaller} and \texttt{pytest}.
 
 \begin{minted}[
     framesep=2mm,
@@ -96,7 +127,7 @@ pip install .
 LuRaCs
 \end{minted}
 
-\subsection{Connecting Devices}
+\subsection{Connecting Detector}\label{sec:connecting_devices}
 
 \begin{table}[H]
 \centering
@@ -105,11 +136,13 @@ LuRaCs
 \begin{tabular}{@{}llll@{}}
 \toprule
 Model         & Manufacturer  & Connections & Note         \\ \midrule
-RadiaCode-1xx & Radiacode     & USB, BLE    &              \\
-Raysid        & Raysid        & BLE         &              \\
+RadiaCode-1xx & Radiacode Ltd.    & USB, BLE    &              \\
+Raysid        & In-View        & BLE         &              \\
 digiBase      & Oretec Ametek & USB         &  Requires Ortec Firmware            \\
 digiDart      & Oretec Ametek & USB         &              \\
-DetectiveX    & Oretec Ametek & NETWORK     &              \\ \bottomrule
+DetectiveX    & Oretec Ametek & NETWORK     &              \\ 
+Identifinder R400 & FLIR & NETWORK \\
+\bottomrule
 \end{tabular}
 \end{table}
 
@@ -129,12 +162,12 @@ SUBSYSTEM=="usb", ATTRS{idVendor}=="0a2d", GROUP="users", MODE="0666"
 
 \end{minted}
 
-\textbf{Connecting devices over the network } likely requires setup specific to that instrument so no general guide is provided. See example \ref{subsec:example_detx} for how this can be done for the Ortec Ametec Detective X.
+\textbf{Connecting devices over the network } typically requires instrument-specific configuration, so no general guide is provided. See example \ref{subsec:example_detx} on how this can be done for the Ortec Ametec Detective X.
 
-\textbf{Connecting a digiBase} requires the files containing the necessary firmware. These files can be found in the install directories of the \textit{Maestro} and \textit{Gamma Vision} software provided by Ortec. LuRaCs does not provide these files and users are responsible for acquiring these files in accordance with applicable licences. Once the files have been identified they can be reached by LuRaCs by saving them in the driver library. Select \texttt{File -> Import Drivers} and select the files. If they appear in \texttt{File -> Drivers} they can now be reached by LuRaCs.
+\textbf{Connecting a digiBase} requires the files containing the necessary firmware. These files can be found in the installation directories of the \texttt{Maestro} and \texttt{Gamma Vision} software provided by Ortec. LuRaCs does not provide these files. Users are responsible for acquiring these files in accordance with applicable licences. By importing these files to the driver library they can be reached by LuRaCs. In LuRaCs, select \texttt{File -> Import Drivers} and select the files. If they appear in \texttt{File -> Drivers} they can now be reached by LuRaCs.
 
 \subsection{Compatible file formats}
-LuRaCs is compatible with a selection of file formats, both standard and more niche third party formats. However, LuRaCs is not primarily intended to support general spectrum analysis so if you are looking for a general analysis application consider using InterSpec\footcite{SandialabsInterSpec2025} instead. 
+LuRaCs is compatible with a selection of file formats, both standard and other third party formats. However, LuRaCs is not primarily intended to support general spectrum analysis. The user may consider other analysis applications for such purposes, e.g. InterSpec\footcite{SandialabsInterSpec2025} instead. 
 
 \begin{table}[H]
 \centering
@@ -142,7 +175,7 @@ LuRaCs is compatible with a selection of file formats, both standard and more ni
 \label{tab:supported_formats}
 \begin{tabular}{@{}lll@{}}
 \toprule
-\textbf{Source}            & \textbf{Extension} & \textbf{Contained Data}                                        \\ \midrule
+\textbf{Source}            & \textbf{Extension} & \textbf{Embedded data}                                        \\ \midrule
 Radiacode         & .xml      & Counts, background, live time, real time, calibration \\
 \textit{Several}             & .n42      & Counts, background, live time, real time, calibration \\
 Ortec    & .spe      & Counts, live time, real time, calibration             \\
@@ -153,51 +186,108 @@ Canberra & .tka      & Counts, live time, real time                          \\ 
 \begin{table}[H]
 \centering
 \caption{Compatible track formats.}
-\label{tab:supported_formats}
-\begin{tabular}{@{}ll@{}}
+\label{tab:supported_track_formats}
+\begin{tabular}{@{}lll@{}}
 \toprule
-\textbf{Source}            & \textbf{Extension} \\ \midrule
-Radiacode         & .rctrk \\ \bottomrule
+\textbf{Source}            & \textbf{Extension} & \textbf{Embedded data} \\ \midrule
+Radiacode         & .rctrk & Geolocation for Count- \& Dose Rates \\ \bottomrule
 \end{tabular}
 \end{table}
 
 \subsection{Package dependencies and Resources}
+We are grateful to the develops and maintainers of the packages used in the application. Both the projects that are included as dependencies and those that we forked and modified. All licences are collected in the \texttt{/licences} directory in the GitHub repo and packaged with compiled versions as well. Forked packages have their original licences and notices retained as they were in the original code, with our changed noted.
+
+\begin{table}[H]
+    \centering
+    \caption{Dependencies, their licenses, and source repositories.}
+    \label{tab:dependencies}
+    \begin{tabular}{ll}
+        \toprule
+        \textbf{Package} & \textbf{License} \\
+        \midrule
+        \href{https://github.com/hbldh/bleak}{Bleak} & MIT \\
+        \href{https://github.com/numpy/numpy}{NumPy} & BSD-3-Clause \\
+        \href{https://github.com/pyqtgraph/pyqtgraph}{PyQtGraph} & MIT \\
+        \href{https://github.com/pyside/pyside-setup}{PySide6} & GPL-3.0 (Chosen option) \\
+        \href{https://foss.heptapod.net/openpyxl/openpyxl}{openpyxl} & MIT \\
+        \href{https://github.com/pyusb/pyusb}{PyUSB} & BSD-3-Clause \\
+        \href{https://github.com/lxml/lxml}{lxml} & BSD-3-Clause \\
+        \href{https://github.com/fastapi/fastapi}{FastAPI} & MIT \\
+        \href{https://github.com/encode/uvicorn}{Uvicorn} & BSD-3-Clause \\
+        \href{https://github.com/psf/requests}{Requests} & Apache-2.0 \\
+        \href{https://github.com/piccolomo/plotext}{plotext} & MIT \\
+        \href{https://github.com/prompt-toolkit/python-prompt-toolkit}{prompt\_toolkit} & BSD-3-Clause \\
+        \href{https://github.com/pyocd/libusb-package}{libusb\_package} & Apache-2.0 \\
+        \href{https://github.com/lmfit/uncertainties}{uncertainties} & BSD-3-Clause \\
+        \href{https://github.com/Python-Markdown/markdown}{Markdown} & BSD-3-Clause \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{Forked projects that were used in the application.}
+    \label{tab:forked_packages}
+    \begin{tabular}{ll}
+        \toprule
+        \textbf{Package} & \textbf{License} \\
+        \midrule
+        \href{https://github.com/maplibre/maplibre-gl-js}{MapLibre GL JS} & BSD-3-Clause \\
+        \href{https://github.com/protomaps/PMTiles}{pmtiles} & BSD-3-Clause \\
+        \href{https://github.com/cdump/radiacode/tree/master}{readiacode} & MIT \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{Other third party resources used.}
+    \label{tab:third_party_resources}
+    \begin{tabular}{ll}
+        \toprule
+        \textbf{Resource} & \textbf{License} \\
+        \midrule
+        \href{https://fonts.google.com/icons}{Meterial Design Icons } & Apache 2.0 \\
+        \href{https://github.com/catppuccin}{Catpucchin Theme} & MIT \\
+        \bottomrule
+    \end{tabular}
+\end{table}
 
 \subsection{Terms \& Object Definitions}\label{sec:definitions}
 \paragraph{Spectrum} is a data object that contains count histograms from a radiation detector and associated meta data. A spectrum contains the following information:
 
 \begin{itemize}
-    \item Spectrum name.
-    \item Number of channels, fore- and background must have the same number of channels.
-    \item Optional remark or description.
-    \item Detector identifier.
-    \item Detector model.
+    \item Spectrum name (Ex. 'Radium\_Watch\_10cm').
     \item Fore- and Background spectrum.
-    \item ROIs and analysis results from evaluating the ROI on the spectrum like counts and parameters from a curve fit.
-    \item Calibration coefficients for converting channel number to energy.
-    \item Calibrated X-axis expressed in keV.
-    \item Reference to the instrument used for calculations.
+    \item Number of channels, fore- and background must have the same number of channels (Ex. 1024).
+    \item Optional remark or description.
+    \item Detector identifier (Ex. RC-110-001234).
+    \item Detector model (Ex. RadiaCode-110).
+    \item ROIs and analysis results for defined ROIs in the spectrum e.g. counts and parameters from a curve fit, see the \textit{ROIs} section bellow.
+    \item Calibration coefficients for converting channel number to energy (Ex. [0.00024, 0.989, 15.4]).
+    \item Calibrated X-axis expressed in keV [0, 1.233, ..., 2997.23, 3000].
+    \item Reference to the instrument used for calculations, see the \textit{Instruments} section bellow.
 \end{itemize}
 
 
 
-\paragraph{Region Of Interest (ROI)} is a spectrum region bounded by energy. They can be applied both in a spectrum and in a spectrogram. When applied to a spectrum a Gaussian function can be fitted to a peak contained inside the ROI.
+\paragraph{Region Of Interest (ROI)} is a spectrum region bounded by an upper and lower energy. In LuRaCs ROIs can be applied both in a spectrum and in a (recorded/ongoing) spectrogram. When applied to a spectrum a Gaussian function can be fitted to a peak contained inside the ROI, see section \ref{sec:spectrum}
 
-When applied to spectrograms ROIs do not perform any curve fitting, only the summed counts inside the ROI are calculated. The time series produced from a spectrogram ROI can be viewed separately in the map. Spectrograms can use special ROIs called \textit{Calculation ROIs} or CalcROIs. These are calculated from data produced by two other ROIs by combining their values with addition, subtraction or division. For example, CAL\_0 (a Calculation ROI) can show the results of ROI\_0 / ROI\_1 where ROI\_0 is placed over the K-40 peak and ROI\_1 is placed over the Cs-137 peak.
+When applied to spectrograms ROIs do not perform any curve fitting, only the summed counts inside the ROI are calculated. The time series produced from a spectrogram ROI can be viewed separately in the map. Spectrograms can use special ROIs called \textit{Calculation ROIs} or \textit{CalcROIs}. The CalcROIs are calculated by adding, subtracting, or dividing the data from two different ROIs. For example, CAL\_0 (a Calculation ROI) can show the results of ROI\_0 / ROI\_1 where ROI\_0 is placed over the K-40 peak and ROI\_1 is placed over the Cs-137 peak.
 
-\paragraph{Spectrogram} is the primary method for recording time series data. It allows for measuring the difference in counts in each channel between time points separated by a fixed time. It also interfaces with the GPS function and can store geolocational information for mobile measurements. A spectrogram is a rather complicated object and is discussed further in other parts of this manual, see section \ref{sec:file_spectrogram}.
+\paragraph{Spectrogram} is the primary method for recording time series data. It allows for measuring the difference in counts in each channel between time points separated by a fixed time. It also interfaces with a GPS function and can store geolocational information for mobile measurements. A spectrogram is a rather complicated object and is discussed further in other parts of this manual, see section \ref{sec:file_spectrogram}.
 
-Options when creating a spectrogram are
+LuRaCs provides the following options when creating a spectrogram:
 \begin{itemize}
-    \item Detector to use for data.
-    \item Spectrogram name.
-    \item Save interval, the time between each row.
-    \item If channels should be concatenated, concatenating by a factor 2 means summing two channels to one, halving to total number of channels. Useful for reducing filesize and improving visual analysis.
+    \item Detector selection for data collection.
+    \item Name of the new spectrogram.
+    \item Save interval (the time between each row/measurement point).
+    \item Whether channels should be concatenated. For example, concatenating by a factor 2 means summing two adjacent channels into one, thereby halving the total number of channels. This is useful for reducing file size and improving visual analysis.
 \end{itemize}
-If spectrum corresponding to the detector used for the spectrogram is energy calibrated this calibration is also used for the spectrogram.
+If the detector used for acquiring the spectrum associated with the spectrogram is energy calibrated, the same calibration is used for the spectrogram.
 
 
-\paragraph{Instrument}s are divided into \textit{Generic} and \textit{Unique} instruments. \textit{Generic Instrument} represent an instrument model. All instruments of the same model share some properties, of which the \textit{Generic Instrument} stores the following:
+\paragraph{Instrument}s represent parameters of an external \textit{detector} and are divided into \textit{Generic} and \textit{Unique} instruments. \textit{Generic Instrument} represent a detector model, like 'RadiaCode-110' or '3"x3" NaI + digiBase'. All instruments of the same model share some properties, of which the \textit{Generic Instrument} stores the following:
 \begin{itemize}
     \item Model name.
     \item Manufacturer.
@@ -206,9 +296,9 @@ If spectrum corresponding to the detector used for the spectrogram is energy cal
     \item Energy Resolution.
     \item Intrinsic Energy Efficiency.
 \end{itemize}
-A \textit{Unique Instrument} represents a specific instrument of a certain model. The \textit{Generic Instruments} serve as a basis for quickly making a new \textit{Unique Instrument}. A \textit{Unique Instrument} store the same information as a \textit{Generic Instrument} in addition to an energy calibration. \textit{Unique Instruments} can be assigned to a spectrum from which certain tools can pull required data for calculations and they can store the energy calibration for instruments that do not store it themselves.
+A \textit{Unique Instrument} represents a specific detector of a certain model. The \textit{Generic Instruments} serve as a basis for quickly making a new \textit{Unique Instrument}. A \textit{Unique Instrument} can store the same information as a \textit{Generic Instrument} in addition to an energy calibration and uses a serial number for identification. \textit{Unique Instruments} can be assigned to a spectrum from which certain tools can pull required data for calculations and they can store the energy calibration for instruments that do not store it themselves.
 
-\paragraph{Detector} denotes an external instrument for detecting radiation that LuRaCs can sample data from. They can be connected through USB, Bluetooth or a network. Each type of detector have their own 'client'. LuRaCs interacts with detectors through clients which contain the code needed to interact with the physical detector but each client can be implemented differently. This structure makes detector implementations in LuRaCs flexible and easily extensible.
+\paragraph{Detector} denotes an external instrument for detecting radiation that LuRaCs can sample data from. This is in contrast to an \textit{Instrument} which represent detector parameters and not the detector itself. They can be connected through USB, Bluetooth or a network. Each type of detector have their own 'client'. LuRaCs interacts with detectors through clients which contain the code needed to interact with the physical detector but each client can be implemented differently. However, the end-user interacts with the detectors the same way no matter how the client is coded. This structure makes detector implementations in LuRaCs flexible and easily extensible.
 
 \subsubsection{Abbreviations}
 \begin{table}[H]
@@ -216,9 +306,16 @@ A \textit{Unique Instrument} represents a specific instrument of a certain model
     \caption{List of abbreviations used in this manual}
     \label{tab:abbreviations}
     \begin{tabular}{ll}
+        BLE & Bluetooth Low Energy \\
         CLI & Command Line Interface \\
         CPS & Counts Per Second \\
+        CsI & Caesium-Iodide scintillator \\
+        HPGe & High Purity Germanium semi-conductor \\
+        LuRaCs & Lund Radiation analysis Computer software \\
+        GPS & Global Positioning System \\
         GUI & Graphical User Interface \\
         ML-EM & Maximum Likelihood - Expectation Maximisation \\
+        NaI & Sodium-Iodide scintillator \\
+        USB & Universal Serial Bus \\
     \end{tabular}
 \end{table}

@@ -1,0 +1,186 @@
+\subsection{Data Library}\label{sec:data_store}
+The \textit{Data Library} allows for saving data objects in the application it self for easy access. It also allows for limited editing of previously saved objects. It contains the following object types \textit{Spectra}, \textit{Spectrograms}, \textit{ROIs}, \textit{Unique Instruments} and \textit{Generic Instruments}. 
+
+All data items saved in the Data Library can be exported to a single zip-file, with a specific internal structure (see \ref{}), using \texttt{File -> Export Data Library}. Such a file can be imported with \texttt{File -> Import Data Library}. 
+
+\subsubsection*{Spectrum Library}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = .8\linewidth]{images/interface/data_store_spectrum.png}
+    \caption{}
+    \label{fig:data_store_spectrum}
+\end{figure}
+
+\begin{table}[H]
+    \centering
+    \caption{Description of the possible operations in toolbar at the bottom of the Spectrum Library-tab}
+    \label{tab:spectrum_library_fields}
+    \begin{tabular}{p{.3\textwidth}p{.64\textwidth}}
+    \toprule
+    \textbf{Field} & \textbf{Description} \\ \midrule
+    Delete & Remove selected items. \\
+    Load Instrument & Load the instrument contained in the specific spectrum file. If not selected LuRaCs will attempt to match the instrument name to an existing \textit{Unique Instrument} save in the Data Library. \\
+    Load ROIs & Should the ROIs contained in the spectrum be loaded with the spectrum. \\
+    Edit & Edit the spectrum name or remark. \\
+    Export & Export the spectrum. Available formats: \texttt{XML}, \texttt{CSV} and \texttt{xlsx}. \\
+    Load & Load the spectrum into view. \\
+    Close & Close the data Library. \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{Description of columns in the Spectrum Library-tab}
+    \label{tab:spectrum_library_columns}
+    \begin{tabular}{p{.3\textwidth}p{.64\textwidth}}
+    \toprule
+    \textbf{Column} & \textbf{Description} \\ \midrule
+    Name & Spectrum name \\
+    Date & Date when the measurement of the foreground started \\
+    Live Time & Live time of the foreground \\
+    ROIs & Number of ROIs saved with the spectrum, if any. \\
+    Instrument & Which instrument is saved with the spectrum if any. If an instrument with the same name already exists in the Data Library, it will be used instead of the instrument saved with the spectrum. This can be changed in setting. \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsubsection*{Spectrogram Library}
+All created spectrograms are placed in the Spectrogram Library. From here they can be loaded back for analysis or continued measurement.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = .8\linewidth]{images/interface/data_store_spectrogram.png}
+    \caption{}
+    \label{fig:data_store_spectrogram}
+\end{figure}
+
+
+\begin{table}[H]
+    \centering
+    \caption{Description of the possible operations in toolbar at the bottom of the Spectrogram Library-tab}
+    \label{tab:spectrogram_library_fields}
+    \begin{tabular}{p{.3\textwidth}p{.64\textwidth}}
+    \toprule
+    \textbf{Field} & \textbf{Description} \\ \midrule
+    Delete & Remove selected items. \\
+    Export Spectrum Data & If checked the data for  individual channels are included when exporting, everything else is exported the same. \\
+    Edit & Edit the spectrogram name. \\
+    Export & Export the spectrogram to another file. Available formats: \texttt{.db} (SQLite3) and \texttt{xlsx}. \\
+    Load & Load the spectrum into view. \\
+    Close & Close the data Library. \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{Description of columns in the Spectrogram Library-tab}
+    \label{tab:spectrogram_library_columns}
+    \begin{tabular}{p{.3\textwidth}p{.64\textwidth}}
+    \toprule
+    \textbf{Column} & \textbf{Description} \\ \midrule
+    Name & Spectrogram name \\
+    Start Date & Date when the measurement started. \\
+    End Date & Date when the measurement was last stopped. \\
+    Duration & Total measurement duration. \\
+    Instrument & Identifier for the detector used for acquiring the spectrogram. \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsubsection*{ROI Library}
+The ROI Library allows for saving references to ROIs. These can later be loaded to a spectrum or spectrogram. This means the roi options, like the energy bounds, fitting options and assigned nuclide, are saved but data like fitting parameters and peak counts are not.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = .8\linewidth]{images/interface/data_store_rois.png}
+    \caption{}
+    \label{fig:data_store_rois}
+\end{figure}
+
+
+\begin{table}[H]
+    \centering
+    \caption{Description of the possible operations in toolbar at the bottom of the ROI Library-tab}
+    \label{tab:roi_library_fields}
+    \begin{tabular}{p{.3\textwidth}p{.64\textwidth}}
+    \toprule
+    \textbf{Field} & \textbf{Description} \\ \midrule
+    Delete & Remove selected items. \\
+    Edit & Edit the ROI collection name and the ROIs contained within, see \autoref{fig:data_store_roi_edit}. \\
+    Export & Export the ROIs to another file. Available formats: \texttt{.xml}. \\
+    Load to Spectrogram & Load the ROIs as spectrogram ROIs. \\
+    Load to Spectrum & Load the ROIs as spectrum ROIs. \\
+    Close & Close the data Library. \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{Description of columns in the ROI Library-tab}
+    \label{tab:roi_library_columns}
+    \begin{tabular}{p{.3\textwidth}p{.64\textwidth}}
+    \toprule
+    \textbf{Column} & \textbf{Description} \\ \midrule
+    Name & Name of the ROI group. \\
+    ROIs & Number of ROIs in the group. \\
+    Regions & The bounds of all ROIs in the group. \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = .7\linewidth]{images/interface/data_store_roi_edit.png}
+    \caption{ROI editor inside the Data Store. From the nuclide library, it is possible to change the ROI alias/name as well as upper and lower bounds, nuclide, emission.}
+    \label{fig:data_store_roi_edit}
+\end{figure}
+
+\subsubsection*{Unique-/Generic Instruments}
+The tabs for the Unique and Generic Instruments are very similar and therefore described in the same section.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = .8\linewidth]{images/interface/data_store_instrument.png}
+    \caption{Instruments-tab in the Data Library, with eight listed Unique Instruments.}
+    \label{fig:data_store_instruments}
+\end{figure}
+
+
+\begin{table}[H]
+    \centering
+    \caption{Description of the possible operations in toolbar at the bottom of the Instruments-tab}
+    \label{tab:instrument_library_fields}
+    \begin{tabular}{p{.3\textwidth}p{.64\textwidth}}
+    \toprule
+    \textbf{Field} & \textbf{Description} \\ \midrule
+    Delete & Remove selected items. \\
+    Edit & Edit an existing instrument, see \autoref{fig:data_store_instrument_edit}. \\
+    Export & Export the instrument data to another file. Available formats: \texttt{.xml}. \\
+    New & Create a new instrument. \textit{Unique Instruments} can inherit data from \textit{Generic Instruments}. \\
+    Close & Close the data Library. \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{Description of columns in the Instruments-tab}
+    \label{tab:instrument_library_columns}
+    \begin{tabular}{p{.3\textwidth}p{.64\textwidth}}
+    \toprule
+    \textbf{Column} & \textbf{Description} \\ \midrule
+    Name & Instrument name (Only for \textit{Unique Instrument}) \\
+    Model & Name of the instrument model. Ex. RadiaCode-110 or Identifinder R400. \\
+    Calibration & Shows if the instrument stores an energy calibration. (Only for \textit{Unique Instrument}) \\
+    Resolution & Shows if the instrument stores an energy resolution. \\
+    Efficiency & Shows if the instrument stores an intrinsic efficiency. \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = .8\linewidth]{images/interface/data_store_instrument_edit.png}
+    \caption{The dialog for creating a new instrument or editing an existing one. 'Instrument Name' can not be changed for a generic instrument.}
+    \label{fig:data_store_instrument_edit}
+\end{figure}

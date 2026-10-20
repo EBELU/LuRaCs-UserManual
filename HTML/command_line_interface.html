@@ -1,0 +1,254 @@
+<h2 id="subsec:cli">Command Line Interface (CLI)</h2>
+<p>LuRaCs is primarily operated through the GUI but it also provides a terminal-based command line interface, allowing for controlling detectors without a GUI. This may be useful if remote measurements or measurements run on a Raspberry Pi is attached to a drone. This mode shares most of the same commands as the GUI Console with the exception of visualisation tools.</p>
+<p>This mode is started by running LuRaCs in a terminal with the <code>–headless</code> flag.</p>
+<figure>
+<img src="images/interface/cli.png" id="fig:cli" alt="" /><figcaption>LuRaCs command line interface in terminal mode.</figcaption>
+</figure>
+<figure>
+<img src="images/interface/cli_spectrum.png" id="fig:cli_spectrum" alt="" /><figcaption>Two spectra viewed through the command line using the command <code>view spectrum -Emax 1000 all</code>. The <code>-Emax 1000</code> flag limits the x-axis to <span class="math inline"> &lt; 1000</span> keV.</figcaption>
+</figure>
+<div id="tab:command-reference">
+<table>
+<caption>Command-line interface command reference.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><span class="nodecor"><strong>Command</strong></span></th>
+<th style="text-align: left;"><span class="nodecor"><strong>Description</strong></span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span>Table  – continued from previous page</span></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="nodecor"><strong>Command</strong></span></td>
+<td style="text-align: left;"><span class="nodecor"><strong>Description</strong></span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>help</code></td>
+<td style="text-align: left;">Display the available commands and their descriptions.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>clear</code></td>
+<td style="text-align: left;">Clear the console and return the application to start.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>exit</code>, <code>quit</code>, <code>shutdown</code></td>
+<td style="text-align: left;">Exit the application.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>device scan usb</code></td>
+<td style="text-align: left;">Scan for connected USB devices.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>device scan ble</code></td>
+<td style="text-align: left;">Scan for nearby Bluetooth Low Energy devices.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>device connect usb &lt;device&gt;</code></td>
+<td style="text-align: left;">Connect to a USB device matching the specified name.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>device connect ble &lt;device1&gt; [device2 ...]</code></td>
+<td style="text-align: left;">Connect to one or more Bluetooth Low Energy devices.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>device disconnect &lt;device&gt;</code></td>
+<td style="text-align: left;">Disconnect the specified device.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>device disconnect all</code></td>
+<td style="text-align: left;">Disconnect all connected devices.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>list devices</code></td>
+<td style="text-align: left;">Display all connected devices.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>list spectra</code></td>
+<td style="text-align: left;">Display all loaded spectra.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>list spectrogram</code></td>
+<td style="text-align: left;">Display all loaded spectrograms.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>list rois</code></td>
+<td style="text-align: left;">Display all loaded regions of interest.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>index spectrum</code></td>
+<td style="text-align: left;">Display indexed spectrum files.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>index spectrogram</code></td>
+<td style="text-align: left;">Display indexed spectrogram files.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>index roi</code></td>
+<td style="text-align: left;">Display indexed ROI files.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>view spectrum &lt;name&gt;</code></td>
+<td style="text-align: left;">Display the specified spectrum. The spectrum can be selected by name or by its index in the loaded spectrum list.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>view spectrum -n &lt;name&gt;</code></td>
+<td style="text-align: left;">Specify the spectrum to display by name.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>view spectrum all</code></td>
+<td style="text-align: left;">Display all loaded spectra on the same plot.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>view spectrum -A</code></td>
+<td style="text-align: left;">Display all loaded spectra on the same plot.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>view spectrum -Emin &lt;energy&gt;</code></td>
+<td style="text-align: left;">Set the lower energy limit of the displayed spectrum, in keV.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>view spectrum -Emax &lt;energy&gt;</code></td>
+<td style="text-align: left;">Set the upper energy limit of the displayed spectrum, in keV.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>view spectrum -cps</code></td>
+<td style="text-align: left;">Display the spectrum as counts per second (CPS) instead of total counts.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>view spectrum -log</code></td>
+<td style="text-align: left;">Display the spectrum using the logarithmic scaling.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>view spectrum -bkgSub</code></td>
+<td style="text-align: left;">Display the background-subtracted spectrum, if the spectrum has a background.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>view rois</code></td>
+<td style="text-align: left;">Display the currently loaded regions of interest.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>view log</code></td>
+<td style="text-align: left;">Display recent application log entries.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>roi &lt;lower&gt; &lt;upper&gt;</code></td>
+<td style="text-align: left;">Add a region of interest between the specified lower and upper bounds.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>roi -c</code></td>
+<td style="text-align: left;">Clear all regions of interest.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>spectrogram start &lt;device&gt;</code></td>
+<td style="text-align: left;">Start a spectrogram for the specified device.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>spectrogram start all</code></td>
+<td style="text-align: left;">Start spectrograms for all connected devices.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>spectrogram pause &lt;name&gt;</code></td>
+<td style="text-align: left;">Pause the specified spectrogram.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>spectrogram pause all</code></td>
+<td style="text-align: left;">Pause all running spectrograms.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>spectrogram unpause &lt;name&gt;</code></td>
+<td style="text-align: left;">Resume the specified spectrogram.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>spectrogram unpause all</code></td>
+<td style="text-align: left;">Resume all paused spectrograms.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>spectrogram load &lt;path&gt;</code></td>
+<td style="text-align: left;">Load a spectrogram from the specified file.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>spectrogram unload &lt;name&gt;</code></td>
+<td style="text-align: left;">Unload the specified spectrogram.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>spectrogram unload all</code></td>
+<td style="text-align: left;">Unload all loaded spectrograms.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>-n &lt;name&gt;</code></td>
+<td style="text-align: left;">Specify a custom name when starting a spectrogram.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>-i &lt;seconds&gt;</code></td>
+<td style="text-align: left;">Set the spectrogram save interval. Default: <span class="math inline">1</span> second.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>-c &lt;count&gt;</code></td>
+<td style="text-align: left;">Set the number of spectra to concatenate before saving. Default: <span class="math inline">1</span>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>map url &lt;https-URL&gt;</code></td>
+<td style="text-align: left;">Load an online map from the specified HTTPS URL.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>map file &lt;path&gt;</code></td>
+<td style="text-align: left;">Load a local offline map from a PMTiles file.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>watch</code></td>
+<td style="text-align: left;">Continuously display live information from connected devices. Press <code>Ctrl+C</code> to stop.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>exec &lt;script-file&gt;</code></td>
+<td style="text-align: left;">Execute commands from a script file. Empty lines and lines beginning with <code>#</code> are ignored.</td>
+</tr>
+</tbody>
+</table>
+</div>

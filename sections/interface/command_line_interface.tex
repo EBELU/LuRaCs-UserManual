@@ -1,0 +1,20 @@
+\subsection{Command Line Interface (CLI)}\label{subsec:cli}
+LuRaCs is primarily operated through the GUI but it also provides a terminal-based command line interface, allowing for controlling detectors without a GUI. This may be useful if remote measurements or measurements run on a Raspberry Pi is attached to a drone. This mode shares most of the same commands as the GUI Console with the exception of visualisation tools.
+
+This mode is started by running LuRaCs in a terminal with the \texttt{--headless} flag.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = .8\linewidth]{images/interface/cli.png}
+    \caption{LuRaCs command line interface in terminal mode.}
+    \label{fig:cli}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = .8\linewidth]{images/interface/cli_spectrum.png}
+    \caption{Two spectra viewed through the command line using the command \texttt{view spectrum -Emax 1000 all}. The \texttt{-Emax 1000} flag limits the x-axis to $< 1000$ keV.}
+    \label{fig:cli_spectrum}
+\end{figure}
+
+\input{tables/cli_commands.tex}

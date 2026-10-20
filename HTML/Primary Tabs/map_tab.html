@@ -1,0 +1,21 @@
+<h3 id="map">Map</h3>
+<p>Loading a map enables viewing of geographic measurements made with a spectrogram and a GPS. Maps can be loaded from online API requiring an internet connection or loaded from a <em>.pmtiles</em>-file for offline use. Compatible APIs and files are offered by several sources, the software <em>QGis</em> offers support for exporting <em>.pmtiles</em> from other formats using plugins.</p>
+<h4 id="disclaimer">Disclaimer</h4>
+<p>LuRaCs does not provide or distribute any map data. Users are responsible for ensuring that such data or tile services they use with LuRaCs are obtained and used in accordance with the applicable licenses, terms, and usage restrictions.</p>
+<p>The map is rendered using Qt’s web engine, making it a powerful but resource demanding tool. Using offline maps can require a lot of system memory since the server needs to cache tiles for a smooth view. It is therefore recommended to use a system with enough memory when this option is applied. However, both the map and datapoints are rendered using GPU acceleration with WebGL, allowing for 10 000s of points to be displayed without excessive stress on the system. For reference, a Raspberry Pi 5 with 8 GB of RAM can render a 1.4 GB map file without any stutter, total memory usage was approximately 2 GB.</p>
+<figure>
+<img src="images/interface/map_view.jpg" id="fig:map_view" alt="" /><figcaption>Map with a loaded track and a connected GPS.</figcaption>
+</figure>
+<ol>
+<li><p>Options menu for loading maps, importing and exporting simple tracks.</p></li>
+<li><p>Longitude and Latitude for the position of the cursor.</p></li>
+<li><p>Name of the loaded map.</p></li>
+<li><p>List of loaded spectrograms. If the selected spectrogram does not contain any geolocation data, no measurement points are displayed.</p></li>
+<li><p>Selector for what data is shown: total count rate, dose rate or count rate inside a loaded ROI.</p></li>
+<li><p>Main map view.</p></li>
+<li><p>Selector for color gradient, used for the track points and a histogram over the measured values. The color map can be changed by clicking Mouse-2 on the gradient bar.</p></li>
+<li><p>Live data from the GPS.</p></li>
+<li><p>Current GPS position, always displayed as a white and blue circle.</p></li>
+</ol>
+<h4 id="load-a-map">Load a map</h4>
+<p>is done from <code>Map Options -&gt; Load Online/Offline Map</code>. An offline map takes the form of a <em>.pmltiles</em> file. By choosing this option prompts the selection of such a file. Choosing to load an online map prompts the user to enter a URL, to a tile serving API, possibly including an API key. The checkbox allows for saving the most recently used URL. If a personal API key is used, be aware that URLs are saved unencrypted.</p>

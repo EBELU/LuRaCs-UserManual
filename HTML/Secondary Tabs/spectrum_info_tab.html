@@ -1,0 +1,79 @@
+<h3 id="spectrum-info">Spectrum Info</h3>
+<p>Displays information about loaded spectra, both from files (which ones, write out) and detectors memory.</p>
+<figure>
+<img src="images/interface/spectrum_tab.jpg" id="fig:spectrum_info" alt="" /><figcaption>Spectrum Info Tab. For imported spectra with other formats than <code>XML</code> or <code>N42</code> file extensions are kept in the name.</figcaption>
+</figure>
+<div id="tab:spectrum_info_table">
+<table>
+<caption>Description of the columns in the Spectrum Info tab</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Column</strong></th>
+<th style="text-align: left;"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Column 0</td>
+<td style="text-align: left;">Color button allowing for changing the color of the displayed. Options button marked with ’...’, see .</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Spectrum</td>
+<td style="text-align: left;">The name of the spectrum or connected detector. A spectrum retrieved from a detector is automatically given the same name as the detector, this can not be changed unless the spectrum is saved or exported.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Type</td>
+<td style="text-align: left;"><em>Foreground</em> or <em>Background</em>, these share the same name in the ’Spectrum’-column for the same spectrum. This division exists because a spectrum can contain both foreground and background that have different measurement times and total counts.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Live Time</td>
+<td style="text-align: left;">The live time (h:min:s) of the measurement, accounting for dead time.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Real Time</td>
+<td style="text-align: left;">The real time (h:min:s) of the measurement.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Calibrated</td>
+<td style="text-align: left;"><em>True</em> or <em>False</em>, if an energy calibration is detected and applied.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Instrument</td>
+<td style="text-align: left;">Which instrument is assigned to the spectrum, see section <a href="#sec:definitions" data-reference-type="ref" data-reference="sec:definitions">[sec:definitions]</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tab:spectrum_info_options_menu">
+<table>
+<caption>Description of the options menu opened by the button marked ’...’ on each row. The type ’Background’s are limited to only the ’Remove’ option.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Field</strong></th>
+<th style="text-align: left;"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Save</td>
+<td style="text-align: left;">Save the spectrum to the Data Library.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Export</td>
+<td style="text-align: left;">Export the spectrum to a standalone file in the following formats: <code>XML</code>, <code>CSV</code>, <code>xlsx</code>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hide/Show</td>
+<td style="text-align: left;">Toggle visibility of the spectrum in the spectrum view. ROIs are not applied to hidden spectra.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Edit</td>
+<td style="text-align: left;">Edit properties of the spectrum, see .</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Remove Spectrum</td>
+<td style="text-align: left;">Remove the spectrum and disconnect a detector associated with the spectrum.</td>
+</tr>
+</tbody>
+</table>
+</div>

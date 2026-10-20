@@ -1,0 +1,15 @@
+<h3 id="calibration">Calibration</h3>
+<p>Calibration is the operation of setting the energy each channel corresponds to.</p>
+<figure>
+<img src="images/interface/gtools_calibration.jpg" id="fig:gtools_calibration" alt="" /><figcaption>Calibration window of a spectrum with 4 ROIs and assigned nuclides.</figcaption>
+</figure>
+<ol>
+<li><p>Which spectrum should be used for the calibration. For each calibration, data from only one spectrum is allowed.</p></li>
+<li><p>Add a calibration point, that is not associated with a ROI. Measured and Reference energies must be set manually.</p></li>
+<li><p>Current calibration points detected and their corresponding information. When unchecking a row it will be ignored in the calculation.</p></li>
+<li><p>Polynomial degree of the calibration function and the current coefficients. Coefficients can be changed manually but will be updated by pressing <code>Calculate</code>.</p></li>
+<li><p>The instrument used for acquiring the spectrum. This is fixed and can not be changed here, instead edit the spectrum before starting the calibration, see section <a href="#" data-reference-type="ref" data-reference="">0.0.1</a>.</p></li>
+<li><p>Plot showing the energy as a function of channels based on the latest calculated coefficients.</p></li>
+<li><p>Assign the coefficients to the <em>Unique Instrument</em> shown in (5.).</p></li>
+<li><p>Assign the new calibration coefficients and recalculate the x-axis for the spectrum selected in (1.), updating the view in the Spectrum-tab. Note, this will not change the calibration of an already started spectrogram.</p></li>
+</ol>

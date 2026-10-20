@@ -106,15 +106,10 @@
     \multicolumn{2}{l}{\textbf{Maps}} \\
 
     \texttt{--map\_url <URL>} &
-        Load an online map from the specified URL at application startup. \\
+        Load an online map from the specified URL at application startup. Only one map source may be specified at startup. \\
 
     \texttt{--map\_file <path>} &
         Load a local offline map from the specified \texttt{.pmtiles}
-        file at application startup. \\
-
-    \texttt{--map\_url} and \texttt{--map\_file} &
-        Only one map source may be specified at startup. If both
-        options are provided, no map is loaded and a warning is
-        written to the application log. \\
+        file at application startup. Only one map source may be specified at startup. \\
 
 \end{longtable}

@@ -1,0 +1,43 @@
+<h3 id="deconvolution">Deconvolution</h3>
+<p>This tool does more than simply reducing the effect of energy resolution but will still be referred to as a deconvolution operation. Deconvolution in this sense is more similar to reconstruction as in image reconstruction in nuclear medicine, it employs the ML-EM algorithm. By using a detector response matrix, most simply acquired using Monte Carlo-simulations, the effects of the detector resolution, scattering in the detector and other effects can be reduced. The response matrix represents the expected detector response to a photon emitted at a certain energy, see and section <a href="#sec:" data-reference-type="ref" data-reference="sec:">[sec:]</a></p>
+<figure>
+<img src="images/interface/gtools_deconvolution.jpg" id="fig:gtools_deconvolution" alt="" /><figcaption>A Co-60 spectrum deconvolved using ML-EM and a response matrix for a Radiacode-103G detecting a parallel beam of monoenergetic photons.</figcaption>
+</figure>
+<ol>
+<li><p>The original Co-60 spectrum in blue and the deconvolved spectrum in orange.</p></li>
+<li><p>Control window for the deconvolution operation, see .</p></li>
+<li><p>The deconvolved spectrum is added as new spectrum, copying information from the original.</p></li>
+</ol>
+<div id="tab:gtools_deconvolution">
+<table>
+<caption>Description of the deconvolution window.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Field</strong></th>
+<th style="text-align: left;"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Algorithm</td>
+<td style="text-align: left;">Which algorithm should be used. Options are <code>ML-EM</code> (use this) and <code>Generalized Richardson-Lucy</code>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Iterations</td>
+<td style="text-align: left;">The number of iterations the algorithm should run.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">(ML-EM) Response Matrix</td>
+<td style="text-align: left;">The path to a .npz file containing the detector response matrix to be used.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Instrument</td>
+<td style="text-align: left;">Instrument providing information for the algorithm. For instance, <code>Generalized Richardson-Lucy</code> is based on the resolution saved in the instrument.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Spectrum</td>
+<td style="text-align: left;">Which spectrum should the operation be executed on.</td>
+</tr>
+</tbody>
+</table>
+</div>

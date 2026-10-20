@@ -1,0 +1,20 @@
+<h3 id="spectrogram-rois">Spectrogram ROIs</h3>
+<p>Spectrum ROIs apply a curve fitting whereas Spectrogram ROIs do not. When applying a ROI to a spectrogram it sums the counts from all the channels within its bounds and do so for every row in the spectrogram. The results are displayed in count rate, as the number of counts are normalised to the save interval. This makes it easier to compare spectrograms recorded with different save intervals.</p>
+<figure>
+<img src="images/interface/spectrogram_rois.jpg" id="fig:spectrogram_rois" alt="" /><figcaption>Spectrogram ROI tab showing two loaded spectrograms with two loaded ROIs. A <em>Calculation ROI</em> is also added.</figcaption>
+</figure>
+<ol>
+<li><p>Plots of two spectrogram ROIs evaluated on two separate spectrograms.</p></li>
+<li><p>Calculation ROI</p></li>
+<li><p>Button for removing the calculation ROI</p></li>
+<li><p>Settings for the first spectrogram in the calculation ROI. The first combobox lists loaded spectrograms and the second selects the data, total count rate or count rate from a ROI.</p></li>
+<li><p>Mathematical operations for comparing the ROI values are: <code>+</code>, <code>-</code> or <code>/</code>.</p></li>
+<li><p>Settings for the second spectrogram in the calculation ROI. These setting are the same as for the first (4.).</p></li>
+<li><p>ROI names. Calculation ROIs currently only have a tag containing a serial number on the form <code>CAL_X</code>. Currently, they can not be renamed.</p></li>
+<li><p>ROI data in text form. Shown is the latest value and (mean+-std) calculated from the data shown in the plot.</p></li>
+</ol>
+<p>During mobile measurements LuRaCs offers the selection to monitor several ROIs simultaneously. For this e a ’Compact View’ can be used. This is enabled under <code>View -&gt; Spectrogram ROis -&gt; Compact View</code>. This function strips all GUI elements from the plots, except the y-ticks and the plot itself.</p>
+<figure>
+<img src="images/interface/spectrogram_rois_compact.jpg" id="fig:spectrogram_rois_compact" alt="" /><figcaption>Same spectrograms and ROIs as in but in compact view.</figcaption>
+</figure>
+<p><em>Calculation ROIs</em> are plots calculated from the results of other ROIs. <strong>These perform element wise operations and do not account for differences in measurement parameters</strong>. Element 0 from ROI 0 is combined with Element 0 of ROI 1, regardless of measurement date or spectrogram save interval.</p>

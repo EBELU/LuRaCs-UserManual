@@ -1,0 +1,103 @@
+<h2 id="command-line-arguments">Command Line Arguments</h2>
+<p>Command Line Arguments can be provided when starting the application from a terminal.</p>
+<div id="tab:cli-options">
+<table>
+<caption>Command-line options available when starting LuRaCs.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Option</strong></th>
+<th style="text-align: left;"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span>Table  – continued from previous page</span></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Option</strong></td>
+<td style="text-align: left;"><strong>Description</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>–debug</code></td>
+<td style="text-align: left;">Launch the application in debug mode. A mock device is added automatically for testing and development.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>–headless</code></td>
+<td style="text-align: left;">Run the application without the graphical user interface, using terminal mode instead.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>–clear_local_cache</code></td>
+<td style="text-align: left;">Remove all locally stored files and exit the application.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>–import_spectrum &lt;file&gt; [file ...]</code></td>
+<td style="text-align: left;">Load one or more spectrum files when starting the application. Each specified file must exist and be supported by the application’s file importer.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>–import_rois &lt;file&gt;</code></td>
+<td style="text-align: left;">Load regions of interest from the specified XML file.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>-roi &lt;lower&gt; &lt;upper&gt;</code></td>
+<td style="text-align: left;">Add a region of interest with the specified lower and upper energy bounds in keV. The option can be specified multiple times to add several ROIs.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>–nuclides &lt;nuclide&gt; [nuclide ...]</code></td>
+<td style="text-align: left;">Preset one or more nuclides in the isotopics interface. This option is applied when the graphical user interface is available.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>-ble &lt;device&gt; [device ...]</code></td>
+<td style="text-align: left;">Attempt to establish Bluetooth Low Energy connections using the specified device names.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>–bluetooth &lt;device&gt; [device ...]</code></td>
+<td style="text-align: left;">Long-form alias for <code>-ble</code>. Attempts Bluetooth Low Energy connections using the specified device names.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>-usb &lt;device&gt; [device ...]</code></td>
+<td style="text-align: left;">Attempt to establish USB connections using the specified device names. Matching is performed against detected USB device product names.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>-nw &lt;ip&gt; [ip ...]</code></td>
+<td style="text-align: left;">Attempt to connect to network devices using their IP addresses.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>–network &lt;ip&gt; [ip ...]</code></td>
+<td style="text-align: left;">Long-form alias for <code>-nw</code>. Connects to network devices using their IP addresses.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>–serial_gps &lt;interface&gt;</code></td>
+<td style="text-align: left;">Connect a GPS receiver using a USB serial interface. The specified value identifies the serial interface used by the GPS receiver.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>–map_url &lt;URL&gt;</code></td>
+<td style="text-align: left;">Load an online map from the specified URL at application startup. Only one map source may be specified at startup.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>–map_file &lt;path&gt;</code></td>
+<td style="text-align: left;">Load a local offline map from the specified <code>.pmtiles</code> file at application startup. Only one map source may be specified at startup.</td>
+</tr>
+</tbody>
+</table>
+</div>
