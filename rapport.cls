@@ -72,7 +72,7 @@ separate-uncertainty = true}
 \RequirePackage{expl3} %Wrapper for LaTeX3
 \RequirePackage{ifthen}
 \RequirePackage{fancyhdr}
-\RequirePackage[outputdir=.output/]{minted} % Code listing
+\RequirePackage{minted} % Code listing
 \RequirePackage{csquotes}
 \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
 
